@@ -1,10 +1,8 @@
- 
-
 import * as React from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 
 import { cn } from "@/lib/utils";
-import {  MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { Button, TButtonSize, TButtonVariant } from "./button";
 
 function Popover({
@@ -33,7 +31,7 @@ function PopoverContent({
         sideOffset={sideOffset}
         className={cn(
           "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
-          className
+          className,
         )}
         {...props}
       />
@@ -57,7 +55,7 @@ interface IProps {
   align?: "center" | "start" | "end" | undefined;
   variant?: TButtonVariant;
   size?: TButtonSize;
-  id?:string
+  id?: string;
 }
 
 export function POPOVER({
@@ -68,8 +66,8 @@ export function POPOVER({
   triggerClassNames,
   className,
   align,
-  variant='ghost',
-  size='icon',
+  variant = "ghost",
+  size = "icon",
   id,
 }: IProps) {
   return (

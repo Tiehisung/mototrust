@@ -27,7 +27,7 @@ const PlayerGalleriesPage = () => {
     error,
     refetch,
     isFetching,
-  } = useGetGalleriesQuery(queryString);
+  } = useGetGalleriesQuery('queryString');
 
   const isLoading = playerLoading || galleriesLoading;
   const player = playerData?.data;

@@ -12,6 +12,7 @@ import { PageSEO } from "@/utils/PageSEO";
 import PlayerStatistics from "./statistics/Statistics";
 import LandingPlayers from "./(landing)/Players";
 import LandingFixtures from "./matches/(fixturesAndResults)/LandingFixtures";
+import TestHome from "./testHome";
 
 const LandingNewsHeadlines = lazy(() => import("./news/LandingNews"));
 
@@ -24,15 +25,12 @@ const GridFallback = () => (
 );
 
 export default function Home() {
- 
-
+  if ("test".length) return <TestHome />;
   return (
     <>
       <PageSEO page="home" />
 
       <main className="relative md:block space-y-10">
-  
-
         <HERO />
 
         {/* Players Section */}

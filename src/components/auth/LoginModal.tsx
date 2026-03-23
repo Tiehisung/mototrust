@@ -1,8 +1,8 @@
 import { DIALOG } from "../Dialog";
-import TextDivider from "../Divider";
 import { ReactNode } from "react";
 import { TButtonVariant } from "../ui/button";
 import { CredentialsLoginForm } from "./LoginCredentials";
+import Divider from "../Divider";
 
 /**
  * id - login-controller
@@ -38,12 +38,12 @@ const LoginController = ({
         <FcGoogle size={24} />
       </LoginBtn> */}
 
-      <TextDivider text="🔐" />
+      <Divider content  ="🔐" />
       <CredentialsLoginForm />
 
       {description && (
         <div>
-          <TextDivider text="🔐🪪" className="px-4 my-10" />
+          <Divider content="🔐🪪" className="px-4 my-10" />
 
           <div>{description}</div>
         </div>
