@@ -4,10 +4,10 @@ import DocumentFolders from "./Folders";
 import { DocumentUploader } from "./DocUploader";
 import { ConsentForm } from "@/components/pdf/ConsentForm";
 import { RecentDocs } from "./RecentDocs";
-import TextDivider from "../../../../../smockly/src/components/Divider";
 import { useGetFolderMetricsQuery } from "@/services/docs.endpoints";
 import { useGetPlayersQuery } from "@/services/player.endpoints";
 import Loader from "@/components/loaders/Loader";
+import Divider from "@/components/Divider";
 
 export default function DocsPage() {
   const { data: playersData, isLoading: playersLoading } =
@@ -56,8 +56,8 @@ export default function DocsPage() {
 
         <br />
 
-        <TextDivider
-          text="GENERATE CONSENT FORMS"
+        <Divider
+          content="GENERATE CONSENT FORMS"
           className="text-Orange my-6"
         />
 

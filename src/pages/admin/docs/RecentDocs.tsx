@@ -1,4 +1,3 @@
-import TextDivider from "../../../../../smockly/src/components/Divider";
 import { Color } from "@/styles";
 import { FaFilePdf } from "react-icons/fa";
 import Loader from "@/components/loaders/Loader";
@@ -10,6 +9,7 @@ import { DocumentActions } from "./[folder]/Actions";
 import { shortText } from "@/lib";
 import { useGetDocumentsQuery } from "@/services/docs.endpoints";
 import { formatError } from "@/lib/error";
+import Divider from "@/components/Divider";
 
 export function RecentDocs() {
   // Use the query hook instead of server-side fetch
@@ -23,8 +23,8 @@ export function RecentDocs() {
     return (
       <div>
         <header className="items-center justify-between mb-4">
-          <TextDivider
-            text="RECENT DOCUMENTS"
+          <Divider
+            content="RECENT DOCUMENTS"
             className="text-xs font-light grow"
           />
         </header>
@@ -37,8 +37,8 @@ export function RecentDocs() {
     return (
       <div>
         <header className="items-center justify-between mb-4">
-          <TextDivider
-            text="RECENT DOCUMENTS"
+          <Divider
+            content="RECENT DOCUMENTS"
             className="text-xs font-light grow"
           />
         </header>
@@ -52,8 +52,8 @@ export function RecentDocs() {
   return (
     <div>
       <header className="items-center justify-between mb-4">
-        <TextDivider
-          text="RECENT DOCUMENTS"
+        <Divider
+          content="RECENT DOCUMENTS"
           className="text-xs font-light grow"
         />
       </header>
