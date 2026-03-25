@@ -43,6 +43,8 @@ export const api = createApi({
         'Squads',
         "Users",
         'Uploads',
+        'Fans',
+        'FanStats',
 
         // Dashboards
         'Metrics',

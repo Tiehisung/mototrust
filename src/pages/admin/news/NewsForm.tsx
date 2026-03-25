@@ -19,6 +19,7 @@ import {
 import { clearNews, setNews } from "@/store/slices/news.slice";
 import { CloudinaryWidget } from "@/components/cloudinary/Cloudinary";
 import { useEffect } from "react";
+import { ImageUploadWidget } from "@/components/cloudinary/ImageUploadWidget";
 
 export interface IPostNews {
   details: {
@@ -110,22 +111,15 @@ export const NewsForm = ({ newsItem = null }: INewsForm) => {
           name="headline.image"
           control={control}
           render={({ field }) => (
-            <CloudinaryWidget
-              onUploadSuccess={(fs) => field.onChange(fs?.[0]?.secure_url)}
-              maxFiles={1}
-              trigger={
-                <>
-                  <CgAttachment size={24} /> Upload Wall Image
-                </>
-              }
+            <ImageUploadWidget
+              onUpload={(file) => {
+                console.log(file);
+                field.onChange(file?.secure_url);
+              }}
               folder={`news/media-${new Date().getFullYear()}`}
-              multiple={false}
               cropping
-              initialFiles={[
-                {
-                  secure_url: persistedNews?.headline.image,
-                } as ICloudinaryFile,
-              ]}
+              shape="square"
+              previewFileStyles="w-full h-auto"
             />
           )}
         />

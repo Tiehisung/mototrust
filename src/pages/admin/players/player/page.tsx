@@ -25,15 +25,18 @@ import {
   useGetPlayerQuery,
 } from "@/services/player.endpoints";
 import { buildQueryString } from "@/lib/searchParams";
+import { IPlayer } from "@/types/player.interface";
 
 export default function PlayerProfilePage() {
   const navigate = useNavigate();
-  const  playerSlug  = useParams().playerSlug;
+  const playerSlug = useParams().playerSlug;
 
   const { data: playerData, isLoading: playerLoading } = useGetPlayerQuery(
     playerSlug || "",
   );
-  const { data: galleriesData } = useGetGalleriesQuery(`?tags=${playerData?.data?._id}`);
+  const { data: galleriesData } = useGetGalleriesQuery(
+    `?tags=${playerData?.data?._id}`,
+  );
   const { data: playersData } = useGetPlayersQuery(buildQueryString());
 
   const [updatePlayer] = useUpdatePlayerMutation();
@@ -45,10 +48,12 @@ export default function PlayerProfilePage() {
 
   const handleUpdateStatus = async (status: boolean) => {
     try {
-      const result = await updatePlayer({ _id: player?._id, status:status?'former':'current' }).unwrap();
+      const result = await updatePlayer({
+        _id: player?._id,
+        status: status ? "former" : "current",
+      }).unwrap();
       if (result.success) {
         toast.success(result.message);
-        navigate(0);
       }
     } catch (error) {
       toast.error("Failed to update player status");
@@ -68,7 +73,7 @@ export default function PlayerProfilePage() {
   };
 
   if (playerLoading) return <PageLoader />;
-  if (!player) return <div>Player not found</div>;
+  if (!player && !playerLoading) return <div>Player not found</div>;
 
   const fullname = `${player?.lastName} ${player?.firstName}`;
 
@@ -145,7 +150,7 @@ export default function PlayerProfilePage() {
           <p>{player?.email}</p>
         </div>
 
-        <UpdatePlayerIssuesAndFitness player={player} />
+        <UpdatePlayerIssuesAndFitness player={player as IPlayer}  />
 
         <section id="edit-player">
           <PrimaryCollapsible

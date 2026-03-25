@@ -37,37 +37,35 @@ const Contact: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
           <div className="space-y-6">
             <div className="flex gap-4 p-4 bg-gray-50 rounded-xl">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
                 <i className="fas fa-map-marker-alt text-emerald-600 text-xl"></i>
               </div>
               <div>
                 <h3 className="font-bold text-lg text-gray-800">
-                  Stadium Address
+                  Park Address
                 </h3>
                 <p className="text-gray-600">
-                  Bunyeni Sports Complex, Main Road, Bunyeni District
+                  Bunyeni Sports Complex, Main Road, Konjiehi, Wa Metro District
                 </p>
               </div>
             </div>
             <div className="flex gap-4 p-4 bg-gray-50 rounded-xl">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
                 <i className="fas fa-envelope text-emerald-600 text-xl"></i>
               </div>
               <div>
                 <h3 className="font-bold text-lg text-gray-800">Email Us</h3>
-                <p className="text-gray-600">
-                  info@bunyeni.fc | tickets@bunyeni.fc
-                </p>
+                <p className="text-gray-600">bunyenifc@gmail.com</p>
               </div>
             </div>
             <div className="flex gap-4 p-4 bg-gray-50 rounded-xl">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
                 <i className="fas fa-phone-alt text-emerald-600 text-xl"></i>
               </div>
               <div>
                 <h3 className="font-bold text-lg text-gray-800">Call Us</h3>
                 <p className="text-gray-600">
-                  +123 456 7890 | Office Hours: Mon-Fri 9AM-6PM
+                  +233 55970 8485 | Office Hours: Mon-Fri 9AM-6PM
                 </p>
               </div>
             </div>

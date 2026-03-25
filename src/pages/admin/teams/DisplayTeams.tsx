@@ -6,7 +6,7 @@ import { LVOutPutTable } from "@/components/tables/VerticalTable";
 import { Edit, Plus, Trash } from "lucide-react";
 import { ConfirmDialog } from "@/components/Confirm-dialog";
 import { StackModal } from "@/components/modals/StackModal";
-import { useNavigate } from "react-router-dom";
+ 
 import { toast } from "sonner";
 import { useDeleteTeamMutation } from "@/services/team.endpoints";
 import { ITeam } from "@/types/match.interface";
@@ -15,7 +15,7 @@ import { Pagination } from "@/components/pagination/Pagination";
 import { staticImages } from "@/assets/images";
 
 const DisplayTeams = ({ teams }: { teams?: IQueryResponse<ITeam[]> }) => {
-  const navigate = useNavigate();
+ 
   const [deleteTeam] = useDeleteTeamMutation();
 
   if (!teams) return <div className="_label p-6">No teams available</div>;
@@ -25,8 +25,8 @@ const DisplayTeams = ({ teams }: { teams?: IQueryResponse<ITeam[]> }) => {
       const result = await deleteTeam(teamId).unwrap();
       if (result.success) {
         toast.success(result.message);
-        navigate(0);
       }
+      
     } catch (error) {
       toast.error("Failed to delete team");
     }

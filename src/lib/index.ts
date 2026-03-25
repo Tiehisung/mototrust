@@ -24,10 +24,10 @@ export const generateNumbers = (from: number, to: number) => {
   }
   return acc;
 };
-export const getInitials = (text: string | string[], length = 2) => {
+export const getInitials = (text?: string | string[], length = 2) => {
+  if (!text) return '';
   const list = typeof text == 'string' ? text.trim().split(' ') : text;
   const initials = list?.map((l) => l.trim()[0]);
-  if (!text) return '';
   return initials.join('').substring(0, length);
 };
 

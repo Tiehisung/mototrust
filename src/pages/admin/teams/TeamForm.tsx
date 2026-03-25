@@ -10,7 +10,7 @@ import {
   useCreateTeamMutation,
   useUpdateTeamMutation,
 } from "@/services/team.endpoints";
-import { ImageUploadWidget } from "@/components/cloudinary/AvatarUploadWidget";
+import { ImageUploadWidget } from "@/components/cloudinary/ImageUploadWidget";
 
 export interface IPostTeam {
   name: string;
@@ -30,7 +30,6 @@ interface IProps {
 }
 
 export const TeamForm = ({ team }: IProps) => {
- 
   const [waiting, setWaiting] = useState(false);
   const [createTeam] = useCreateTeamMutation();
   const [updateTeam] = useUpdateTeamMutation();
@@ -96,7 +95,6 @@ export const TeamForm = ({ team }: IProps) => {
         }
 
         fireDoubleEscape();
-     
       } else {
         toast.error(result.message);
       }

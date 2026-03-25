@@ -21,13 +21,16 @@ export interface IMatch {
   opponent: ITeam;
   broadcaster?: IFileProps;
   status: EMatchStatus;
-  results: 'win' | 'draw' | 'loss'
   isHome: boolean;
   venue?: { name: string; files: IFileProps[] };
   goals: Array<IGoal>
   events: Array<IMatchEvent>;
   cards: Array<ICard>;
   squad?: ISquad
+  competition?: string
+  
+  resultStatus: 'win' | 'draw' | 'loss'
+  result?: string // eg 3-1
 }
 export interface IMatchMetrics {
   goals: {
@@ -42,7 +45,7 @@ export interface IMatchMetrics {
     away: ITeam;
   }
 }
- 
+
 export interface IMatchEvent {
   title: string,
   description?: string;
@@ -81,7 +84,7 @@ export interface IGoal {
 export interface IMatchHighlight extends IFileProps {
   title: string
   match: IMatch
-  tags?:string[]
+  tags?: string[]
 }
 
 export enum EGoalType {

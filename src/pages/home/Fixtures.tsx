@@ -1,5 +1,12 @@
 // components/Fixtures.tsx
+import Loader from "@/components/loaders/Loader";
+import { useGetMatchesQuery } from "@/services/match.endpoints";
 import React from "react";
+import { Link } from "react-router-dom";
+import ModernFixtureCard from "../matches/(fixturesAndResults)/cards/Modern";
+import { MatchFixtureCard } from "../matches/(fixturesAndResults)/cards/Fixture";
+import { EMatchStatus, IMatch } from "@/types/match.interface";
+import { PlayedMatchCard } from "../matches/(fixturesAndResults)/cards/Played";
 
 interface Match {
   date: string;
@@ -27,33 +34,19 @@ const fixtures: Match[] = [
     time: "15:00",
     competition: "Premier League",
   },
-  {
-    date: "APR 11, 2025",
-    home: "Bunyeni FC",
-    away: "Coastal United",
-    result: null,
-    time: "17:30",
-    competition: "Cup Quarterfinal",
-  },
-  {
-    date: "APR 18, 2025",
-    home: "Northern Stars",
-    away: "Bunyeni FC",
-    result: null,
-    time: "14:00",
-    competition: "Premier League",
-  },
-  {
-    date: "APR 25, 2025",
-    home: "Bunyeni FC",
-    away: "Western Warriors",
-    result: null,
-    time: "16:00",
-    competition: "Premier League",
-  },
 ];
 
-const Fixtures: React.FC = () => {
+const LandingFixtures: React.FC = () => {
+  const { data: matchesData, isLoading } = useGetMatchesQuery({});
+
+  if (isLoading) {
+    return (
+      <div className="px-4 space-y-10 _page flex justify-center items-center min-h-100">
+        <Loader message="Loading fixtures..." />
+      </div>
+    );
+  }
+
   return (
     <section id="fixtures" className="py-24 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -67,13 +60,44 @@ const Fixtures: React.FC = () => {
           <div className="w-20 h-1 bg-emerald-600 mx-auto"></div>
         </div>
         <div className="max-w-4xl mx-auto space-y-4">
+          {matchesData?.data?.map((match, index) => {
+            return <ModernFixtureCard key={index} match={match} />;
+          })}
+        </div>
+
+        <br />
+
+        <div className="flex flex-wrap lg:grid lg:grid-cols-3 gap-[3vw] justify-center px-2 mt-5">
+          {matchesData?.data?.slice(0, 3)?.map((match) => {
+            if (match.status == EMatchStatus.FT)
+              return (
+                <PlayedMatchCard
+                  key={match._id}
+                  match={match as IMatch}
+                  league="Circuit Galla"
+                  className="max-sm:grow"
+                />
+              );
+
+            return (
+              <MatchFixtureCard
+                match={match as IMatch}
+                className="grow sm:max-w-lg"
+                key={match._id}
+              />
+            );
+          })}
+        </div>
+
+        <br />
+        <div className="max-w-4xl mx-auto space-y-4">
           {fixtures.map((match, index) => (
             <div
               key={index}
               className="bg-white rounded-xl p-5 flex flex-wrap items-center justify-between gap-4 hover:shadow-lg transition-shadow border border-gray-200"
             >
               <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className="min-w-[100px]">
+                <div className="min-w-25">
                   <span className="text-gray-600 text-sm font-medium">
                     {match.date}
                   </span>
@@ -82,11 +106,11 @@ const Fixtures: React.FC = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-3 flex-1 md:flex-none">
-                  <span className="font-semibold text-right min-w-[110px] text-gray-800">
+                  <span className="font-semibold text-right min-w-27.5 text-gray-800">
                     {match.home}
                   </span>
                   <span className="text-emerald-600 font-bold text-lg">vs</span>
-                  <span className="font-semibold min-w-[110px] text-gray-800">
+                  <span className="font-semibold min-w-27.5 text-gray-800">
                     {match.away}
                   </span>
                 </div>
@@ -101,24 +125,27 @@ const Fixtures: React.FC = () => {
                     ⏱️ {match.time}
                   </span>
                 )}
-                <button className="text-emerald-600 hover:text-emerald-700 text-sm font-medium transition-colors">
-                  {match.result ? "📺 Highlights →" : "🎫 Get Tickets →"}
-                </button>
+                <Link
+                  to={match.result ? "/highlights?tag=a-vrs-b" : "/donation"}
+                  className="text-emerald-600 hover:text-emerald-700 text-sm font-medium transition-colors"
+                >
+                  {match.result ? "📺 Highlights →" : "🎫 Support Match →"}
+                </Link>
               </div>
             </div>
           ))}
         </div>
         <div className="text-center mt-10">
-          <a
-            href="#"
+          <Link
+            to="/matches"
             className="text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-1"
           >
             View Full Schedule <span>→</span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>
   );
 };
 
-export default Fixtures;
+export default LandingFixtures;

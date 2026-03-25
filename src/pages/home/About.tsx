@@ -3,10 +3,10 @@ import React from "react";
 
 const About: React.FC = () => {
   const stats = [
-    { value: "15+", label: "Trophies" },
-    { value: "50+", label: "Academy Graduates" },
-    { value: "10k+", label: "Passionate Fans" },
-    { value: "25+", label: "Years of Legacy" },
+    { value: "5+", label: "Trophies" },
+    { value: "25+", label: "Juvennile Players" },
+    { value: "1000+", label: "Passionate Fans" },
+    { value: `${new Date().getFullYear() - 2024}+`, label: "Years of Legacy" },
   ];
 
   return (

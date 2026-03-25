@@ -26,6 +26,7 @@ export const formatDate = (
     | "dd-mm-yyyy"
     | "yyyy-mm-dd"
     | "March 2, 2025"
+    | "MAR 28, 2025"
     | "Sunday, March 2, 2025"
     | "HH:MM"
     | "HH:MM:SS"
@@ -44,6 +45,13 @@ export const formatDate = (
       return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(
         createdAt
       );
+
+    case "MAR 28, 2025":
+      return createdAt.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }).toUpperCase();
 
     case "dd/mm/yyyy":
       return moment(dateString).format("DD/MM/YYYY");

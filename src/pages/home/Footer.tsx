@@ -1,5 +1,6 @@
 // components/Footer.tsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
@@ -23,24 +24,30 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-white mb-3">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-emerald-500 transition">
+                <Link to="/about" className="hover:text-emerald-500 transition">
                   About Club
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-500 transition">
-                  Tickets
-                </a>
+                <Link to="/news" className="hover:text-emerald-500 transition">
+                  News
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-500 transition">
-                  Shop
-                </a>
+                <Link
+                  to="/highlights"
+                  className="hover:text-emerald-500 transition"
+                >
+                  Highlights
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-500 transition">
-                  Academy
-                </a>
+                <Link
+                  to="/gallery"
+                  className="hover:text-emerald-500 transition"
+                >
+                  Gallery
+                </Link>
               </li>
             </ul>
           </div>
@@ -48,33 +55,32 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-white mb-3">Support</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-emerald-500 transition">
+                <Link to="#" className="hover:text-emerald-500 transition">
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-500 transition">
-                  Membership
-                </a>
+                <Link to="#" className="hover:text-emerald-500 transition">
+                  Fans
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-500 transition">
+                <Link to="#" className="hover:text-emerald-500 transition">
                   Volunteer
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-500 transition">
+                <Link to="/#contact" className="hover:text-emerald-500 transition">
                   Contact Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
           <div>
             <h4 className="font-semibold text-white mb-3">Official Partners</h4>
             <ul className="space-y-2 text-sm">
-              <li className="text-gray-500">Nike</li>
-              <li className="text-gray-500">Heineken</li>
-              <li className="text-gray-500">Local Bank</li>
+              <li className="text-gray-500">Zenis Water, Konjiehi</li>
+              <li className="text-gray-500">Miami Camp, Konjiehi</li>
             </ul>
           </div>
         </div>
@@ -84,13 +90,13 @@ const Footer: React.FC = () => {
             passion for the beautiful game.
           </p>
           <p className="mt-2">
-            <a href="#" className="hover:text-emerald-500 transition">
+            <Link to="#" className="hover:text-emerald-500 transition">
               Privacy Policy
-            </a>{" "}
+            </Link>{" "}
             •
-            <a href="#" className="hover:text-emerald-500 transition ml-2">
+            <Link to="#" className="hover:text-emerald-500 transition ml-2">
               Terms of Use
-            </a>
+            </Link>
           </p>
         </div>
       </div>

@@ -10,6 +10,7 @@ export interface IPlayerMini {
     name: string;
     avatar?: string;
     number: number;
+    position?:string
 }
 
 export interface IPlayer {

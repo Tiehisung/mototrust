@@ -71,7 +71,7 @@ export function PerformanceTabs({ player }: PerformanceTabsProps) {
   const getMatchResultCount = (resultType: "w" | "l" | "d"): number => {
     return (
       player?.matches?.filter((m) => {
-        const result = m?.results?.toLowerCase();
+        const result = m?.resultStatus?.toLowerCase();
         return result?.startsWith(resultType);
       }).length || 0
     );
@@ -198,14 +198,14 @@ export function PerformanceTabs({ player }: PerformanceTabsProps) {
                     <div className="text-right">
                       <div
                         className={`font-bold text-lg ${
-                          match?.results?.toLowerCase()?.startsWith("w")
+                          match?.resultStatus?.toLowerCase()?.startsWith("w")
                             ? "text-green-600"
-                            : match?.results?.toLowerCase()?.startsWith("l")
+                            : match?.resultStatus?.toLowerCase()?.startsWith("l")
                               ? "text-red-600"
                               : "text-amber-600"
                         }`}
                       >
-                        {match?.results || "N/A"}
+                        {match?.resultStatus || "N/A"}
                       </div>
                       <div className="text-sm text-muted-foreground">
                         Result

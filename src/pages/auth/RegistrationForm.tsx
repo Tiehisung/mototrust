@@ -29,7 +29,7 @@ export default function RegistrationForm() {
 
       smartToast(result);
       if (result.success) {
-        reset({ name: "", email: "", password: "", role: EUserRole.GUEST });
+        reset({ name: "", email: "", password: "", role: EUserRole.FAN });
       }
     } catch (e) {
       smartToast({ error: e });

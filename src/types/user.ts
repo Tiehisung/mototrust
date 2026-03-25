@@ -6,11 +6,12 @@ export interface IUser {
   password?: string;
   role?: EUserRole;
 
-  emailVerified?:boolean
+  emailVerified?: boolean
 
   isActive?: boolean;
   lastLogin?: Date;
   resetPasswordExpires?: Date;
+  isFan?: boolean;
 
   createdAt?: string;
   updatedAt?: string;
@@ -20,10 +21,26 @@ export enum EUserRole {
   ADMIN = 'admin',
   SUPER_ADMIN = 'super_admin',
   PLAYER = 'player',
-  GUEST = 'guest',
+  FAN = 'fan',
 }
 export enum EUserAccount {
   CREDENTIALS = 'credentials',
   GOOGLE = 'google',
 }
- 
+
+export interface IFan extends IUser {
+  fanPoints: number;
+  fanBadges: string[];
+  fanRank?: number;
+  engagementScore: number;
+  contributions: {
+    comments: number;
+    shares: number;
+    reactions: number;
+    matchAttendance: number;
+    galleries: number;
+    newsViews: number;
+  };
+  fanSince: string;
+  lastActive?: Date|string;
+}

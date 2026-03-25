@@ -61,16 +61,18 @@ body {
   --color-Blue: var(--blue);
   --color-Arsh: var(--arsh);
   --color-Orange: var(--orange);
+  --color-Gold: var(--gold);
   --color-modalOverlay: var(--modal-overlay);
 }
 
 :root {
   /* Brand Colors */
   --red: rgb(255, 107, 107);
-  --green: #00c846;
+  --green: #096;
   --blue: #1475e1;
   --arsh: #ddd9d9;
   --orange: #ff9800;
+  --gold: #c6a763;
   --modal-overlay: #00000080;
 
   /* Base */
