@@ -107,7 +107,6 @@ const SquadPage = () => {
           <section>
             <SquadForm
               players={players?.data}
-              staff={[]} //managers?.data??
               matches={matches?.data}
               defaultMatch={targetMatch}
             />

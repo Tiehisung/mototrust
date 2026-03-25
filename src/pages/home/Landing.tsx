@@ -1,6 +1,5 @@
 // App.tsx - Main application component
 import React, { useState, useEffect } from "react";
-import Navbar from "./Navbar";
 import Hero from "./Hero";
 import About from "./About";
 import Squad from "./Squad";
@@ -8,6 +7,7 @@ import Fixtures from "./Fixtures";
 import Contact from "./Contact";
 import Newsletter from "./Newsletter";
 import Footer from "./Footer";
+import Navbar from "@/components/Navbar";
 
 const HomeComponent: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);

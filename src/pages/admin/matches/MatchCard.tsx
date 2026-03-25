@@ -14,7 +14,6 @@ import SquadCard from "../squad/SquadCard";
 import { UpdateFixtureMatch } from "./CreateFixture";
 import SquadForm from "../squad/SquadForm";
 import { IPlayer } from "@/types/player.interface";
-import { IStaff } from "@/types/staff.interface";
 import { IMatch, ITeam } from "@/types/match.interface";
 import { ResizableContent } from "@/components/resizables/ResizableContent";
 import { Link } from "react-router-dom";
@@ -24,14 +23,12 @@ import { smartToast } from "@/utils/toast";
 export function AdminMatchCard({
   match,
   teams,
-  staff,
   matches,
   players,
 }: {
   match?: IMatch;
   teams?: ITeam[];
   players?: IPlayer[];
-  staff?: IStaff[];
   matches?: IMatch[];
 }) {
   const { away, home } = checkTeams(match);
@@ -105,67 +102,64 @@ export function AdminMatchCard({
       </main>
 
       <hr />
-  
-        <ResizableContent className="max-w-full text-sm">
-          <UpdateFixtureMatch teams={teams} fixture={match} />
 
-          <ToggleMatchStatus
-            fixtureId={match?._id as string}
-            matchDate={match?.date as string}
-            status={match?.status as IMatch["status"]}
-          />
+      <ResizableContent className="max-w-full text-sm">
+        <UpdateFixtureMatch teams={teams} fixture={match} />
 
-          {match?.squad ? (
-            <DIALOG
-              trigger="Squad"
-              triggerStyles="justify-start"
-              title=""
-              className="min-w-[80vw]"
-            >
-              <SquadCard squad={match?.squad} match={match} />
-            </DIALOG>
-          ) : (
-            <DIALOG
-              trigger="Squad"
-              variant="ghost"
-              triggerStyles="justify-start"
-              title={`Select Squad for ${match?.title}`}
-              className="min-w-[80vw]"
-            >
-              <SquadForm
-                players={players}
-                staff={staff}
-                matches={matches}
-                defaultMatch={match}
-              />
-            </DIALOG>
-          )}
+        <ToggleMatchStatus
+          fixtureId={match?._id as string}
+          matchDate={match?.date as string}
+          status={match?.status as IMatch["status"]}
+        />
 
-          <Link
-            to={`/admin/matches/${match?.slug ?? match?._id}`}
-            className="_hover _link p-2 px-4"
-          >
-            View
-          </Link>
-           
-
-          <ConfirmActionButton
-            primaryText="Delete"
-            trigger="Delete"
+        {match?.squad ? (
+          <DIALOG
+            trigger="Squad"
             triggerStyles="justify-start"
-            onConfirm={handleDelete}
-            isLoading={isDeleting}
-            variant="destructive"
-            confirmVariant="delete"
-            title={shortText(match?.title ?? "Match")}
-            confirmText={`Are you sure you want to delete "<b>${shortText(
-              match?.title ?? "Match",
-              40,
-            )}</b>"?`}
-            escapeOnEnd
-          />
-        </ResizableContent>
-    
+            title=""
+            className="min-w-[80vw]"
+          >
+            <SquadCard squad={match?.squad} match={match} />
+          </DIALOG>
+        ) : (
+          <DIALOG
+            trigger="Squad"
+            variant="ghost"
+            triggerStyles="justify-start"
+            title={`Select Squad for ${match?.title}`}
+            className="min-w-[80vw]"
+          >
+            <SquadForm
+              players={players}
+              matches={matches}
+              defaultMatch={match}
+            />
+          </DIALOG>
+        )}
+
+        <Link
+          to={`/admin/matches/${match?.slug ?? match?._id}`}
+          className="_hover _link p-2 px-4"
+        >
+          View
+        </Link>
+
+        <ConfirmActionButton
+          primaryText="Delete"
+          trigger="Delete"
+          triggerStyles="justify-start"
+          onConfirm={handleDelete}
+          isLoading={isDeleting}
+          variant="destructive"
+          confirmVariant="delete"
+          title={shortText(match?.title ?? "Match")}
+          confirmText={`Are you sure you want to delete "<b>${shortText(
+            match?.title ?? "Match",
+            40,
+          )}</b>"?`}
+          escapeOnEnd
+        />
+      </ResizableContent>
     </div>
   );
 }

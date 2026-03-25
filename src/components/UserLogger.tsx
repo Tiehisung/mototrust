@@ -18,10 +18,10 @@ export default function UserLogButtons() {
           ? "/admin"
           : "";
 
-    if (user.role == "guest")
+    if (user.role == "fan")
       return (
         <div className="flex items-center gap-2.5 text-sm">
-          <p>Guest</p>
+          <p>Fan</p>
           <LogoutBtn variant={"destructive"} size={"sm"} />
         </div>
       );
