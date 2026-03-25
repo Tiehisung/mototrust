@@ -2,8 +2,6 @@ import { DisplayFixtures } from "./DisplayFixtures";
 import Header from "../../../components/Element";
 import { QuickLinks } from "@/components/QuickLinks/LinkOrSectionId";
 import { Separator } from "@/components/ui/separator";
-// import { useSearchParams } from "react-router-dom";
-
 import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

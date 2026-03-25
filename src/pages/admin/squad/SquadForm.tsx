@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { EPlayerPosition, IPlayer } from "@/types/player.interface";
+import { EPlayerPosition, IPlayer, IPlayerMini } from "@/types/player.interface";
 import {
   Card,
   CardHeader,
@@ -160,7 +160,8 @@ const SquadForm = ({
             name: `${p.firstName} ${p.lastName}`,
             position: data.positions[p._id] || p.position,
             avatar: p.avatar,
-          })),
+            number:p.number
+          } as IPlayerMini)),
         match: data.match as IMatch,
       };
 

@@ -8,6 +8,7 @@ import { AVATAR } from "./ui/avatar";
 import { logos } from "@/assets/images";
 import { useAuth } from "@/store/hooks/useAuth";
 import { Link } from "react-router-dom";
+import UserLogButtons from "./UserLogger";
 
 interface NavbarProps {
   isScrolled?: boolean;
@@ -75,7 +76,8 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 >
                   {item}
                 </Button>
-              ))}
+              ))}{" "}
+              <UserLogButtons />
             </div>
           </PrimaryDropdown>
         ) : (
@@ -89,6 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 {item}
               </button>
             ))}
+            <UserLogButtons />
           </div>
         )}
       </div>
