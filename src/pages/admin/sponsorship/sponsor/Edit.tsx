@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import BottomSheetLite from "@/components/modals/BottomSheetLite";
 import { ISponsorProps } from "@/pages/sponsorship/page";
 import { useUpdateSponsorMutation } from "@/services/sponsor.endpoints";
-import { ImageUploadWidget } from "@/components/cloudinary/AvatarUploadWidget";
+import { ImageUploadWidget } from "@/components/cloudinary/ImageUploadWidget";
 import { smartToast } from "@/utils/toast";
 
 export function EditSponsor({ sponsor }: { sponsor?: ISponsorProps }) {
@@ -45,7 +45,7 @@ export function EditSponsor({ sponsor }: { sponsor?: ISponsorProps }) {
 
       smartToast(result);
     } catch (error) {
-      smartToast({error});
+      smartToast({ error });
     } finally {
       setWaiting(false);
     }

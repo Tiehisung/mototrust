@@ -131,7 +131,7 @@ export function CloudinaryWidget({
             const file = result.info as ICloudinaryFile;
 
             setFiles((prev) => {
-              const updated = [...prev, file];
+              const updated = file?.secure_url ? [file, ...prev] : prev;
               onUploadSuccess?.(updated);
               return updated;
             });

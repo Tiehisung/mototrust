@@ -1,91 +1,58 @@
 // pages/Home.tsx or pages/index.tsx
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 
-import CardLoader from "@/components/loaders/CardLoader";
-
-import { TechnicalManagement } from "./(landing)/Management";
-import { PitchGallery } from "./(landing)/Pitch";
-import LandingSquad from "./(landing)/Squad";
+ 
 import { LiveMatchCard } from "./matches/live/Live";
-import HERO from "./(landing)/HeroSection";
 import { PageSEO } from "@/utils/PageSEO";
-import PlayerStatistics from "./statistics/Statistics";
 import LandingPlayers from "./(landing)/Players";
-import LandingFixtures from "./matches/(fixturesAndResults)/LandingFixtures";
-import TestHome from "./testHome";
+import About from "./home/About";
+import Contact from "./home/Contact";
+import Newsletter from "./home/Newsletter";
+import Hero from "./home/Hero";
+import Navbar from "@/components/Navbar";
+import { LandingSquad } from "./(landing)/Squad";
+import LandingFixtures from "./home/Fixtures";
 
 const LandingNewsHeadlines = lazy(() => import("./news/LandingNews"));
 
-const GridFallback = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {[...Array(6)].map((_, i) => (
-      <CardLoader key={i} className="h-48 w-full" />
-    ))}
-  </div>
-);
-
 export default function Home() {
-  if ("test".length) return <TestHome />;
   return (
     <>
       <PageSEO page="home" />
-
+      <Navbar />
       <main className="relative md:block space-y-10">
-        <HERO />
+        <Hero />
 
-        {/* Players Section */}
-        <section className="container mx-auto px-4">
-          <Suspense fallback={<CardLoader className="h-36 w-40 mx-auto" />}>
-            <LandingPlayers />
-          </Suspense>
-        </section>
+        <LandingPlayers />
 
-        {/* Squad Section */}
-        <section className="container mx-auto px-4">
-          <Suspense fallback={<CardLoader className="h-36 w-40 mx-auto" />}>
-            <LandingSquad />
-          </Suspense>
-        </section>
+        <LandingSquad />
 
-        {/* Live Match */}
-        <section className="container mx-auto px-4">
-          <Suspense fallback={<CardLoader className="h-36 w-40 mx-auto" />}>
-            <LiveMatchCard />
-          </Suspense>
-        </section>
+        <LiveMatchCard />
 
-        {/* Fixtures */}
-        <section className="container mx-auto px-4">
-          <Suspense fallback={<CardLoader className="h-36 w-40 mx-auto" />}>
-            <LandingFixtures />
-          </Suspense>
-        </section>
+      
 
-        {/* News */}
-        <section className="container mx-auto px-4">
-          <Suspense fallback={<CardLoader className="h-36 w-40 mx-auto" />}>
-            <LandingNewsHeadlines />
-          </Suspense>
-        </section>
+        <LandingFixtures />
 
-        {/* Pitch Gallery - Static, no suspense needed */}
-        <section className="container mx-auto px-4">
-          <PitchGallery />
-        </section>
+        <LandingNewsHeadlines />
 
-        {/* Statistics */}
-        <section className="container mx-auto px-4">
+        <About />
+
+        <Contact />
+
+        <Newsletter />
+
+        {/* 
           <Suspense fallback={<GridFallback />}>
             <PlayerStatistics />
-          </Suspense>
-        </section>
+          
+        */}
 
         {/* Technical Management */}
-        <section className="container mx-auto px-4">
-          <Suspense fallback={<CardLoader className="h-36 w-40 mx-auto" />}>
+        {/* 
+         
             <TechnicalManagement />
-          </Suspense>
-        </section>
+          
+        */}
       </main>
     </>
   );

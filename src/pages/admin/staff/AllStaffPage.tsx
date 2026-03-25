@@ -34,6 +34,8 @@ export default function AllStaffPage() {
   const { data, isLoading, isFetching, error, refetch } =
     useGetStaffMembersQuery(sp.toString());
 
+   
+
   const staff = data?.data || [];
   const pagination = data?.pagination;
 

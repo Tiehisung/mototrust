@@ -23,6 +23,7 @@ interface AvatarUploadWidgetProps {
   shape?: "circle" | "square" | "rounded";
   showUploadButton?: boolean;
   uploadButtonText?: string;
+  previewFileStyles?: string;
 }
 
 export const ImageUploadWidget = ({
@@ -36,6 +37,7 @@ export const ImageUploadWidget = ({
   shape = "circle",
   showUploadButton = true,
   uploadButtonText = "Upload Photo",
+  previewFileStyles,
 }: AvatarUploadWidgetProps) => {
   const [loaded, setLoaded] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | undefined>(
@@ -138,6 +140,7 @@ export const ImageUploadWidget = ({
             "relative overflow-hidden border-2 border-gray-200 dark:border-gray-700 shadow-md bg-gray-100 dark:bg-gray-800",
             sizeClasses[size],
             shapeClasses[shape],
+            previewFileStyles,
           )}
         >
           {previewImage ? (

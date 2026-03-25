@@ -4,9 +4,9 @@ import { _pagination, Pagination } from "@/components/pagination/Pagination";
 import { useState } from "react";
 import { SearchQueryUpdator } from "./Headers";
 import { ISelectOptionLV } from "@/types";
-import { PlayedMatchCard } from "./(fixturesAndResults)/Cards";
 import { PrimarySelect } from "@/components/select/Select";
 import { IMatch } from "@/types/match.interface";
+import { PlayedMatchCard } from "./(fixturesAndResults)/cards/Played";
 
 const MatchesSection = ({ matches }: { matches: IMatch[] }) => {
   const filters = [

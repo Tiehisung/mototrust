@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { EPlayerPosition, IPlayer } from "@/types/player.interface";
+import { EPlayerPosition, IPlayer, IPlayerMini } from "@/types/player.interface";
 import {
   Card,
   CardHeader,
@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/table";
 import { PrimarySelect } from "@/components/select/Select";
 import { Button } from "@/components/buttons/Button";
-import { IStaff } from "@/types/staff.interface";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { TextArea } from "@/components/input/Inputs";
 import { Label } from "@/components/ui/label";
@@ -31,10 +30,12 @@ import { IMatch } from "@/types/match.interface";
 import { useCreateSquadMutation } from "@/services/squad.endpoints";
 import { ISquad } from "@/types/squad.interface";
 import { smartToast } from "@/utils/toast";
+import { useGetStaffMembersQuery } from "@/services/staff.endpoints";
+import { ISelectOptionLV } from "@/types";
 
 interface IProps {
   players?: IPlayer[];
-  staff?: IStaff[];
+
   matches?: IMatch[];
   defaultMatch?: IMatch;
 }
@@ -58,9 +59,10 @@ export type IPostSquad = z.infer<typeof squadSchema>;
 const SquadForm = ({
   defaultMatch,
   players = [],
-  staff = [],
+
   matches = [],
 }: IProps) => {
+  const { data: staffData,   } = useGetStaffMembersQuery("");
   const [createSquad, { isLoading: isCreating }] = useCreateSquadMutation();
 
   const { handleSubmit, control, setValue, watch, reset } = useForm<IPostSquad>(
@@ -130,8 +132,10 @@ const SquadForm = ({
         return;
       }
 
-      const coachObj = staff?.find((m) => m._id === data.coach);
-      const assistantObj = staff?.find((m) => m._id === data.assistant);
+      const coachObj = staffData?.data?.find((m) => m._id === data.coach);
+      const assistantObj = staffData?.data?.find(
+        (m) => m._id === data.assistant,
+      );
 
       const payload: ISquad = {
         description: data.description,
@@ -156,7 +160,8 @@ const SquadForm = ({
             name: `${p.firstName} ${p.lastName}`,
             position: data.positions[p._id] || p.position,
             avatar: p.avatar,
-          })),
+            number:p.number
+          } as IPlayerMini)),
         match: data.match as IMatch,
       };
 
@@ -344,10 +349,12 @@ const SquadForm = ({
                       control={control}
                       render={({ field, fieldState }) => (
                         <PrimarySelect
-                          options={staff?.map((m) => ({
-                            label: m.fullname,
-                            value: m._id,
-                          }))}
+                          options={
+                            staffData?.data?.map((m) => ({
+                              label: m.fullname,
+                              value: m._id,
+                            })) as ISelectOptionLV[]
+                          }
                           placeholder="Coach"
                           value={field.value}
                           onChange={field.onChange}
@@ -364,10 +371,12 @@ const SquadForm = ({
                       control={control}
                       render={({ field, fieldState }) => (
                         <PrimarySelect
-                          options={staff?.map((m) => ({
-                            label: m.fullname,
-                            value: m._id,
-                          }))}
+                          options={
+                            staffData?.data?.map((m) => ({
+                              label: m.fullname,
+                              value: m._id,
+                            })) as ISelectOptionLV[]
+                          }
                           placeholder="Assistant"
                           value={field.value}
                           onChange={field.onChange}

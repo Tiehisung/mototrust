@@ -133,7 +133,7 @@ const teamApi = api.injectEndpoints({
                 method: "PUT",
                 body,
             }),
-            invalidatesTags: (_result, _error, { _id:id }) => [
+            invalidatesTags: (_result, _error, { _id: id }) => [
                 { type: 'Teams', id: 'LIST' },
                 { type: 'Teams', id },
                 { type: 'Teams', id: 'CLUB_' },
@@ -157,6 +157,7 @@ const teamApi = api.injectEndpoints({
                 { type: 'Teams', id: 'SEASON_' },
                 { type: 'Teams', id: `STATS_${id}` },
                 { type: 'Teams', id: `PLAYERS_${id}` },
+                'Teams'
             ],
         }),
 
@@ -166,14 +167,9 @@ const teamApi = api.injectEndpoints({
                 url: `/teams/${teamId}`,
                 method: "DELETE",
             }),
-            invalidatesTags: (_result, _error, teamId) => [
-                { type: 'Teams', id: 'LIST' },
-                { type: 'Teams', id: teamId },
-                { type: 'Teams', id: 'CLUB_' },
-                { type: 'Teams', id: 'SEASON_' },
-                { type: 'Teams', id: `STATS_${teamId}` },
-                { type: 'Teams', id: `PLAYERS_${teamId}` },
-            ],
+            invalidatesTags: (_result,) => ['Teams' ],
+                
+           
         }),
 
         // ADD player to team

@@ -2,8 +2,6 @@ import { DisplayFixtures } from "./DisplayFixtures";
 import Header from "../../../components/Element";
 import { QuickLinks } from "@/components/QuickLinks/LinkOrSectionId";
 import { Separator } from "@/components/ui/separator";
-// import { useSearchParams } from "react-router-dom";
-
 import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -12,7 +10,6 @@ import { useGetPlayersQuery } from "@/services/player.endpoints";
 import { useGetTeamsQuery } from "@/services/team.endpoints";
 import { IQueryResponse } from "@/types";
 import { IMatch } from "@/types/match.interface";
-import { useGetStaffMembersQuery } from "@/services/staff.endpoints";
 
 export default function AdminFixtures() {
   // const [searchParams] = useSearchParams();
@@ -29,12 +26,7 @@ export default function AdminFixtures() {
 
   const { data: players, isLoading: playersLoading } = useGetPlayersQuery("");
 
-  const { data: staff, isLoading: staffLoading } = useGetStaffMembersQuery(
-   ''
-  );
-
-  const isLoading =
-    fixturesLoading || teamsLoading || playersLoading || staffLoading;
+  const isLoading = fixturesLoading || teamsLoading || playersLoading;
 
   if (isLoading) {
     return (
@@ -72,7 +64,6 @@ export default function AdminFixtures() {
         <DisplayFixtures
           fixtures={fixtures as IQueryResponse<IMatch[]>}
           teams={teams?.data}
-          staff={staff?.data}
           players={players?.data}
         />
 

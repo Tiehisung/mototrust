@@ -12,7 +12,6 @@ import {
 } from "@/services/match.endpoints";
 
 import { smartToast } from "@/utils/toast";
-import { useGetStaffMembersQuery } from "@/services/staff.endpoints";
 
 const MatchActions = ({
   match,
@@ -28,9 +27,6 @@ const MatchActions = ({
   const status = match?.status;
   const [updateMatch] = useUpdateMatchMutation();
   const [deleteMatch] = useDeleteMatchMutation();
-
-  const { data: staffData } = useGetStaffMembersQuery('');
- 
 
   const handleStatusUpdate = async (newStatus: "LIVE" | "FT") => {
     try {
@@ -81,7 +77,6 @@ const MatchActions = ({
           >
             <SquadForm
               players={players}
-              staff={staffData?.data}
               matches={matches}
               defaultMatch={match}
             />

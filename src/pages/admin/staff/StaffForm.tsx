@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { DateTimeInput, IconInputWithLabel } from "@/components/input/Inputs";
 import { Button } from "@/components/buttons/Button";
-import { ImageUploadWidget } from "@/components/cloudinary/AvatarUploadWidget";
+import { ImageUploadWidget } from "@/components/cloudinary/ImageUploadWidget";
 import { staticImages } from "@/assets/images";
 import { smartToast } from "@/utils/toast";
 import { IStaff } from "@/types/staff.interface";
@@ -177,7 +177,6 @@ export default function StaffForm({
                 label="Fullname"
                 {...field}
                 type="text"
-                
                 className="px-2 w-52 sm:w-60 rounded font-semibold"
                 error={errors.fullname?.message}
               />
@@ -193,7 +192,6 @@ export default function StaffForm({
                 label="Phone"
                 {...field}
                 type="tel"
-                
                 className="px-2 w-52 sm:w-60 rounded font-semibold"
                 error={errors.phone?.message}
               />
@@ -209,7 +207,6 @@ export default function StaffForm({
                 label="Email"
                 {...field}
                 type="email"
-                
                 className="px-2 w-52 sm:w-60 rounded font-semibold"
                 error={errors.email?.message}
               />
@@ -225,7 +222,6 @@ export default function StaffForm({
                 label="Date Signed"
                 type="date"
                 {...field}
-                
                 className="px-2 w-52 sm:w-60 rounded font-semibold"
                 error={errors.dateSigned?.message}
               />
@@ -241,7 +237,6 @@ export default function StaffForm({
                 label="Role"
                 {...field}
                 type="text"
-                
                 className="px-2 w-52 sm:w-60 rounded font-semibold"
                 error={errors.role?.message}
               />

@@ -7,7 +7,7 @@ import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ISponsorProps } from "@/pages/sponsorship/page";
 import { useCreateSponsorMutation } from "@/services/sponsor.endpoints";
-import { ImageUploadWidget } from "@/components/cloudinary/AvatarUploadWidget";
+import { ImageUploadWidget } from "@/components/cloudinary/ImageUploadWidget";
 import { smartToast } from "@/utils/toast";
 
 export function AddNewSponsor({ sponsors }: { sponsors?: ISponsorProps[] }) {

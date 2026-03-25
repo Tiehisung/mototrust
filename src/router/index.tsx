@@ -27,6 +27,7 @@ import { EUserRole } from "@/types/user";
 import NotAuthorizedPage from "@/pages/auth/NotAuthorized";
 import PlayerDashboardPage from "@/pages/players/dashboard/page";
 import PlayerGalleriesPage from "@/pages/players/dashboard/galleries/page";
+import TopFansPage from "@/pages/TopFans";
 
 // Wrapper component for AdminLayout with ScrollToTop
 const AdminLayoutWithScrollToTop = () => (
@@ -135,6 +136,10 @@ const applicationRouter = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/fans",
+    element: <TopFansPage />,
   },
 ]);
 

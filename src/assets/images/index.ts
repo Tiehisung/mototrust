@@ -21,6 +21,13 @@ import blueCurvy from "./bg/blue-curvy-bg.png";
 import circleCheckMark from './circle-checkmark.png'
 import error from './error.png'
 import success from './success.png'
+import logoTrans from '../../logo-trans-bg.png'
+import logoWhite from '../../logo-white-bg.png'
+
+export const logos = {
+  logoWhite,
+  logoTrans,
+}
 
 export const staticImages = {
   error: error,
@@ -45,6 +52,8 @@ export const staticImages = {
   cap,
   ball,
   cards,
-  goalkeeperGloves
+  goalkeeperGloves,
+  ...logos
 
 };
+

@@ -1,4 +1,4 @@
-import { MatchFixtureCard, PlayedMatchCard } from "./Cards";
+ 
 import PrimLink from "@/components/Link";
 import { TITLE } from "@/components/Element";
 import { EMatchStatus, IMatch } from "@/types/match.interface";
@@ -6,6 +6,8 @@ import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGetMatchesQuery } from "@/services/match.endpoints";
+import { PlayedMatchCard } from "./cards/Played";
+import { MatchFixtureCard } from "./cards/Fixture";
 
 const LandingFixtures = () => {
   const {
@@ -15,7 +17,7 @@ const LandingFixtures = () => {
   } = useGetMatchesQuery({ status: EMatchStatus.FT });
 
   const { data: upcomingData, isLoading: upcomingLoading } = useGetMatchesQuery(
-    { status:   EMatchStatus.UPCOMING },
+    { status: EMatchStatus.UPCOMING },
   );
 
   const isLoading = completedLoading || upcomingLoading;
@@ -70,7 +72,7 @@ const LandingFixtures = () => {
       <section>
         <header className="flex justify-between items-center gap-6">
           <TITLE text="PLAYED FIXTURES" />
-          <PrimLink 
+          <PrimLink
             to="/matches#matches"
             text="More"
             className="_link flex items-center"
