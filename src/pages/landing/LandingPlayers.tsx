@@ -36,8 +36,7 @@ const LandingPlayers = () => {
   }
 
   return (
-    <div id="players">
-      
+    <div id="players" className=" max-w-6xl mx-auto">
       <H>Players</H>
       <ResponsiveSwiper
         swiperStyles={{ width: "100%", height: "fit-content" }}
@@ -70,7 +69,9 @@ const LandingPlayers = () => {
 
                 <br />
                 <Link to={`/players/details?playerId=${player?._id}`}>
-                  <span className="bg-primary text-white p-2 px-4">DISCOVER</span>
+                  <span className="bg-primary text-white p-2 px-4">
+                    DISCOVER
+                  </span>
                 </Link>
               </div>
             </div>

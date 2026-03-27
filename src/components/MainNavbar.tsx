@@ -31,6 +31,7 @@ export default function MainNavbar() {
     { label: "Fixtures", id: "fixtures", href: "/matches" },
     { label: "Contact", href: "/contact" },
     { label: "About", id: "about" },
+    { label: "News", href: "/news" },
   ];
 
   return (

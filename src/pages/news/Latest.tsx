@@ -4,15 +4,16 @@ import { useGetNewsQuery } from "@/services/news.endpoints";
 import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { H } from "@/components/Element";
 
 export function LatestNews() {
-  const { data: newsData, isLoading, error } = useGetNewsQuery('');
+  const { data: newsData, isLoading, error } = useGetNewsQuery("");
   const news = newsData;
 
   if (isLoading) {
     return (
       <div>
-        <div className="_heading max-sm:text-center">LATEST NEWS</div>
+        <H >LATEST NEWS</H>
         <div className="flex justify-center items-center min-h-75">
           <Loader message="Loading news..." />
         </div>
@@ -23,7 +24,7 @@ export function LatestNews() {
   if (error || !news?.data?.length) {
     return (
       <div>
-        <div className="_heading max-sm:text-center">LATEST NEWS</div>
+        <H >LATEST NEWS</H>
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No News Available</AlertTitle>
@@ -37,7 +38,7 @@ export function LatestNews() {
 
   return (
     <div>
-      <div className="_heading max-sm:text-center">LATEST NEWS</div>
+      <H>LATEST NEWS</H>
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6">
         {news?.data?.slice(0, 5)?.map((item) => (
           <NewsCard

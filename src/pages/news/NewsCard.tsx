@@ -72,13 +72,13 @@ export default function NewsCard({
 
           {/* Footer */}
           <footer className="flex items-center gap-3 pt-3 justify-between text-xs text-muted-foreground border-t">
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex items-center gap-2 ">
               <Calendar size={14} />
               {new Date(date).toLocaleDateString()}{" "}
               {`${symbols.dot} ${getTimeAgo(date)}`}
             </div>
 
-            {reactions && <div className="">{reactions} Reactions</div>}
+            {reactions && <span className="">{reactions} Reactions</span>}
           </footer>
         </div>
       </Link>

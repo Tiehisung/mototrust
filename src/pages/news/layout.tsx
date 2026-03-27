@@ -26,11 +26,9 @@ const NewsLayout: FC = () => {
         <meta property="og:image" content="/bnfc.png" />
       </Helmet>
 
-      <div className="pt-10 md:pt-20">
+      <div>
         <main className="relative grow">
-          <div className="">
-            <Breadcrumbs />
-          </div>
+          <Breadcrumbs />
           <Outlet />
         </main>
       </div>

@@ -9,7 +9,6 @@ import { TITLE } from "@/components/Element";
 import { PrimaryCollapsible } from "@/components/Collapsible";
 import { getTimeAgo } from "@/lib/timeAndDate";
 import { IAccordionProps, PrimaryAccordion } from "@/components/ui/accordion";
-import { shortText } from "@/lib";
 import { useUpdatePlayerMutation } from "@/services/player.endpoints";
 import { smartToast } from "@/utils/toast";
 import { fireEscape } from "@/hooks/Esc";
@@ -29,11 +28,7 @@ export default function UpdatePlayerIssuesAndFitness({
     try {
       const updatedIssues = [
         { title, description, date: new Date().toISOString() },
-        ...player?.issues?.map((issue) =>
-          typeof issue === "string"
-            ? { title: shortText(issue, 35), description: issue, date: "" }
-            : issue,
-        ),
+        ...player?.issues,
       ];
 
       const result = await updatePlayer({
@@ -44,7 +39,7 @@ export default function UpdatePlayerIssuesAndFitness({
       if (result.success) {
         setTitle("");
         setDescription("");
-        fireEscape()
+        fireEscape();
       }
 
       smartToast(result);

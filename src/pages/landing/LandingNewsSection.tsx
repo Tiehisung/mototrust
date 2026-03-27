@@ -108,7 +108,10 @@ const Desktop: React.FC<Props> = ({ newsItems }) => {
                     <h3 className="font-semibold text-gray-800 text-lg mb-2 group-hover:text-primary transition-colors line-clamp-3">
                       {item?.headline?.text}
                     </h3>
-                    <Link to={`/news/${item?.slug}`} className="flex items-center gap-1 text-primary text-sm font-medium">
+                    <Link
+                      to={`/news/${item?.slug}`}
+                      className="flex items-center gap-1 text-primary text-sm font-medium"
+                    >
                       <span>Read more</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Link>

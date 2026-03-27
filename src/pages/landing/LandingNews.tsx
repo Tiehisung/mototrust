@@ -43,7 +43,7 @@ const LandingNewsHeadlines = () => {
   }
 
   return (
-    <div className="">
+    <div className=" max-w-6xl mx-auto">
       <H>NEWS </H>
       <ResponsiveSwiper
         swiperStyles={{ width: "100%", height: "fit-content" }}
@@ -88,7 +88,7 @@ export const NewsInPage = ({ news }: { news: INewsProps[] }) => {
   }
 
   return (
-    <div className="relative flex items-start gap-2">
+    <div className="relative flex items-start gap-2 max-w-6xl mx-auto">
       <main className="my-5">
         {news?.map((item, index) => {
           return (

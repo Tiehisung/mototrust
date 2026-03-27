@@ -202,6 +202,8 @@ const LandingMatchSquad: React.FC<TrendingProps> = ({ className = "" }) => {
   const { data: squadsData, isLoading } = useGetSquadsQuery("");
   const squad = squadsData?.data ? squadsData?.data[0] : undefined;
 
+  console.log({squad})
+
   if (isLoading) {
     return (
       <div className="py-12 px-4 space-y-8 _page flex justify-center items-center min-h-100">
@@ -210,7 +212,7 @@ const LandingMatchSquad: React.FC<TrendingProps> = ({ className = "" }) => {
     );
   }
   return (
-    <div className={className} id='squad'>
+    <div className={`container ${className}`} id='squad'>
       <div className="hidden md:block">
         <Desktop squad={squad} />
       </div>
