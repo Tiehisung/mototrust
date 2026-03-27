@@ -2,8 +2,7 @@
 
 import { Calendar, Tag } from "lucide-react";
 import { motion } from "framer-motion";
-import { symbols } from "@/data";
-import { getTimeAgo } from "@/lib/timeAndDate";
+import { getTimeLeftOrAgo } from "@/lib/timeAndDate";
 import { Link } from "react-router-dom";
 
 interface NewsCardProps {
@@ -71,14 +70,13 @@ export default function NewsCard({
           )}
 
           {/* Footer */}
-          <footer className="flex items-center gap-3 pt-3 justify-between text-xs text-muted-foreground border-t">
-            <div className="flex items-center gap-2 pt-2">
+          <footer className="flex items-center flex-wrap gap-3 pt-3 justify-between text-xs text-muted-foreground border-t">
+            <div className="flex items-center gap-2 ">
               <Calendar size={14} />
-              {new Date(date).toLocaleDateString()}{" "}
-              {`${symbols.dot} ${getTimeAgo(date)}`}
+             {getTimeLeftOrAgo(date).formatted} 
             </div>
 
-            {reactions && <div className="">{reactions} Reactions</div>}
+            {reactions && <span className="text-nowrap">{reactions} Reactions</span>}
           </footer>
         </div>
       </Link>

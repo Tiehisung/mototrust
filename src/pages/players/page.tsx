@@ -18,7 +18,7 @@ const PlayersPage = () => {
         <HEADER
           title="Players"
           subtitle="Meet Our Gallant Players"
-          className="pt-12 text-Orange"
+         
         />
         <div className="flex justify-center items-center min-h-100">
           <Loader message="Loading players..." />
@@ -33,7 +33,7 @@ const PlayersPage = () => {
         <HEADER
           title="Players"
           subtitle="Meet Our Gallant Players"
-          className="pt-12 text-Orange"
+         
         />
         <div className="p-4">
           <Alert variant="destructive">
@@ -75,7 +75,7 @@ const PlayersPage = () => {
         <HEADER
           title="Players"
           subtitle="Meet Our Gallant Players"
-          className="pt-12 text-Orange"
+         
         />
         <OurPlayers players={players} /> 
       </div>

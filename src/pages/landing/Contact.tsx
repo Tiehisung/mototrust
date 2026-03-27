@@ -1,5 +1,9 @@
 // components/Contact.tsx
+import { Button } from "@/components/buttons/Button";
+import { Input, TextArea } from "@/components/input/Inputs";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 import React, { useState } from "react";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -16,14 +20,14 @@ const Contact: React.FC = () => {
   };
 
   const socialLinks = [
-    { icon: "facebook", color: "hover:bg-[#1877f2]" },
-    { icon: "twitter", color: "hover:bg-[#1da1f2]" },
-    { icon: "instagram", color: "hover:bg-[#e4405f]" },
-    { icon: "youtube", color: "hover:bg-[#ff0000]" },
+    { icon: <Facebook />, color: "bg-[#1877f2]" },
+    { icon: <FaXTwitter />, color: "bg-[#1da1f2]" },
+    { icon: <Instagram />, color: "bg-[#e4405f]" },
+    { icon: <Youtube />, color: "bg-[#ff0000]" },
   ];
 
   return (
-    <section id="contact" className="py-24 bg-white">
+    <section id="contact" className="py-24">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <span className="text-emerald-600 font-semibold tracking-wide uppercase text-sm">
@@ -72,52 +76,56 @@ const Contact: React.FC = () => {
             <div className="flex gap-4 pt-2">
               {socialLinks.map((social) => (
                 <a
-                  key={social.icon}
+                  key={social.color}
                   href="#"
-                  className={`w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:text-white transition-all ${social.color}`}
+                  className={`w-10 h-10 text-white/80 rounded-full flex items-center justify-center hover:text-white transition-all ${social.color}`}
                 >
-                  <i className={`fab fa-${social.icon}`}></i>
+                  {social.icon}
                 </a>
               ))}
             </div>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
+          
+          <form  onSubmit={handleSubmit} className="space-y-4">
+            <Input
               type="text"
               placeholder="Your Name"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
-              className="w-full px-5 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition-all"
+              className="w-full px-5 py-3  "
               required
+              name={"name"}
             />
-            <input
+            <Input
               type="email"
               placeholder="Email Address"
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-              className="w-full px-5 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition-all"
+              className="w-full px-5 py-3  "
               required
+              name={"email"}
             />
-            <textarea
-              rows={4}
+            <TextArea
               placeholder="Your Message"
               value={formData.message}
               onChange={(e) =>
                 setFormData({ ...formData, message: e.target.value })
               }
-              className="w-full px-5 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition-all resize-none"
+              className="w-full px-5 py-3   resize-none"
               required
-            ></textarea>
-            <button
+              name={"message"}
+            />
+            <Button
               type="submit"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg w-full"
+              size="xl"
+              className=" text-white rounded-xl font-semibold transition-all shadow-md hover:shadow-lg w-full"
             >
               Send Message
-            </button>
+            </Button>
           </form>
         </div>
       </div>

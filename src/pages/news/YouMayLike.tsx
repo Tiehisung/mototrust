@@ -5,6 +5,7 @@ import { useGetNewsQuery } from "@/services/news.endpoints";
 import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { H } from "@/components/Element";
 
 const YouMayLike = () => {
   const { data: newsData, isLoading, error } = useGetNewsQuery('');
@@ -13,7 +14,7 @@ const YouMayLike = () => {
   if (isLoading) {
     return (
       <div>
-        <h1 className="_heading">YOU MAY LIKE</h1>
+        <H >YOU MAY LIKE</H>
         <div className="flex justify-center items-center min-h-75">
           <Loader message="Loading news..." />
         </div>
@@ -24,7 +25,7 @@ const YouMayLike = () => {
   if (error || !news?.data?.length) {
     return (
       <div>
-        <h1 className="_heading">YOU MAY LIKE</h1>
+        <H >YOU MAY LIKE</H>
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No News Available</AlertTitle>
@@ -38,7 +39,7 @@ const YouMayLike = () => {
 
   return (
     <div>
-      <h1 className="_heading">YOU MAY LIKE</h1>
+      <H >YOU MAY LIKE</H>
       <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5 gap-y-10 mt-5">
         {news?.data?.slice(0, 6)?.map((item, index) => (
           <AnimateOnView key={item._id} index={index}>

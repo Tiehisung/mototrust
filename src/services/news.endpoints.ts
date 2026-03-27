@@ -9,13 +9,8 @@ const newsApi = api.injectEndpoints({
         // GET all news (with pagination, filtering)
         getNews: builder.query<IQueryResponse<INewsProps[]>, string>({
             query: (paramsString = '') => `/news?${paramsString}`,
-            providesTags: (result) =>
-                result?.data
-                    ? [
-                        ...result.data.map(({ _id }) => ({ type: 'News' as const, id: _id })),
-                        { type: 'News', id: 'LIST' },
-                    ]
-                    : [{ type: 'News', id: 'LIST' }],
+            providesTags: ['News'],
+
         }),
 
         // GET trending news (most viewed/liked)
@@ -24,7 +19,7 @@ const newsApi = api.injectEndpoints({
                 url: "/news/trending",
                 params: { limit: params?.limit || 5 },
             }),
-            providesTags: [{ type: 'News', id: 'TRENDING' }],
+            providesTags: ['News'],
         }),
 
         // GET latest news
@@ -33,7 +28,7 @@ const newsApi = api.injectEndpoints({
                 url: "/news/latest",
                 params: { limit: params?.limit || 5 },
             }),
-            providesTags: [{ type: 'News', id: 'LATEST' }],
+            providesTags: ['News'],
         }),
 
         // GET news by category
@@ -46,15 +41,13 @@ const newsApi = api.injectEndpoints({
                 url: `/news/category/${category}`,
                 params: { page, limit },
             }),
-            providesTags: (_result, _error, { category }) => [
-                { type: 'News', id: `CATEGORY_${category}` },
-            ],
+            providesTags: ['News']
         }),
 
         // GET news by slug
         getNewsItem: builder.query<IQueryResponse<INewsProps>, string>({
             query: (slug) => `/news/${slug}`,
-            providesTags: (_result, _error, slug) => [{ type: 'News', id: slug }],
+            providesTags: ['News']
         }),
 
         // GET news stats (views, likes, shares)
@@ -69,7 +62,7 @@ const newsApi = api.injectEndpoints({
                 url: "/news/stats",
                 params,
             }),
-            providesTags: [{ type: 'News', id: 'STATS' }],
+            providesTags: ['News'],
         }),
 
         // CREATE news article
@@ -79,12 +72,7 @@ const newsApi = api.injectEndpoints({
                 method: "POST",
                 body,
             }),
-            invalidatesTags: [
-                { type: 'News', id: 'LIST' },
-                { type: 'News', id: 'LATEST' },
-                { type: 'News', id: 'TRENDING' },
-                { type: 'News', id: 'STATS' },
-            ],
+            invalidatesTags: ['News'],
         }),
 
         // UPDATE news article (full update - PUT)
@@ -94,12 +82,7 @@ const newsApi = api.injectEndpoints({
                 method: "PUT",
                 body,
             }),
-            invalidatesTags: (_result, _error, { _id: id }) => [
-                { type: 'News', id: 'LIST' },
-                { type: 'News', id },
-                { type: 'News', id: 'LATEST' },
-                { type: 'News', id: 'TRENDING' },
-            ],
+            invalidatesTags: ['News']
         }),
 
         // PATCH news article (partial update)
@@ -109,12 +92,7 @@ const newsApi = api.injectEndpoints({
                 method: "PATCH",
                 body,
             }),
-            invalidatesTags: (_result, _error, { id }) => [
-                { type: 'News', id: 'LIST' },
-                { type: 'News', id },
-                { type: 'News', id: 'LATEST' },
-                { type: 'News', id: 'TRENDING' },
-            ],
+            invalidatesTags: ['News']
         }),
 
         // TOGGLE publish status (publish/unpublish)
@@ -128,12 +106,7 @@ const newsApi = api.injectEndpoints({
                 method: "PATCH",
                 body: { publish, scheduledDate },
             }),
-            invalidatesTags: (_result, _error, { id }) => [
-                { type: 'News', id: 'LIST' },
-                { type: 'News', id },
-                { type: 'News', id: 'LATEST' },
-                { type: 'News', id: 'TRENDING' },
-            ],
+            invalidatesTags: ['News']
         }),
 
         // LIKE news article
@@ -142,11 +115,7 @@ const newsApi = api.injectEndpoints({
                 url: `/news/${newsId}/like`,
                 method: "POST",
             }),
-            invalidatesTags: (_result, _error, newsId) => [
-                { type: 'News', id: newsId },
-                { type: 'News', id: 'TRENDING' },
-                { type: 'News', id: 'STATS' },
-            ],
+            invalidatesTags: ['News']
         }),
 
         // UNLIKE news article
@@ -155,11 +124,7 @@ const newsApi = api.injectEndpoints({
                 url: `/news/${newsId}/unlike`,
                 method: "POST",
             }),
-            invalidatesTags: (_result, _error, newsId) => [
-                { type: 'News', id: newsId },
-                { type: 'News', id: 'TRENDING' },
-                { type: 'News', id: 'STATS' },
-            ],
+            invalidatesTags: ['News']
         }),
 
         // SHARE news article
@@ -172,11 +137,7 @@ const newsApi = api.injectEndpoints({
                 method: "POST",
                 body: { platform },
             }),
-            invalidatesTags: (_result, _error, { newsId }) => [
-                { type: 'News', id: newsId },
-                { type: 'News', id: 'TRENDING' },
-                { type: 'News', id: 'STATS' },
-            ],
+            invalidatesTags: ['News']
         }),
 
         // DELETE news article
@@ -185,13 +146,7 @@ const newsApi = api.injectEndpoints({
                 url: `/news/${newsId}`,
                 method: "DELETE",
             }),
-            invalidatesTags: (_result, _error, newsId) => [
-                { type: 'News', id: 'LIST' },
-                { type: 'News', id: 'LATEST' },
-                { type: 'News', id: 'TRENDING' },
-                { type: 'News', id: newsId },
-                { type: 'News', id: 'STATS' },
-            ],
+            invalidatesTags: ['News']
         }),
 
         // BULK DELETE news articles
@@ -201,12 +156,7 @@ const newsApi = api.injectEndpoints({
                 method: "POST",
                 body: { newsIds },
             }),
-            invalidatesTags: [
-                { type: 'News', id: 'LIST' },
-                { type: 'News', id: 'LATEST' },
-                { type: 'News', id: 'TRENDING' },
-                { type: 'News', id: 'STATS' },
-            ],
+            invalidatesTags: ['News']
         }),
 
         // GET related news
@@ -218,9 +168,7 @@ const newsApi = api.injectEndpoints({
                 url: `/news/${newsId}/related`,
                 params: { limit: limit || 3 },
             }),
-            providesTags: (_result, _error, { newsId }) => [
-                { type: 'News', id: `RELATED_${newsId}` },
-            ],
+            providesTags: ['News']
         }),
 
         // GET news by author
@@ -233,9 +181,7 @@ const newsApi = api.injectEndpoints({
                 url: `/news/author/${authorId}`,
                 params: { page, limit },
             }),
-            providesTags: (_result, _error, { authorId }) => [
-                { type: 'News', id: `AUTHOR_${authorId}` },
-            ],
+            providesTags: ['News']
         }),
 
         // INCREMENT view count
@@ -244,11 +190,7 @@ const newsApi = api.injectEndpoints({
                 url: `/news/${newsId}/view`,
                 method: "POST",
             }),
-            invalidatesTags: (_result, _error, newsId) => [
-                { type: 'News', id: newsId },
-                { type: 'News', id: 'TRENDING' },
-                { type: 'News', id: 'STATS' },
-            ],
+            invalidatesTags: ['News']
         }),
     }),
 });

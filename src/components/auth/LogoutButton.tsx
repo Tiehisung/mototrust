@@ -32,6 +32,7 @@ export const LogoutBtn = ({
       waiting={isLoading}
       primaryText={text}
       waitingText=""
+      title='Sign Out'
     >
       {children ?? <LogOut className="w-4 h-4 " />}
     </Button>

@@ -9,11 +9,19 @@ export function scrollToElement(elementId: string) {
     }, 10)
 }
 
+export const scrollToSection = (id?: string) => {
+    if (!id) return
+    const element = document.getElementById(id);
+    if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+    }
+};
+
 export const toggleClick = (id?: string) => {
-  setTimeout(() => {
-    const doc = document.getElementById(id as string);
-    if (doc) doc.click();
-  }, 1);
+    setTimeout(() => {
+        const doc = document.getElementById(id as string);
+        if (doc) doc.click();
+    }, 1);
 };
 
 export function pathnameToLinks(

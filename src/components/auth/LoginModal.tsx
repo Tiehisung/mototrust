@@ -26,7 +26,7 @@ const LoginController = ({
       trigger={trigger}
       title={"Login to continue"}
       id="login-controller"
-      variant={variant}
+      variant={variant}  
     >
       {/* <LoginBtn
         text={text}

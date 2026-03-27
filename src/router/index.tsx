@@ -5,7 +5,7 @@ import { adminRoutes } from "./admin.routes";
 import ScrollToTop from "@/utils/ScrollToTop";
 import TestPage from "@/pages/test/page";
 import SponsorsPage from "@/pages/sponsorship/page";
-import Contact from "@/pages/contact-us/page";
+import ContactPage from "@/pages/contact-us/page";
 import MatchHighlightsPage from "@/pages/highlights/page";
 import GalleryPage from "@/pages/gallery/page";
 import MatchesPage from "@/pages/matches/page";
@@ -16,7 +16,6 @@ import HomeLayout from "@/pages/Layout";
 
 // Admin
 import AdminLayout from "@/pages/admin/layout";
-import Home from "@/pages/Home";
 import PlayerProfilePage from "@/pages/players/details/page";
 import NewsLayout from "@/pages/news/layout";
 import NewsItemPage from "@/pages/news/newsItem/page";
@@ -28,6 +27,8 @@ import NotAuthorizedPage from "@/pages/auth/NotAuthorized";
 import PlayerDashboardPage from "@/pages/players/dashboard/page";
 import PlayerGalleriesPage from "@/pages/players/dashboard/galleries/page";
 import TopFansPage from "@/pages/TopFans";
+import LandingPage from "@/pages/LandingPage";
+import LatestMatchSquadPage from "@/pages/squad/Squad";
 
 // Wrapper component for AdminLayout with ScrollToTop
 const AdminLayoutWithScrollToTop = () => (
@@ -44,7 +45,7 @@ const applicationRouter = createBrowserRouter([
     element: <HomeLayout />,
 
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <LandingPage /> },
       {
         path: "news",
         element: <NewsLayout />,
@@ -56,6 +57,10 @@ const applicationRouter = createBrowserRouter([
       {
         path: "users",
         element: <UsersPage />,
+      },
+      {
+        path: "squad",
+        element: <LatestMatchSquadPage />,
       },
       {
         path: "players",
@@ -96,7 +101,7 @@ const applicationRouter = createBrowserRouter([
       },
       {
         path: "contact",
-        element: <Contact />,
+        element: <ContactPage />,
       },
       {
         path: "join-us",

@@ -248,7 +248,7 @@ export function NewsReactions({ newsItem }: { newsItem: INewsProps }) {
               </div>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: shortText(com?.comment ?? "Hi", maxLength),
+                  __html: shortText(com?.comment, maxLength) || "",
                 }}
                 className="border border-border rounded-2xl p-3 -ml-6 mt-4 _p text-wrap wrap-break-word max-sm:max-w-60 max-w-3/4 overflow-x-auto"
               />

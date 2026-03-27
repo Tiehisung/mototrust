@@ -56,7 +56,7 @@ export function TextArea({
   }, [value]);
   return (
     <div className={`relative w-full group ${wrapperStyles}`} title={dataTip}>
-      {(animate && label) ? (
+      {animate && label ? (
         <label
           htmlFor={name}
           className={`absolute transition-all duration-200 ease-linear delay-0 select-none ${
@@ -82,7 +82,10 @@ export function TextArea({
         onChange={(e) => {
           onChange(e);
         }}
-        className={cn(`outline-none border _borderColor focus:border-border shadow-teal-100/50 rounded px-2 w-full min-h-20 `,className)}
+        className={cn(
+          `bg-background outline-none border _borderColor focus:border-primary shadow-teal-100/50 rounded px-2 w-full min-h-20 focus:outline-none focus:ring-2 focus:ring-primary`,
+          className,
+        )}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(value ? true : false)}
         {...others}
@@ -138,7 +141,7 @@ export function Input({
         className={` transition-all duration-200 ease-linear delay-0 select-none _label text-muted-foreground ${labelStyles}`}
       >
         {label}
-      </Label >
+      </Label>
       <input
         name={name}
         id={name}
@@ -152,7 +155,7 @@ export function Input({
             ? placeholder.substring(0, 27) + "..."
             : placeholder
         }
-        className={`bg-background text-secondary-foreground outline-none border border-border focus:border-teal-500 shadow-teal-100/50 h-9 rounded px-2 w-full placeholder:line-clamp-1 _slowTrans ${className}`}
+        className={`bg-background text-secondary-foreground outline-none border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary shadow-teal-100/50 h-9 rounded px-2 w-full placeholder:line-clamp-1 _slowTrans ${className}`}
         {...others}
         required={required}
       />

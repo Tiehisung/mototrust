@@ -9,6 +9,7 @@ import { logos } from "@/assets/images";
 import { useAuth } from "@/store/hooks/useAuth";
 import { Link } from "react-router-dom";
 import UserLogButtons from "./UserLogger";
+import { scrollToSection } from "@/lib/dom";
 
 interface NavbarProps {
   isScrolled?: boolean;
@@ -29,12 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+   
 
   const isMobile = useIsMobile("md");
   return (

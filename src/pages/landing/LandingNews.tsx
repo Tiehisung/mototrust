@@ -1,13 +1,12 @@
 import { broadcasters } from "@/assets/broadcaster/broadcaster";
 import { Reveal } from "@/components/Animate/Reveal";
 import { INewsProps } from "@/types/news.interface";
-import { TITLE } from "@/components/Element";
-import { PiNewspaperLight } from "react-icons/pi";
+import { H } from "@/components/Element";
 import { useGetNewsQuery } from "@/services/news.endpoints";
 import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import NewsCard from "./NewsCard";
+import NewsCard from "../news/NewsCard";
 import { markupToPlainText } from "@/lib/dom";
 import { ResponsiveSwiper } from "@/components/carousel/ResponsiveSwiper";
 
@@ -19,8 +18,8 @@ const LandingNewsHeadlines = () => {
 
   if (isLoading) {
     return (
-      <div className="_page">
-        <TITLE icon={<PiNewspaperLight />} text="News" />
+      <div className="">
+        <H>NEWS </H>
         <div className="flex justify-center items-center min-h-50">
           <Loader message="Loading news..." />
         </div>
@@ -30,8 +29,8 @@ const LandingNewsHeadlines = () => {
 
   if (error || !news?.data?.length) {
     return (
-      <div className="_page">
-        <TITLE icon={<PiNewspaperLight />} text="News" />
+      <div className="">
+        <H>NEWS </H>
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No News Available</AlertTitle>
@@ -44,9 +43,8 @@ const LandingNewsHeadlines = () => {
   }
 
   return (
-    <div className="_page">
-      <TITLE icon={<PiNewspaperLight />} text="News" />
-      <br />
+    <div className=" max-w-6xl mx-auto">
+      <H>NEWS </H>
       <ResponsiveSwiper
         swiperStyles={{ width: "100%", height: "fit-content" }}
         slideStyles={{ borderRadius: "0" }}
@@ -90,7 +88,7 @@ export const NewsInPage = ({ news }: { news: INewsProps[] }) => {
   }
 
   return (
-    <div className="relative flex items-start gap-2">
+    <div className="relative flex items-start gap-2 max-w-6xl mx-auto">
       <main className="my-5">
         {news?.map((item, index) => {
           return (
