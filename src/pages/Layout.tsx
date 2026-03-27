@@ -1,19 +1,21 @@
 import { Toaster } from "sonner";
 // import FooterCP from "@/components/footer/FooterCp";
-import HeaderCp from "@/components/HeaderCp";
+// import HeaderCp from "@/components/HeaderCp";
 import BackToTopButton from "@/components/scroll/ToTopBtn";
 
 import { Swinger } from "@/components/Animate/Swing";
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "@/utils/ScrollToTop";
 import Footer from "./home/Footer";
+import MainNavbar from "../components/MainNavbar";
 
 export default function HomeLayout() {
   return (
-    <main>
+    <main className="relative">
       <ScrollToTop />
-      <HeaderCp />
-      <div className={`min-h-screen overflow-x-hidden pt-20`}>
+      {/* <HeaderCp />  */}
+      <MainNavbar />
+      <div className={`min-h-screen overflow-x-hidden px-4`}>
         <Outlet />
         <Swinger className="fixed bottom-6 right-6 z-30">
           <BackToTopButton />

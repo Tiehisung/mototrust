@@ -48,22 +48,22 @@ const About: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <img
-              src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=600&q=80"
+              src="https://res.cloudinary.com/djzfztrig/image/upload/v1774595311/assets-storage/k2ettykinlreegktkcth.jpg"
               alt="Football action"
               className="rounded-2xl w-full h-48 object-cover shadow-md"
             />
             <img
-              src="https://images.unsplash.com/photo-1577223625816-7546f13df25d?auto=format&fit=crop&w=600&q=80"
+              src="https://res.cloudinary.com/djzfztrig/image/upload/v1774595622/assets-storage/wt34apgcmz6rq04popyo.jpg"
               alt="Fans cheering"
               className="rounded-2xl w-full h-48 object-cover mt-8 shadow-md"
             />
             <img
-              src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=600&q=80"
+              src="https://res.cloudinary.com/djzfztrig/image/upload/v1774595643/assets-storage/obhaffhmsy4ssjmbw2e2.jpg"
               alt="Stadium"
               className="rounded-2xl w-full h-48 object-cover shadow-md"
             />
             <img
-              src="https://images.unsplash.com/photo-1522778119026-d364f97c3a8d?auto=format&fit=crop&w=600&q=80"
+              src="https://res.cloudinary.com/djzfztrig/image/upload/v1774595545/assets-storage/r3rjmb1fao5q5xz4by4u.jpg"
               alt="Team celebration"
               className="rounded-2xl w-full h-48 object-cover mt-8 shadow-md"
             />

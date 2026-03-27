@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/store/hooks/useAuth";
 import LoginController from "./auth/LoginModal";
 import { LogoutBtn } from "./auth/LogoutButton";
+import { UserCircle } from "lucide-react";
+import { getInitials } from "@/lib";
 
 export default function UserLogButtons() {
   const { user, isLoading } = useAuth();
@@ -31,13 +33,16 @@ export default function UserLogButtons() {
         <Link
           to={path}
           className="hidden md:block border _borderColor hover:ring rounded px-2 py-1 h-full"
+          title='Go to dashboard'
         >
-          {user?.name?.split(" ")?.[0] ?? "Dashboard"}
+          {getInitials(user?.name) ?? "Dashboard"}
         </Link>
 
-        <LogoutBtn variant={"destructive"} size={"sm"} />
+        <LogoutBtn variant={"delete"} size={"sm"} />
       </div>
     );
   }
-  return <LoginController trigger="Sign In" />;
+  return (
+    <LoginController trigger={<UserCircle className="min-h-5 min-w-5 " />} />
+  );
 }

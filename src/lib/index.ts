@@ -10,8 +10,8 @@ export const bytesToMB = (bytes: number): number => {
   return Number((bytes / (1024 * 1024)).toFixed(2));
 };
 
-export const shortText = (text: string, maxLength = 30) =>
-  text?.length >= maxLength ? `${text.substring(0, maxLength)}...` : text;
+export const shortText = (text?: string, maxLength = 30) =>
+  (text?.length || 0) >= maxLength ? `${text?.substring(0, maxLength)}...` : text;
 
 
 export const getRandomIndex = (length: number) =>

@@ -20,6 +20,7 @@
     "@fontsource/oswald": "^5.2.8",
     "@fontsource/roboto": "^5.2.9",
     "@fontsource/titillium-web": "^5.2.8",
+    "@headlessui/react": "^2.2.9",
     "@hookform/resolvers": "^5.2.2",
     "@react-pdf/renderer": "^4.3.2",
     "@reduxjs/toolkit": "^2.11.2",

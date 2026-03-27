@@ -1,19 +1,19 @@
-import { useGetSquadsQuery } from "@/services/squad.endpoints";
 import Loader from "@/components/loaders/Loader";
 import { getInitials } from "@/lib";
- 
+import { useGetSquadsQuery } from "@/services/squad.endpoints";
+
  
 
-export const LandingSquad: React.FC = () => {
-  const { data: squadsData, isLoading,   } = useGetSquadsQuery("");
+export default function LatestMatchSquadPage() {
+ const { data: squadsData, isLoading } = useGetSquadsQuery("");
   const squad = squadsData?.data ? squadsData.data[0] : null;
-    if (isLoading) {
-      return (
-        <div className="py-12 px-4 space-y-8 _page flex justify-center items-center min-h-100">
-          <Loader message="Loading squad..." />
-        </div>
-      );
-    }
+  if (isLoading) {
+    return (
+      <div className="py-12 px-4 space-y-8 _page flex justify-center items-center min-h-100">
+        <Loader message="Loading squad..." />
+      </div>
+    );
+  }
   return (
     <section id="squad" className="py-24 bg-white">
       <div className="container mx-auto px-4 md:px-6">
@@ -43,7 +43,7 @@ export const LandingSquad: React.FC = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                 />
                 <div className="absolute top-3 left-3 bg-emerald-600 uppercase text-white font-bold w-10 h-10 rounded-full flex items-center justify-center shadow-md">
-                  {player?.number || getInitials(player?.position?.split(' '))}
+                  {player?.number || getInitials(player?.position?.split(" "))}
                 </div>
               </div>
               <div className="p-4 text-center">

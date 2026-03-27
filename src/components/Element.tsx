@@ -10,27 +10,23 @@ export default function HEADER({
   subtitle,
   title,
   children,
-  className = "text-Orange",
-  isPage = true,
+  className = "",
 }: {
   title?: ReactNode;
   subtitle?: string;
   className?: string;
   children?: ReactNode;
-  isPage?: boolean;
 }) {
   return (
     <header
       className={cn(
-        `border-b border-border bg-linear-to-r from-primary dark:from-Blue/45 via-primary/60 to-primary/90 dark:to-Blue/20 grow pb-6 pt-12 px-4`,
+        `border-b border-border grow pb-6 pt-12 px-4`,
         "font-noto-sans-georgian", // Using the font class
         className,
       )}
     >
-      <div className={`mx-auto ${isPage ? "_page" : ""}`}>
-        <div className="text-3xl md:text-4xl lg:text-5xl font-bold my-4">
-          {title}
-        </div>
+      <div className={`mx-auto`}>
+        <H>{title}</H>
         {subtitle && <div className={`font-light`}>{subtitle}</div>}
       </div>
       <div>{children}</div>
@@ -59,6 +55,14 @@ export function TITLE({ text, icon }: IProps) {
       >
         {text}
       </h1>
+    </div>
+  );
+}
+
+export function H({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-2 my-6 font-semibold text-3xl tracking-wide">
+      {children}
     </div>
   );
 }

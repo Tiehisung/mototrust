@@ -67,7 +67,7 @@ body {
 
 :root {
   /* Brand Colors */
-  --red: rgb(255, 107, 107);
+  --red: #ff0000;
   --green: #096;
   --blue: #1475e1;
   --arsh: #ddd9d9;
@@ -76,7 +76,7 @@ body {
   --modal-overlay: #00000080;
 
   /* Base */
-  --background: #ffffff;
+  --background: #f6f6f6;
   --foreground: #071d2a;
 
   /* Roundedness */
@@ -90,7 +90,7 @@ body {
   --popover-foreground: #071d2a;
 
   /* Primary Buttons / Highlights (Teal-ish Navy) */
-  --primary: #213743;
+  --primary: #c6a763;
   --primary-foreground: #f6f7f8;
 
   /* Secondary Buttons */
@@ -106,7 +106,7 @@ body {
   --accent-foreground: #213743;
 
   /* Destructive */
-  --destructive: #ff6b6b;
+  --destructive: #ff0000;
   --destructive-foreground: white;
 
   /* Borders */

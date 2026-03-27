@@ -31,7 +31,7 @@ export default function UsersPage() {
             </h1>
           }
           subtitle="View and manage users authenticated via Google or Credentials"
-          isPage
+          
           className="flex flex-wrap items-center justify-between gap-6 text-Orange"
         >
           <button className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">
@@ -57,7 +57,7 @@ export default function UsersPage() {
             </h1>
           }
           subtitle="View and manage users authenticated via Google or Credentials"
-          isPage
+          
           className="flex flex-wrap items-center justify-between gap-6 text-Orange"
         >
           <button className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">
@@ -88,7 +88,7 @@ export default function UsersPage() {
           </h1>
         }
         subtitle="View and manage users authenticated via Google or Credentials"
-        isPage
+        
         className="flex flex-wrap items-center justify-between gap-6 text-Orange"
       >
         <button className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">

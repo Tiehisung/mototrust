@@ -1,3 +1,4 @@
+import { LucideProps } from "lucide-react";
 import { IFileProps } from "./file.interface";
 import { IUser } from "./user";
 
@@ -51,4 +52,33 @@ export interface IPostNews {
 
   };
   sponsor?: Partial<IFileProps>;
+}
+
+export interface INewsItem {
+  _id: string | number;
+  title: string;
+  image: string;
+  category: string;
+  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+  slug?: string;
+  excerpt?: string;
+  date?: string;
+  author?: string;
+}
+export interface INewsSection {
+  tag?: string
+  mainImage: string;
+  title: string;
+  subtitle: string;
+  items: {
+    _id: string | number;
+    title: string;
+    image: string;
+    category: string;
+    icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+    slug?: string;
+    excerpt?: string;
+    date?: string;
+    author?: string;
+  }[];
 }
