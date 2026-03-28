@@ -127,34 +127,34 @@ body {
 
 .dark {
   /* Base */
-  --background: #0c1a23;
+  --background: #3c3c3c;
   --foreground: #f6f7f8;
 
   /* Surfaces */
-  --card: #15232c;
+  --card: #1f1f1f;
   --card-foreground: #f6f7f8;
 
-  --popover: #182a35;
+  --popover: #3c3c3c;
   --popover-foreground: #f6f7f8;
 
   /* Primary */
-  --primary: #0f212e;
+  --primary: #0078d4;
   --primary-foreground: #ffffff;
 
   /* Secondary */
-  --secondary: #1c2e3a;
+  --secondary: #7a8192;
   --secondary-foreground: #d7e0e7;
 
   /* Muted */
   --muted: #1a2a36;
-  --muted-foreground: #8ea2b5;
+  --muted-foreground: #b7b7b7;
 
   /* Accent */
   --accent: #1e3240;
   --accent-foreground: #f6f7f8;
 
   /* Destructive */
-  --destructive: #ff6b6b;
+  --destructive: #ff0000;
   --destructive-foreground: white;
 
   /* Borders / Inputs */

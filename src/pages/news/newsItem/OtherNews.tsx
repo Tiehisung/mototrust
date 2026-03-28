@@ -1,14 +1,10 @@
- 
-
 import { INewsProps } from "@/types/news.interface";
 import { AnimateOnView } from "@/components/Animate/AnimateOnView";
 import { IQueryResponse } from "@/types";
- 
 
 import { RxVideo } from "react-icons/rx";
 import TableLoader from "@/components/loaders/Table";
 import { Link, useLocation, useParams } from "react-router-dom";
- 
 
 export default function OtherAdminNews({
   news,
@@ -25,7 +21,9 @@ export default function OtherAdminNews({
       ) : (
         others?.map((item, index) => (
           <AnimateOnView key={item._id} index={index}>
-            <Link to={`${isAdmin ? "/admin" : ""}/news/${item?._id}`}>
+            <Link
+              to={`${isAdmin ? "/admin" : ""}/news/${item?.slug || item?._id}`}
+            >
               <div className="w-full overflow-hidden group relative">
                 <img
                   src={item?.headline?.image as string}

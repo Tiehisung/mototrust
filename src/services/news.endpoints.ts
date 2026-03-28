@@ -50,20 +50,7 @@ const newsApi = api.injectEndpoints({
             providesTags: ['News']
         }),
 
-        // GET news stats (views, likes, shares)
-        getNewsStats: builder.query<IQueryResponse<{
-            totalViews: number;
-            totalLikes: number;
-            totalShares: number;
-            averageReadTime: number;
-            topCategories: Array<{ category: string; count: number }>;
-        }>, { startDate?: string; endDate?: string }>({
-            query: (params) => ({
-                url: "/news/stats",
-                params,
-            }),
-            providesTags: ['News'],
-        }),
+
 
         // CREATE news article
         createNews: builder.mutation<IQueryResponse<INewsProps>, Partial<IPostNews>>({
@@ -192,6 +179,83 @@ const newsApi = api.injectEndpoints({
             }),
             invalidatesTags: ['News']
         }),
+
+        // Update views
+        updateNewsViews: builder.mutation<IQueryResponse<{ views: number }>, IInteractionPayload>({
+            query: ({ newsId, ...body }) => ({
+                url: `/news/${newsId}/views`,
+                method: "PATCH",
+                body,
+            }),
+            invalidatesTags: (_result, _error, { newsId }) => [{ type: "News", id: newsId }, 'News'],
+        }),
+
+        // Update comments
+        updateNewsComments: builder.mutation<
+            IQueryResponse<{ comments: any[]; totalComments: number }>,
+            UpdateCommentPayload
+        >({
+            query: ({ newsId, ...body }) => ({
+                url: `/news/${newsId}/comments`,
+                method: "PATCH",
+                body,
+            }),
+            invalidatesTags: (_result, _error, { newsId }) => [{ type: "News", id: newsId }, 'News'],
+        }),
+
+        // Delete comment
+        deleteNewsComment: builder.mutation<IQueryResponse<{ totalComments: number }>, DeleteCommentPayload>({
+            query: ({ newsId, ...body }) => ({
+                url: `/news/${newsId}/comments`,
+                method: "DELETE",
+                body,
+            }),
+            invalidatesTags: (_result, _error, { newsId }) => [{ type: "News", id: newsId }, 'News'],
+        }),
+
+        // Update shares
+        updateNewsShares: builder.mutation<IQueryResponse<{ shares: number }>, IInteractionPayload>({
+            query: ({ newsId, ...body }) => ({
+                url: `/news/${newsId}/shares`,
+                method: "PATCH",
+                body,
+            }),
+            invalidatesTags: (_result, _error, { newsId }) => [{ type: "News", id: newsId }, 'News'],
+        }),
+
+        // Update likes (NEW)
+        updateNewsLikes: builder.mutation<IQueryResponse<{ liked: boolean; likes: number }>, UpdateLikePayload>({
+            query: ({ newsId, ...body }) => ({
+                url: `/news/${newsId}/likes`,
+                method: "PATCH",
+                body,
+            }),
+            invalidatesTags: (_result, _error, { newsId }) => [{ type: "News", id: newsId }, 'News'],
+        }),
+
+        // Get news stats
+        getNewsStats: builder.query<
+            IQueryResponse<{ views: number; comments: number; shares: number; likes: number }>,
+            string
+        >({
+            query: (newsId) => `/news/${newsId}/stats`,
+            providesTags: (_result, _error, newsId) => [{ type: "News", id: newsId }, 'News'],
+        }),
+
+        // GET news stats (views, likes, shares)
+        // getNewsStats: builder.query<IQueryResponse<{
+        //     totalViews: number;
+        //     totalLikes: number;
+        //     totalShares: number;
+        //     averageReadTime: number;
+        //     topCategories: Array<{ category: string; count: number }>;
+        // }>, { startDate?: string; endDate?: string }>({
+        //     query: (params) => ({
+        //         url: "/news/stats",
+        //         params,
+        //     }),
+        //     providesTags: ['News'],
+        // }),
     }),
 });
 
@@ -217,7 +281,11 @@ export const {
     useDeleteNewsMutation,
     useBulkDeleteNewsMutation,
     useIncrementViewCountMutation,
-
+    useUpdateNewsViewsMutation,
+    useUpdateNewsCommentsMutation,
+    useDeleteNewsCommentMutation,
+    useUpdateNewsSharesMutation,
+    useUpdateNewsLikesMutation,
     // Lazy queries
     useLazyGetNewsQuery,
     useLazyGetTrendingNewsQuery,
@@ -228,3 +296,31 @@ export const {
 
 // Export the API for use in store
 export default newsApi;
+
+interface IInteractionPayload {
+    newsId: string;
+    userId: string
+    deviceId: string;
+}
+
+interface UpdateCommentPayload {
+    newsId: string;
+    userId?: string;
+    comment: string;
+}
+
+
+
+interface DeleteCommentPayload {
+    newsId: string;
+    userId?: string;
+    commentId: string;
+    isAdmin?: boolean;
+}
+interface UpdateLikePayload {
+    newsId: string;
+    userId?: string;
+    deviceId: string;
+    isLike?: boolean;
+}
+

@@ -26,7 +26,7 @@ interface ClickButtonProps extends ButtonProps {
 export function Button({
   primaryText,
   waiting = false,
-  waitingText = "Processing...",
+  waitingText = "",
   className = "",
   disabled = false,
   type = "button",

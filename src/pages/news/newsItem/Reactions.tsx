@@ -1,11 +1,9 @@
 import { Button } from "@/components/buttons/Button";
-import { INewsProps } from "@/types/news.interface";
-import { ThumbsUp, SendHorizontal, ThumbsDown } from "lucide-react";
-import { ActionButton } from "@/components/buttons/ActionButton";
-import { apiConfig } from "@/lib/configs";
+import { IComment, INewsProps } from "@/types/news.interface";
+import { ThumbsUp, ThumbsDown, Trash } from "lucide-react";
 import { POPOVER } from "@/components/ui/popover";
 import SocialShare from "@/components/SocialShare";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { staticImages } from "@/assets/images";
 import { LiaCommentSolid } from "react-icons/lia";
 import { IoShareSocial } from "react-icons/io5";
@@ -13,124 +11,88 @@ import { AVATAR } from "@/components/ui/avatar";
 import { getTimeLeftOrAgo } from "@/lib/timeAndDate";
 import { shortText } from "@/lib";
 import { BsDot } from "react-icons/bs";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { DIALOG } from "@/components/Dialog";
-import QuillEditor from "@/components/editor/Quill";
-import { fireEscape } from "@/hooks/Esc";
 import { getDeviceId } from "@/lib/device";
 import { icons } from "@/assets/icons/icons";
 import LoginController from "@/components/auth/LoginModal";
-import { useUpdateNewsMutation } from "@/services/news.endpoints";
-import { toggleClick, markupToPlainText } from "@/lib/dom";
-import { smartToast } from "@/utils/toast";
-import { RtkActionButton } from "@/components/buttons/ActionButtonRTK";
-import { useAppSelector } from "@/store/hooks/store";
+import {
+  useDeleteNewsCommentMutation,
+  useGetNewsStatsQuery,
+  useUpdateNewsSharesMutation,
+  useUpdateNewsViewsMutation,
+  useUpdateNewsLikesMutation,
+} from "@/services/news.endpoints";
+import { toggleClick,   } from "@/lib/dom";
+import { useAuth } from "@/store/hooks/useAuth";
+import CommentForm from "./Comment";
 
-export function NewsReactions({ newsItem }: { newsItem: INewsProps }) {
-  const [comment, setComment] = useState("");
-  const { user } = useAppSelector((s) => s.auth);
-  const [updateNews, { isLoading: isUpdating }] = useUpdateNewsMutation();
+export function NewsReactions({ newsItem }: { newsItem?: INewsProps }) {
+ 
+  const { user } = useAuth();
 
-  const maxLength = 3500;
+  const [updateViews] = useUpdateNewsViewsMutation();
 
-  const onComment = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const result = await updateNews({
-        _id: newsItem?._id,
-        comments: [
-          {
-            email: user?.email ?? "unknown",
-            name: user?.name ?? "unknown",
-            image: user?.image,
-            date: new Date().toISOString(),
-            comment,
-          },
-          ...(newsItem?.comments ?? []),
-        ],
-      }).unwrap();
+  const [updateLikes, { isLoading: isLiking }] = useUpdateNewsLikesMutation();
 
-      if (result.success) {
-        smartToast({ message: "Comment sent", success: true });
-        setComment("");
-        fireEscape();
-      }
-    } catch (error) {
-      smartToast({ error });
+  
+
+  const [updateShares] = useUpdateNewsSharesMutation();
+
+  const { data: stats, refetch: refetchStats } = useGetNewsStatsQuery(
+    newsItem?._id as string,
+  );
+  console.log(stats);
+
+  // Record view on mount
+  useEffect(() => {
+    updateViews({
+      newsId: newsItem?._id as string,
+      deviceId: getDeviceId(),
+      userId: user?._id as string,
+    });
+  }, []);
+  const [localLiked, setLocalLiked] = useState(false);
+
+  const handleLike = async () => {
+    const result = await updateLikes({
+      newsId: newsItem?._id as string,
+      deviceId: getDeviceId(),
+      userId: user?._id,
+      isLike: !localLiked,
+    }).unwrap();
+
+    if (result.success) {
+      setLocalLiked(result?.data?.liked as boolean);
+     
     }
   };
 
-  // LIKES
-  const isLiked = newsItem?.likes?.find((l) => l.device === getDeviceId());
-  const likes = isLiked
-    ? newsItem?.likes?.filter((l) => l.device !== getDeviceId())
-    : [
-        ...(newsItem?.likes ?? []),
-        {
-          name: user?.name ?? "unknown",
-          date: new Date().toISOString(),
-          device: getDeviceId(),
-        },
-      ];
-
-  // update views
-  useEffect(() => {
-    function updateViews() {
-      const uniqueViews = newsItem?.views?.find(
-        (ni) => ni.device === getDeviceId(),
-      )
-        ? newsItem?.views
-        : [
-            ...(newsItem?.views ?? []),
-            {
-              email: user?.email ?? "unknown",
-              name: user?.name ?? "unknown",
-              date: new Date().toISOString(),
-              device: getDeviceId() ?? "unknown",
-            },
-          ];
-
-      updateNews({
-        _id: newsItem?._id,
-        views: uniqueViews,
-      });
-    }
-    updateViews();
-  }, []);
-
   const handleShare = async () => {
-    await updateNews({
-      _id: newsItem?._id,
-      shares: [
-        ...(newsItem?.shares ?? []),
-        {
-          email: user?.email ?? "unknown",
-          name: user?.name ?? "unknown",
-          date: new Date().toISOString(),
-          device: "unknown",
-        },
-      ],
-    });
+    const result = await updateShares({
+      newsId: newsItem?._id as string,
+      deviceId: getDeviceId(),
+      userId: user?._id as string,
+    }).unwrap();
+
+    if (result.success) {
+      refetchStats();
+    }
   };
 
   return (
     <div>
-      <ul className="flex items-center flex-wrap gap-4">
+      <ul className="flex items-baseline-last flex-wrap gap-4">
         <li>
-          <RtkActionButton
-            mutation={useUpdateNewsMutation}
-            data={{ _id: newsItem?._id, likes }}
-            className={`p-1.5 _shrink rounded-full ${
-              isLiked ? "bg-Blue text-white" : ""
+          <Button
+            onClick={handleLike}
+            className={`p-1.5 _shrink rounded-full mb-0 ${
+              localLiked ? "text-Blue " : ""
             }`}
-            styles={{ borderRadius: "100%" }}
             variant="ghost"
-            loadingText=""
-            disableToast
-            id="likes-trigger"
+            waiting={isLiking}
           >
-            {isLiked ? <ThumbsDown size={32} /> : <ThumbsUp size={32} />}
-          </RtkActionButton>
+            {localLiked ? <ThumbsDown size={24} /> : <ThumbsUp size={24} />}
+          </Button>
           <span
             className="font-light text-xs"
             onClick={() => toggleClick("likes-trigger")}
@@ -182,29 +144,7 @@ export function NewsReactions({ newsItem }: { newsItem: INewsProps }) {
               title="Comment on this news article"
               id="comments-trigger"
             >
-              <form onSubmit={onComment}>
-                <QuillEditor
-                  value={comment}
-                  onChange={(val) => {
-                    if (val.length <= maxLength) setComment(val);
-                  }}
-                  className="w-full grow"
-                  placeholder="Type comment ..."
-                />
-                <p className="_p p-4">
-                  {`${markupToPlainText(comment)?.length}/${maxLength}`}
-                </p>
-                <Button
-                  type="submit"
-                  className="backdrop-blur-2xl w-full mt-5 justify-center"
-                  waiting={isUpdating}
-                  waitingText=""
-                  primaryText="Comment"
-                  size="lg"
-                >
-                  <SendHorizontal size={20} />
-                </Button>
-              </form>
+              <CommentForm newsId={newsItem?._id as string} />
             </DIALOG>
           )}
 
@@ -232,48 +172,73 @@ export function NewsReactions({ newsItem }: { newsItem: INewsProps }) {
       {/* Comments */}
       <ul className="grid gap-6 divide-y divide-border/45">
         {newsItem?.comments?.map((com, i) => (
-          <li key={`com-${i}`} className="flex items-start gap-5 pb-6 relative">
-            <AVATAR src={com?.image ?? staticImages.avatar} />
-            <section>
-              <div className="flex items-start gap-6">
-                <div className="flex items-baseline gap-0.5">
-                  <h1 className="_subtitle">{com?.name ?? "Anonymous"}</h1>
-                  <span>
-                    <BsDot size={15} className="text-muted-foreground" />
-                  </span>
-                  <span className="text-sm mt-2.5 font-light">
-                    {getTimeLeftOrAgo(com?.date).formatted}
-                  </span>
-                </div>
-              </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: shortText(com?.comment, maxLength) || "",
-                }}
-                className="border border-border rounded-2xl p-3 -ml-6 mt-4 _p text-wrap wrap-break-word max-sm:max-w-60 max-w-3/4 overflow-x-auto"
-              />
-            </section>
-
-            {user?.role?.includes("admin") && (
-              <ActionButton
-                method="PUT"
-                body={{
-                  comments: newsItem?.comments?.filter(
-                    (c) => c?.date !== com?.date,
-                  ),
-                }}
-                uri={`${apiConfig.news}/${newsItem?._id}`}
-                className="absolute right-2 top-1 p-0.5 _hover _shrink"
-                variant="secondary"
-                loadingText="Deleting..."
-                styles={{ padding: "6px" }}
-              >
-                <RiDeleteBin6Line size={24} />
-              </ActionButton>
-            )}
-          </li>
+          <CommentRow comment={com} newsItem={newsItem} key={i} />
         ))}
       </ul>
+
+      <CommentForm newsId={newsItem?._id as string} />
     </div>
   );
 }
+
+const CommentRow = ({
+  comment: com,
+  newsItem,
+}: {
+  comment: IComment;
+  newsItem?: INewsProps;
+}) => {
+  const { user } = useAuth();
+  const [deleteComment, { isLoading: isDeleting }] =
+    useDeleteNewsCommentMutation();
+
+  const handleDeleteComment = async (commentId: string) => {
+    const result = await deleteComment({
+      newsId: newsItem?._id as string,
+      commentId,
+      userId: user?._id,
+      isAdmin: user?.role?.includes("admin"),
+    }).unwrap();
+
+    if (result.success) {
+    }
+  };
+  return (
+    <li className="flex items-start gap-5 pb-6  ">
+      <AVATAR src={com?.user?.image ?? staticImages.avatar} />
+      <section>
+        <header className="flex items-start gap-6 ">
+          <div className="flex items-baseline gap-0.5">
+            <h1 className="_subtitle">{com?.user?.name ?? "Anonymous"}</h1>
+            <span>
+              <BsDot size={15} className="text-muted-foreground" />
+            </span>
+            <span className="text-sm mt-2.5 font-light">
+              {getTimeLeftOrAgo(com?.date).formatted}
+            </span>
+          </div>
+        </header>
+
+        <div className="relative">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: shortText(com?.comment, 3500) || "",
+            }}
+            className="border border-border rounded-2xl p-3 -ml-6 mt-4 _p text-wrap wrap-break-word max-sm:max-w-60 max-w-3/4 overflow-x-auto"
+          />
+
+          {(user?._id == com.user || user?.role?.includes("admin")) && (
+            <Button
+              onClick={() => handleDeleteComment(com._id as string)}
+              className="absolute right-2 top-1 p-0.5 _hover _shrink"
+              variant="ghost"
+              waiting={isDeleting}
+            >
+              <Trash size={24} />
+            </Button>
+          )}
+        </div>
+      </section>
+    </li>
+  );
+};

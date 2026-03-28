@@ -21,7 +21,9 @@ export const LogoutBtn = ({
   text = "",
   children,
 }: IProps) => {
-  const { logout, isLoading } = useAuth();
+  const { logout, isLoading, user } = useAuth();
+
+  if (!user) return null;
 
   return (
     <Button
@@ -32,7 +34,7 @@ export const LogoutBtn = ({
       waiting={isLoading}
       primaryText={text}
       waitingText=""
-      title='Sign Out'
+      title="Sign Out"
     >
       {children ?? <LogOut className="w-4 h-4 " />}
     </Button>

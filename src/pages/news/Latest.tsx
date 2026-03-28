@@ -10,6 +10,8 @@ export function LatestNews() {
   const { data: newsData, isLoading, error } = useGetNewsQuery("");
   const news = newsData;
 
+  console.log(newsData)
+
   if (isLoading) {
     return (
       <div>

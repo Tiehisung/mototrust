@@ -119,7 +119,7 @@ export function Drawer({
                 leaveTo={enterFromClasses[position]}
               >
                 <Dialog.Panel
-                  className={`pointer-events-auto w-screen ${sizeClasses[position][size]} ${className}`}
+                  className={`pointer-events-auto w-screen ${sizeClasses[position][size]}`}
                 >
                   <div className="flex h-full flex-col bg-background shadow-xl">
                     {/* Header */}
@@ -147,7 +147,7 @@ export function Drawer({
                     )}
 
                     {/* Content */}
-                    <div className="flex-1 overflow-y-auto">{children}</div>
+                    <div className={`flex-1 overflow-y-auto ${className}` }>{children}</div>
 
                     {/* Footer */}
                     {footer && (

@@ -1,7 +1,5 @@
- 
-
 import { FC, useState } from "react";
- 
+
 import { IFileProps } from "@/types/file.interface";
 import { INewsProps } from "@/types/news.interface";
 import { NewsReactions } from "./Reactions";
@@ -10,10 +8,10 @@ import LightboxViewer from "@/components/viewer/LightBox";
 import { getThumbnail } from "@/lib/file";
 import { AVATAR } from "@/components/ui/avatar";
 
-const NewsItemClient: FC<{ newsItem: INewsProps }> = ({ newsItem }) => {
+const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
   const [open, setOpen] = useState(false);
   const [gallery, setGallery] = useState<IFileProps[]>([]);
- 
+
   return (
     <div className=" mb-10">
       <header className="flex flex-wrap items-center gap-2.5">
@@ -66,7 +64,7 @@ const NewsItemClient: FC<{ newsItem: INewsProps }> = ({ newsItem }) => {
                   {(detail?.media?.length ?? 0) > 1 && (
                     <MasonryGallery
                       files={(detail?.media as IFileProps[]) ?? []}
-                      useSize
+                      // useSize
                       wrapperStyles="max-sm:columns-2 md:columns-2 lg:columns-2 xl:columns-3"
                       className="rounded-none "
                     />
@@ -78,7 +76,7 @@ const NewsItemClient: FC<{ newsItem: INewsProps }> = ({ newsItem }) => {
 
           {/* Comments and reactions */}
           <section className=" mt-32 border-t-2 pt-4">
-            <NewsReactions newsItem={newsItem} />
+            <NewsReactions newsItem={newsItem as INewsProps} />
           </section>
 
           <section className="flex items-start gap-5 my-6">

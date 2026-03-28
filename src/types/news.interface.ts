@@ -26,10 +26,10 @@ export interface INewsProps {
   summary?: string;
   tags?: string[];
 
-  likes?: { email: string, name: string; date: string; device?: string }[];
-  views: { email: string, name: string; date: string; device?: string }[];
-  shares?: { email: string, name: string; date: string; device?: string }[];
-  comments?: { email: string, image?: string; name?: string; comment: string; date: string }[];
+  likes?: IInteraction[];
+  views: IInteraction[];
+  shares?: IInteraction[];
+  comments?: IComment[];
   reactions?: number//sum likes,views,shares and comments
 
   createdAt: string;
@@ -38,6 +38,17 @@ export interface INewsProps {
   reporter?: IUser & { about?: string }
 
 }
+
+interface IInteraction {
+  user?: IUser;
+  date: string;
+  device: string;
+  _id: string
+}
+export interface IComment extends IInteraction {
+  comment: string;
+}
+
 
 export interface IPostNews {
   details: {

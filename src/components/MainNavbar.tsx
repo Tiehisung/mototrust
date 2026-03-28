@@ -9,6 +9,7 @@ import { scrollToSection } from "@/lib/dom";
 import { Button } from "@/components/buttons/Button";
 import { fireEscape } from "@/hooks/Esc";
 import UserLogButtons from "./UserLogger";
+import { LogoutBtn } from "./auth/LogoutButton";
 
 interface ILink {
   label: string;
@@ -120,6 +121,7 @@ export default function MainNavbar() {
         position="top"
         size="sm"
         title="Menu"
+        className=" max-h-[75vh]"
       >
         <nav className="flex flex-col p-4 gap-2 ">
           {navLinks.map((item) => {
@@ -149,6 +151,8 @@ export default function MainNavbar() {
                 </Link>
               );
           })}
+
+          <LogoutBtn text="Logout" className="grow" />
         </nav>
       </Drawer>
 
