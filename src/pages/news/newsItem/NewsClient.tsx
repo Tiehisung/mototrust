@@ -64,7 +64,7 @@ const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
                   {(detail?.media?.length ?? 0) > 1 && (
                     <MasonryGallery
                       files={(detail?.media as IFileProps[]) ?? []}
-                      useSize
+                      // useSize
                       wrapperStyles="max-sm:columns-2 md:columns-2 lg:columns-2 xl:columns-3"
                       className="rounded-none "
                     />
