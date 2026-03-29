@@ -14,6 +14,7 @@ import {
 } from "./ui/dialog";
 import { MoreHorizontal } from "lucide-react";
 import { fireDoubleEscape } from "@/hooks/Esc";
+import { cn } from "@/lib/utils";
 
 interface IDialog {
   hideCloseBtn?: boolean;
@@ -68,7 +69,7 @@ export const DIALOG: FC<IDialog> = ({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className={` ${className}`}>
+      <DialogContent className={cn(`p-2 `,className)}>
         <DialogHeader>
           <DialogTitle className="text-center">{title}</DialogTitle>
           <DialogDescription hidden={!description}>

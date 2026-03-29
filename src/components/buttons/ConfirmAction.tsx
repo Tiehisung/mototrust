@@ -46,36 +46,7 @@ export const ConfirmActionButton = ({
   isLoading,
   escapeOnEnd,
 }: IProps) => {
-  // const handleAction = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   try {
-  //     setWaiting(true);
-  //     const response = await fetch(
-  //       uri?.startsWith(apiConfig.base)
-  //         ? uri
-  //         : uri?.startsWith("/")
-  //           ? `${apiConfig.base}${uri}`
-  //           : `${apiConfig.base}/${uri}`,
-  //       {
-  //         method,
-  //         headers: { "Content-Type": "application/json" },
-  //         cache: "no-cache",
-  //         body: JSON.stringify(body),
-  //       },
-  //     );
-  //     const results = await response.json();
-  //     if (results.success) toast.success(results.message);
-  //     if (!results.success) toast.error(results.message);
-
-  //     if (gobackAfter) navigate(-1);
-  //   } catch (error) {
-  //     toast.error(getErrorMessage(error));
-  //   } finally {
-  //     setWaiting(false);
-
-  //     if (escapeOnEnd) fireDoubleEscape(400);
-  //   }
-  // };
+  
 
   if (hidden) {
     return null;
@@ -101,7 +72,7 @@ export const ConfirmActionButton = ({
       <div className="flex flex-col items-center justify-center py-6 ">
         {confirmText && (
           <div
-            className="font-light text-sm text-muted-foreground mb-6"
+            className="font-semibold text-sm text-muted-foreground mb-6"
             dangerouslySetInnerHTML={{ __html: confirmText }}
           />
         )}

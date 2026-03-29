@@ -158,7 +158,7 @@ export const PlayerStatsCard: FC<IPlayerStatsProps> = ({
           <AVATAR
             src={featuredPlayer?.avatar as string}
             alt={featuredPlayer?.name ?? ""}
-            fallbackText={featuredPlayer?.name ?? ""}
+          
             className="w-20 h-20 rounded-full mr-4"
           />
           <div>
@@ -186,7 +186,7 @@ export const PlayerStatsCard: FC<IPlayerStatsProps> = ({
                 <AVATAR
                   src={player?.avatar as string}
                   alt={player?.name as string}
-                  fallbackText={player?.name as string}
+                
                   className="w-10 h-10 rounded-full"
                 />
                 <span className="text-sm font-medium">{player?.name}</span>

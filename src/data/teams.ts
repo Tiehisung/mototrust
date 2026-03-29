@@ -1,11 +1,11 @@
-import {   teamBnfc } from "./teamBnfc";
+import { TEAM } from "./team";
 import { ITeam } from "@/types/match.interface";
 
 export const teamKFC: ITeam = {
-    _id: teamBnfc.alias,
-    name: teamBnfc.name,
-    alias: teamBnfc.alias,
-    logo: teamBnfc.logo,
+    _id: TEAM.alias,
+    name: TEAM.name,
+    alias: TEAM.alias,
+    logo: TEAM.logo,
     community: "Konjiehi",
     currentPlayers: [],
     contact: "0241508430",

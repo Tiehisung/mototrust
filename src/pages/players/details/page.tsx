@@ -7,9 +7,12 @@ import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGetGalleriesQuery } from "@/services/gallery.endpoints";
-import { useGetPlayersQuery, useGetPlayerStatsQuery } from "@/services/player.endpoints";
+import {
+  useGetPlayersQuery,
+  useGetPlayerStatsQuery,
+} from "@/services/player.endpoints";
 import { PageSEO } from "@/utils/PageSEO";
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 
 export default function PlayerProfilePage() {
   const [searchParams] = useSearchParams();
@@ -37,7 +40,6 @@ export default function PlayerProfilePage() {
       </main>
     );
   }
-
 
   if (!player) {
     return (
@@ -79,6 +81,4 @@ export default function PlayerProfilePage() {
       </main>
     </>
   );
-
- 
 }

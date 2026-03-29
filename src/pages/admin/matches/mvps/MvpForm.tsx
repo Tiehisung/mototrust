@@ -140,9 +140,9 @@ export function MVPForm({
         <h2 className="mb-6 text-2xl font-bold flex items-center justify-between">
           {defaultMVP ? `Edit - ${defaultMVP?.player?.name}` : "Add MoTM"}:
           <AVATAR
-            alt="mvp player"
+             
             src={selectedPlayer?.avatar as string}
-            fallbackText="IP"
+            alt="IP"
           />
         </h2>
 
@@ -229,7 +229,7 @@ export function MVPForm({
           <Button
             type="submit"
             waiting={isSubmitting || isCreating || isUpdating}
-            className="w-full _primaryBtn"
+            className="w-full "
             primaryText={defaultMVP ? "Edit MoTM" : "Add MoTM"}
             waitingText={defaultMVP ? "Editing MoTM..." : "Adding MoTM..."}
           >

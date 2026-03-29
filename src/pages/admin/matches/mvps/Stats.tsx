@@ -44,7 +44,7 @@ export function MVPsStats({ loading, mvps }: IProps) {
           icon={
             <AVATAR
               src={dt.player?.avatar as string}
-              fallbackText={dt.player.name}
+              alt={dt.player.name}
               className="h-9 w-9"
             />
           }
@@ -71,7 +71,7 @@ export function MVPsStats({ loading, mvps }: IProps) {
               icon={
                 <AVATAR
                   src={pl.player?.avatar as string}
-                  fallbackText={pl.player.name}
+                  alt={pl.player.name}
                   className="h-9 w-9"
                 />
               }
@@ -97,9 +97,9 @@ export function MVPsStats({ loading, mvps }: IProps) {
           title={
             <div className="flex items-center gap-6">
               <AVATAR
-                alt="mvp player"
+               
                 src={targetPlayer?.player?.avatar as string}
-                fallbackText="IP"
+                alt="IP"
               />
               <p className="text-xl font-semibold">
                 {targetPlayer?.player?.name}

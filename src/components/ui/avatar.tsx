@@ -58,7 +58,7 @@ export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | number;
 
 interface AVATARProps {
   src: string;
-  fallbackText?: string;
+
   alt?: string;
   className?: string;
   size?: AvatarSize;
@@ -87,7 +87,7 @@ const shapeMap = {
 
 export function AVATAR({
   src,
-  fallbackText,
+
   alt,
   className,
   size = "md",
@@ -136,7 +136,7 @@ export function AVATAR({
           typeof size === "number" && { fontSize: customStyle?.fontSize },
         )}
       >
-        {fallbackText || getInitials((alt as string) || "image") || "?"}
+        {getInitials((alt as string) || "image")}
       </AvatarFallback>
     </Avatar>
   );

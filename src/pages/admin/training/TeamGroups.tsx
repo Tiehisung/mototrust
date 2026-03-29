@@ -25,8 +25,8 @@ export function PreviewTeamGroups({
               <AVATAR
                 className="h-12 w-12"
                 src={player?.avatar}
-                alt={player?.lastName}
-                fallbackText={`${player.firstName} ${player.lastName}`}
+                
+                alt={`${player.firstName} ${player.lastName}`}
               />
 
               <div className="flex flex-col">
@@ -50,8 +50,8 @@ export function PreviewTeamGroups({
               <AVATAR
                 className="h-12 w-12"
                 src={player?.avatar}
-                alt={player?.lastName}
-                fallbackText={`${player.firstName} ${player.lastName}`}
+                
+                alt={`${player.firstName} ${player.lastName}`}
               />
 
               <div className="flex flex-col">

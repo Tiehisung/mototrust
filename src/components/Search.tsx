@@ -1,5 +1,3 @@
- 
-
 import React, { useState } from "react";
 
 import useGetParam, { useUpdateSearchParams } from "@/hooks/params";
@@ -47,9 +45,9 @@ export const PrimarySearch = ({
   const defaultValue = useGetParam(searchKey);
   return (
     <div
-      className={`group bg-card flex items-center border border-1.5 border-Red/30 focus-within:ring ring-Red focus-within:border-teal-ring-Red/80 rounded-full grow px-2 text-sm ${className}`}
+      className={`group bg-card flex items-center border border-1.5 border-primary/30 focus-within:ring ring-primary focus-within:border-teal-ring-primary/80 rounded-full grow px-2 text-sm ${className}`}
     >
-      <CgSearch className="h-4 w-auto text-Red/30 group-focus-within:text-Red" />
+      <CgSearch className="h-4 w-auto text-primary/30 group-focus-within:text-primary" />
       <input
         onChange={handleOnChange}
         id={name}
@@ -119,7 +117,7 @@ export const SearchWithSubmit = ({
   return (
     <form
       onSubmit={handleOnChange}
-      className={`group bg-card flex items-center border border-1.5 border-Red/30 focus-within:ring ring-Red focus-within:border-teal-ring-Red/80 rounded-full grow pl-3.5 pr-0.5 text-sm ${className}`}
+      className={`group bg-card flex items-center border border-1.5 border-primary/30 focus-within:ring ring-primary focus-within:border-teal-ring-primary/80 rounded-full grow pl-3.5 pr-0.5 text-sm ${className}`}
     >
       <input
         onChange={(e) => setText(e.target.value)}

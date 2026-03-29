@@ -8,9 +8,9 @@ import { ThemeModeToggle } from "./ThemeToggle";
 import { NavigationPopover } from "./NavigationPopover";
 import { GalleryThumbnails } from "lucide-react";
 import { fireEscape } from "@/hooks/Esc";
-import { TEAM } from "@/data/teamBnfc";
 import { useAuth } from "@/store/hooks/useAuth";
 import { GrDashboard } from "react-icons/gr";
+import { CLUB } from "@/data/club";
 
 export default function HeaderCp() {
   const location = useLocation();
@@ -24,7 +24,9 @@ export default function HeaderCp() {
     >
       <Link to="/">
         <div className="flex items-center gap-2 w-fit">
-          <span className="text-Orange first-letter:capitalize font-bold">{TEAM.alias}</span>
+          <span className="text-Orange first-letter:capitalize font-bold">
+            {CLUB.alias}
+          </span>
         </div>
       </Link>
       <div className="container ml-auto flex justify-end items-center">
@@ -96,7 +98,7 @@ const navLinks = [
 
 export const MobilePublicNav = () => {
   const { user, isLoading } = useAuth(); // From your auth context
-  const role = user?.role
+  const role = user?.role;
   const dashboardRoute =
     role === "player"
       ? "/players/dashboard"

@@ -86,7 +86,7 @@ const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
                 <div className="flex flex-col justify-center items-center gap-3">
                   <AVATAR
                     src={newsItem?.reporter?.image as string}
-                    fallbackText={newsItem?.reporter?.name}
+                  
                     alt="reporter"
                     className="h-16 w-16"
                     border

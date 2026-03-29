@@ -196,7 +196,7 @@ export function AttendanceTable({
                     />
                     <AVATAR
                       src={player.avatar}
-                      fallbackText={getInitials(name)}
+                      alt={getInitials(name)}
                     />
                     <span>{name}</span>
                   </Label>

@@ -1,15 +1,16 @@
 
-import { teamKFC } from "@/data/teams";
+
+import { TEAM } from "@/data/team";
 import { IMatch, IMatchMetrics } from "@/types/match.interface";
 
 export const checkTeams = (match?: IMatch) => {
 
     if (match?.isHome) {
-        return { home: teamKFC, away: match?.opponent }
+        return { home: TEAM, away: match?.opponent }
     }
     return {
         home: match?.opponent,
-        away: teamKFC,
+        away: TEAM,
     }
 };
 

@@ -1,6 +1,6 @@
 import { CredentialsLoginForm } from "@/components/auth/LoginCredentials";
 import HEADER from "@/components/Element";
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {

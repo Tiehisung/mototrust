@@ -4,55 +4,85 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Users, CalendarDays, MapPin, Clock, UserCog } from "lucide-react";
- 
-import { formatDate, getTimeAgo } from "@/lib/timeAndDate";
+
+import {
+  formatDate,
+  getDeadlineInfo,
+  getTimeLeftOrAgo,
+} from "@/lib/timeAndDate";
 import { ConfirmActionButton } from "@/components/buttons/ConfirmAction";
 import { IMatch } from "@/types/match.interface";
-import { useDeleteSquadMutation } from "@/services/squad.endpoints";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { ISquad } from "@/types/squad.interface";
-import { useAppSelector } from "@/store/hooks/store";
+import {
+  useDeleteSquadMutation,
+  useGetSquadByMatchQuery,
+} from "@/services/squad.endpoints";
+import { useAuth } from "@/store/hooks/useAuth";
+import { smartToast } from "@/utils/toast";
+import { fireEscape } from "@/hooks/Esc";
+import PageLoader from "@/components/loaders/Page";
+import { Button } from "@/components/buttons/Button";
+import { useSearchParams } from "@/lib/searchParams";
+import SquadForm from "./SquadForm";
 
 interface SquadDisplayProps {
-  squad?: ISquad;
   match?: IMatch;
 }
 
-const SquadCard = ({ squad, match }: SquadDisplayProps) => {
-const { user } = useAppSelector((s) => s.auth);
-  const navigate = useNavigate();
-  const [deleteSquad] = useDeleteSquadMutation();
+const SquadCard = ({ match }: SquadDisplayProps) => {
+  const { user } = useAuth();
 
-  if (!squad) {
-    return <div className="_label text-center m-6">Squad not found</div>;
-  }
+  const { getSearchParam, setSearchParams } = useSearchParams();
+
+  const { data: squadData, isLoading: loadingSquad } = useGetSquadByMatchQuery(
+    match?._id as string,
+    {
+      skip: !match,
+    },
+  );
+
+  const squad = squadData?.data;
+  const [deleteSquad, { isLoading: deletingSquad }] = useDeleteSquadMutation();
+
+  console.log(squad, match);
 
   const handleDelete = async () => {
     try {
-      const result = await deleteSquad(squad._id || "").unwrap();
+      const result = await deleteSquad(squad?._id || "").unwrap();
       if (result.success) {
-        toast.success(result.message);
-        navigate(0);
+        smartToast(result);
+        fireEscape();
       }
-    } catch (error) {
-      toast.error("Failed to delete squad");
+    } catch (error: any) {
+      smartToast({ error: error.message || "Failed to delete squad" });
     }
   };
 
+  const isLocked =
+    user?.role !== "super_admin" &&
+    getDeadlineInfo(match?.date as string, 5).isPassed;
+
+  if (loadingSquad) return <PageLoader />;
+
+  if (getSearchParam("sq_mode") == "editing")
+    return (
+      <SquadForm
+        defaultMatch={match}
+        onSuccess={() => setSearchParams("sq_mode", "")}
+      />
+    );
+
   return (
-    <Card className="shadow-lg border-0 overflow-hidden rounded-none ml-2.5 mb-12">
-      <CardHeader className="bg-muted/40 py-5">
+    <Card className="p-2 shadow-lg border-0 overflow-hidden rounded-none ml-2.5 mb-12">
+      <CardHeader className="bg-muted/40 py-5 px-0">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between">
           <div>
             <CardTitle className="text-2xl font-bold">
-              Match Squad | {squad?.title ?? "Unknown"}
+              {squad?.title ?? "Unknown"}
             </CardTitle>
             <CardDescription className="flex flex-wrap items-center gap-3 mt-1 text-muted-foreground">
               <span className="flex items-center gap-1">
@@ -77,7 +107,7 @@ const { user } = useAppSelector((s) => s.auth);
         )}
       </CardHeader>
 
-      <CardContent className="py-6">
+      <CardContent className="py-6 px-0">
         {/* Players Section */}
         <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
           <Users size={18} /> Players ({squad?.players?.length})
@@ -168,22 +198,41 @@ const { user } = useAppSelector((s) => s.auth);
         </div>
       </CardContent>
 
-      <CardFooter className="justify-between text-sm text-muted-foreground">
-        <p>
-          Created on {formatDate(squad?.createdAt)} (
-          {getTimeAgo(squad?.createdAt as string)})
+      <footer className="justify-between text-sm text-muted-foreground ">
+        <p className="italic">
+          Modified: {formatDate(squad?.createdAt)} (
+          {getTimeLeftOrAgo(squad?.createdAt as string).formatted})
+        </p>
+
+        <p className="text-sm font-thin p-2 border border-destructive text-destructive rounded-lg my-3 ">
+          Can not modify after{" "}
+          <Badge variant={"secondary"}>
+            {getDeadlineInfo(match?.date as string, 5).deadline}
+          </Badge>
         </p>
 
         {user?.role?.includes("admin") && (
-          <ConfirmActionButton
-            primaryText="Delete Squad"
-            onConfirm={handleDelete}
-            variant="destructive"
-            title="Delete Squad"
-            confirmText={`Are you sure you want to delete "${squad?.title}" Squad?`}
-          />
+          <div className="flex items-center gap-5 ">
+            <Button
+              onClick={() => setSearchParams("sq_mode", "editing")}
+              disabled={isLocked}
+              variant={"secondary"}
+            >
+              Edit
+            </Button>
+
+            <ConfirmActionButton
+              primaryText="Delete Squad"
+              onConfirm={handleDelete}
+              variant="destructive"
+              title="Delete Squad"
+              confirmText={`Are you sure you want to delete "${squad?.title}" Squad?`}
+              isLoading={deletingSquad}
+              disabled={isLocked}
+            />
+          </div>
         )}
-      </CardFooter>
+      </footer>
     </Card>
   );
 };

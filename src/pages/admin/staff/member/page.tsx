@@ -34,8 +34,7 @@ import { smartToast } from "@/utils/toast";
 import { IStaff } from "@/types/staff.interface";
 import Loader from "@/components/loaders/Loader";
 import { ConfirmDialog } from "@/components/Confirm-dialog";
-import { TbStatusChange } from "react-icons/tb";
-import { getInitials } from "@/lib";
+import { TbStatusChange } from "react-icons/tb";;
 import DataErrorAlert from "../../../../components/error/DataError";
 import { maskEmail } from "@/lib/mail-mask";
 import { CountupMetricCard } from "@/components/Metrics/Cards";
@@ -155,7 +154,7 @@ export default function StaffDetailPage() {
 
             <AVATAR
               src={staff.avatar}
-              fallbackText={getInitials(staff?.fullname || "")}
+              
               className="h-24 w-24 md:h-32 md:w-32 border-4 border-background shadow-xl text-2xl md:text-3xl"
               shape="circle"
               alt={staff.fullname}

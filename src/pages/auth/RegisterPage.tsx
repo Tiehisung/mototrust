@@ -1,6 +1,6 @@
 import HEADER from "@/components/Element";
 import RegistrationForm from "./RegistrationForm";
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { Link } from "react-router-dom";
 
 const RegisterPage = () => {

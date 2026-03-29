@@ -1,4 +1,4 @@
-import { teamBnfc } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { checkTeams } from "@/lib/compute/match";
 import { formatDate } from "@/lib/timeAndDate";
 import { IMatch } from "@/types/match.interface";
@@ -33,7 +33,7 @@ export const tournamentTemplates = (match: IMatch, official: { requester: IStaff
 <p>Warm regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -54,7 +54,7 @@ ${teamBnfc.name}</p>
 <p>Please confirm your availability.</p>
 
 <p>Sincerely,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -76,7 +76,7 @@ ${teamBnfc.name}</p>
 
 <p>Best regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -98,7 +98,7 @@ ${teamBnfc.name}</p>
 
 <p>Warm regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -119,7 +119,7 @@ ${teamBnfc.name}</p>
 <p>Please confirm that your club is available.</p>
 
 <p>Sincerely,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -141,7 +141,7 @@ ${teamBnfc.name}</p>
 
 <p>Kind regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -163,7 +163,7 @@ ${teamBnfc.name}</p>
 
 <p>Best regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -185,7 +185,7 @@ ${teamBnfc.name}</p>
 
 <p>Sincerely,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -206,7 +206,7 @@ ${teamBnfc.name}</p>
 <p>We appreciate your confirmation.</p>
 
 <p>Regards,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -229,7 +229,7 @@ ${teamBnfc.name}</p>
 <p>Yours faithfully,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
     ];

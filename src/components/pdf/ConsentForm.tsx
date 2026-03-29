@@ -9,7 +9,6 @@ import {
 } from "@react-pdf/renderer";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { IPlayer } from "@/types/player.interface";
-import { teamBnfc } from "@/data/teamBnfc";
 import { formatDate } from "@/lib/timeAndDate";
 import { COMBOBOX } from "../ComboBox";
 import { DIALOG } from "../Dialog";
@@ -17,6 +16,7 @@ import { MdOutlineDownload, MdOutlinePreview } from "react-icons/md";
 import { VscLoading } from "react-icons/vsc";
 import { FaWpforms } from "react-icons/fa";
 import { TITLE } from "../Element";
+import { CLUB } from "@/data/club";
 
 // Styles
 const styles = StyleSheet.create({
@@ -83,7 +83,7 @@ export default function PlayerConsentForm({ player }: PlayerConsentFormProps) {
         <View style={styles.sectionBorder}>
           <View style={styles.row}>
             <Image
-              src={teamBnfc.logo}
+              src={CLUB.logo}
               style={{
                 width: 90,
                 height: 90,

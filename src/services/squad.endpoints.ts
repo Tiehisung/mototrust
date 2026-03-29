@@ -9,25 +9,25 @@ const squadApi = api.injectEndpoints({
         // GET all squads
         getSquads: builder.query<IQueryResponse<ISquad[]>, string>({
             query: (paramsString = '') => `/squads?${paramsString}`,
-            providesTags: ["Squads"],
+            providesTags: ["Squads",'Matches'],
         }),
 
         // GET squad by ID
         getSquadById: builder.query<IQueryResponse<ISquad>, string>({
             query: (id) => `/squads/${id}`,
-            providesTags: ["Squads"],
+            providesTags: ["Squads",'Matches'],
         }),
 
         // GET squad by match
         getSquadByMatch: builder.query<IQueryResponse<ISquad>, string>({
             query: (matchId) => `/squads/match/${matchId}`,
-            providesTags: ["Squads"],
+            providesTags: ["Squads",'Matches'],
         }),
 
         // GET squad statistics
         getSquadStats: builder.query<IQueryResponse<any>, void>({
             query: () => "/squads/stats",
-            providesTags: ["Squads"],
+            providesTags: ["Squads",'Matches'],
         }),
 
         // CREATE squad
@@ -37,7 +37,7 @@ const squadApi = api.injectEndpoints({
                 method: "POST",
                 body,
             }),
-            invalidatesTags: ["Squads"],
+            invalidatesTags: ["Squads",'Matches'],
         }),
 
         // UPDATE squad
@@ -47,7 +47,7 @@ const squadApi = api.injectEndpoints({
                 method: "PUT",
                 body,
             }),
-            invalidatesTags: ["Squads"],
+            invalidatesTags: ["Squads",'Matches'],
         }),
 
         // UPDATE squad players (starting XI, substitutes)
@@ -63,7 +63,7 @@ const squadApi = api.injectEndpoints({
                 method: "PATCH",
                 body: { startingXI, substitutes, captain, viceCaptain },
             }),
-            invalidatesTags: ["Squads"],
+            invalidatesTags: ["Squads",'Matches'],
         }),
 
         // ADD substitution
@@ -79,7 +79,7 @@ const squadApi = api.injectEndpoints({
                 method: "POST",
                 body: { playerOut, playerIn, minute, reason },
             }),
-            invalidatesTags: ["Squads"],
+            invalidatesTags: ["Squads",'Matches'],
         }),
 
         // UPDATE formation
@@ -92,7 +92,7 @@ const squadApi = api.injectEndpoints({
                 method: "PATCH",
                 body: { formation },
             }),
-            invalidatesTags: ["Squads"],
+            invalidatesTags: ["Squads",'Matches'],
         }),
 
         // DELETE squad
@@ -101,7 +101,7 @@ const squadApi = api.injectEndpoints({
                 url: `/squads/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: ["Squads"],
+            invalidatesTags: ["Squads",'Matches'],
         }),
 
     }),

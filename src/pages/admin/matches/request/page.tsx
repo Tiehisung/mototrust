@@ -7,7 +7,7 @@ import { useGetMatchesQuery } from "@/services/match.endpoints";
 import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { teamBnfc } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { IStaff } from "@/types/staff.interface";
 import { useGetStaffMembersQuery } from "@/services/staff.endpoints";
 import { useAppSelector } from "@/store/hooks/store";
@@ -31,8 +31,8 @@ const MatchRequestPage = () => {
     staffData?.data?.[0] ??
     ({
       fullname: user?.name,
-      role: `${teamBnfc.name} Official`,
-      phone: teamBnfc.contact,
+      role: `${TEAM.name} Official`,
+      phone: TEAM.contact,
     } as IStaff);
 
   const selectedFixture = fixtures?.data?.find((f) => f?._id === fixtureId);

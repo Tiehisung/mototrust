@@ -112,7 +112,7 @@ body {
   /* Borders */
   --border: #c9d3dc; /* Softer, modern border */
   --input: #e2e8ee;
-  --ring: #7b8fa3;
+  --ring: #c6a763;
 
   /* Sidebar */
   --sidebar: #f6f7f8;
@@ -142,7 +142,7 @@ body {
   --primary-foreground: #ffffff;
 
   /* Secondary */
-  --secondary: #7a8192;
+  --secondary: #395565;
   --secondary-foreground: #d7e0e7;
 
   /* Muted */
@@ -150,7 +150,7 @@ body {
   --muted-foreground: #b7b7b7;
 
   /* Accent */
-  --accent: #1e3240;
+  --accent: #13232d61;
   --accent-foreground: #f6f7f8;
 
   /* Destructive */
@@ -160,7 +160,7 @@ body {
   /* Borders / Inputs */
   --border: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.14);
-  --ring: rgba(255, 255, 255, 0.28);
+  --ring: #0078d4;
 
   /* Sidebar */
   --sidebar: #162a36;

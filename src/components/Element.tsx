@@ -20,7 +20,7 @@ export default function HEADER({
   return (
     <header
       className={cn(
-        `border-b border-border grow pb-6 pt-12 px-4`,
+        `border-b border-border grow pb-6 pt-6 px-4`,
         "font-noto-sans-georgian", // Using the font class
         className,
       )}

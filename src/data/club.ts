@@ -1,25 +1,6 @@
-import { ITeam } from "@/types/match.interface";
+import { TEAM } from "./team";
 
-
-
-
-export const teamBnfc: ITeam & { url: string, officialSignature: string } = {
-    _id: 'teamBnfc',
-    url: 'https://bunyenifc.vercel.app',
-    name: 'BunyeniFC',
-    alias: 'yenFC',
-    community: "Wa-Konjiehi",
-    logo: 'https://res.cloudinary.com/dgp4vzn3m/image/upload/v1763109780/assets-storage/android-chrome-512x512_ii3dpc.png',
-    officialSignature: 'https://res.cloudinary.com/dgp4vzn3m/image/upload/v1766906326/assets-storage/signature_alypm1.png',
-    currentPlayers: [],
-    contact: "0241508430",
-    contactName: "Adam Wahid",
-    createdAt: "2023-11-28T10:30:00Z",
-    updatedAt: "2023-11-28T10:30:00Z",
-};
-
-// data/team.ts
-export const TEAM = {
+export const CLUB = {
     // Basic Info
     id: "bnfc",
     name: "bunyenifc", alias: 'yenFC',
@@ -27,7 +8,8 @@ export const TEAM = {
     shortName: "BNFC",
     tagline: "The Pride of Wa",
     description: "Bunyeni Football Club is a professional football club based in Konjiehi, Ghana. Founded in 2020, the club has quickly established itself as a competitive force in regional football.",
-    logo: 'https://res.cloudinary.com/dgp4vzn3m/image/upload/v1763109780/assets-storage/android-chrome-512x512_ii3dpc.png',
+    logo: 'https://res.cloudinary.com/djzfztrig/image/upload/v1774785306/assets-storage/l80n3rmo4chshvcmayh7.png',
+    logoNoBg: 'https://res.cloudinary.com/djzfztrig/image/upload/v1774785306/assets-storage/l80n3rmo4chshvcmayh7.png',
 
     // History
     founded: 2020,
@@ -43,11 +25,10 @@ export const TEAM = {
     },
 
     logos: {
-        default: teamBnfc.logo,
-        light: teamBnfc.logo,
-        dark: teamBnfc.logo,
-        favicon: "/favicon.ico",
-        icon: teamBnfc.logo,
+        default: TEAM.logo,
+        noBg: 'https://res.cloudinary.com/djzfztrig/image/upload/v1774785306/assets-storage/l80n3rmo4chshvcmayh7.png',
+        favicon: "https://res.cloudinary.com/djzfztrig/image/upload/v1774785804/assets-storage/v5qzn1zh0mpbzwbujnwu.ico",
+        faviconNoBg: "https://res.cloudinary.com/djzfztrig/image/upload/v1774785306/assets-storage/l80n3rmo4chshvcmayh7.png",
     },
 
     // Venue
@@ -188,6 +169,3 @@ export const TEAM = {
         currency: "SLL",
     },
 } as const;
-
-// Type for the team data
-export type Team = typeof TEAM;

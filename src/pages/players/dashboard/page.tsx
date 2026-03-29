@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { PlayerFeatureMedia } from "./FeatureMedia";
 import { useGetPlayerQuery } from "@/services/player.endpoints";
 import Loader from "@/components/loaders/Loader";
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { useGetGalleriesQuery } from "@/services/gallery.endpoints";
 import { useAppSelector } from "@/store/hooks/store";
 import DataErrorAlert from "@/components/error/DataError";
@@ -99,8 +99,12 @@ export default function PlayerDashboardPage() {
                   <CardTitle className="text-lg">About Player</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-muted-foreground" dangerouslySetInnerHTML={{__html:player?.about || "No description available."}}/>
-                  
+                  <div
+                    className="text-muted-foreground"
+                    dangerouslySetInnerHTML={{
+                      __html: player?.about || "No description available.",
+                    }}
+                  />
                 </CardContent>
               </Card>
 

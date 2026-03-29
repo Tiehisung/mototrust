@@ -4,21 +4,24 @@ import { MatchEventsAdmin } from "../live-match/EventsUpdator";
 import MatchActions from "./Actions";
 import { Badge } from "@/components/ui/badge";
 import { useParams } from "react-router-dom";
- 
+
 import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGetMatchQuery } from "@/services/match.endpoints";
 import { useGetPlayersQuery } from "@/services/player.endpoints";
 import { useGetTeamsQuery } from "@/services/team.endpoints";
+import { AVATAR } from "@/components/ui/avatar";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function MatchPage() {
-  const  slug  = useParams ().matchSlug
+  const slug = useParams().matchSlug;
 
   const { data: matchData, isLoading: matchLoading } = useGetMatchQuery(
     slug || "",
   );
-  const { data: playersData, isLoading: playersLoading } = useGetPlayersQuery('');
+  const { data: playersData, isLoading: playersLoading } =
+    useGetPlayersQuery("");
   const { data: teamsData, isLoading: teamsLoading } = useGetTeamsQuery({});
 
   const isLoading = matchLoading || playersLoading || teamsLoading;
@@ -52,46 +55,47 @@ export default function MatchPage() {
 
   const { home, away } = checkTeams(match);
   const matchMetrics = checkMatchMetrics(match);
+  const isMobile = useIsMobile();
 
   return (
     <div className="container mx-auto p-4 _page">
       <h1 className="text-2xl font-bold mb-4 text-primaryRed">
         {match?.title} <Badge className="ml-auto">{match?.status}</Badge>
       </h1>
-      <MatchActions
-        match={match}
-        matches={[]} // You'll need to fetch matches separately if needed
-        teams={teams?.data as ITeam[]}
-        players={players?.data}
-      />
-      <div className="my-6 flex items-center justify-between gap-6">
-        <img
-          src={home?.logo as string}
-          alt={home?.name ?? ""}
-          className="aspect-square h-16 w-16 sm:h-24 sm:w-24 object-cover"
-        />
-        <div className="flex flex-col justify-center items-center">
-          <div className="text-xl md:text-2xl font-black uppercase">
-            {home?.name}
-          </div>
+      <MatchActions match={match} teams={teams?.data as ITeam[]} />
+
+      <div className="my-6 flex items-center justify-between gap-6 border p-3 bg-secondary">
+        <section
+          className="flex flex-col justify-center items-center gap-2.5 pointer-events-none"
+ 
+        >
+          <AVATAR
+            src={home?.logo as string}
+            alt={home?.name}
+            size={isMobile ? "lg" : "2xl"}
+          />
+          <p className="text-lg md:text-xl font-semibold ">{home?.name}</p>
+        </section>
+
+        <section className="flex flex-col justify-center items-center">
           {match?.status === "UPCOMING" ? (
-            <div className="font-semibold text-xl">VS</div>
+            <div className="font-semibold text-2xl">VS</div>
           ) : (
             <div className="mx-auto text-2xl text-center">
-              {matchMetrics?.goals?.home ?? 0} -{" "}
-              {matchMetrics?.goals?.away ?? 0}
+              {matchMetrics?.goals?.home ?? 0} -{matchMetrics?.goals?.away ?? 0}
             </div>
           )}
+        </section>
 
-          <div className="text-xl md:text-2xl font-black uppercase">
-            {away?.name}
-          </div>
-        </div>
-        <img
-          src={away?.logo as string}
-          alt={away?.name ?? ""}
-          className="aspect-square h-16 w-16 sm:h-24 sm:w-24 object-cover"
-        />
+        <section className="flex flex-col justify-center items-center gap-2.5">
+          <AVATAR
+            src={away?.logo as string}
+            alt={away?.name}
+            size={isMobile ? "lg" : "2xl"}
+            shape="rounded"
+          />
+          <p className="text-lg md:text-xl font-semibold ">{away?.name} </p>
+        </section>
       </div>
 
       <br />

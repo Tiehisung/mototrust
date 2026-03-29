@@ -41,9 +41,10 @@ export function LeftPaneMobile() {
           ))}
         </li>
       </ul>
-      <li className=" mt-12 px-3 flex gap-6 items-center sticky bottom-0 backdrop-blur-sm bg-muted/30">
+      <li className=" mt-12 px-2 py-1 flex gap-6 items-center border rounded-full ">
         {/* <UserLogButtons /> */}
         <ThemeModeToggle className="w-full" />
+        <LogoutBtn/>
       </li>
     </NavigationPopover>
   );

@@ -1,4 +1,4 @@
-import { teamBnfc } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import JoinUs from "./JoinUsClient";
 
 export const metadata = {
@@ -14,7 +14,7 @@ export const metadata = {
     title: "Join Konjiehi FC ",
     description:
       "Meet the official players, fans and supporters of Konjiehi FC.",
-    images: [teamBnfc.logo],
+    images: [TEAM.logo],
   },
 };
 

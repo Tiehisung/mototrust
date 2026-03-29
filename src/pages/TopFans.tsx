@@ -27,7 +27,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils";
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { mockFans } from "@/data/fans";
 
 const getRankIcon = (rank: number) => {

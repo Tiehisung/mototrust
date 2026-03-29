@@ -152,9 +152,9 @@ export function InjuryForm({
             : "Add Injury"}
           :
           <AVATAR
-            alt="injured player"
+            
             src={selectedPlayer?.avatar as string}
-            fallbackText="IP"
+            alt="IP"
           />
         </h2>
 
@@ -247,7 +247,7 @@ export function InjuryForm({
           <Button
             type="submit"
             waiting={isSubmitting || isCreating || isUpdating}
-            className="w-full _primaryBtn"
+            className="w-full "
             primaryText={injury ? "Edit Injury" : "Add Injury"}
             waitingText={injury ? "Editing Injury..." : "Adding Injury..."}
           >

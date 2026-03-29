@@ -1,4 +1,4 @@
-import { teamBnfc } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { checkTeams } from "@/lib/compute/match";
 import { formatDate } from "@/lib/timeAndDate";
 import { IMatch } from "@/types/match.interface";
@@ -27,7 +27,7 @@ export const youthTemplates = (match: IMatch, official: { requester: IStaff }) =
                 <p>We look forward to your confirmation.</p>
                 <p>Kind regards,<br/>
                 <b>${official?.requester?.fullname}</b><br/>
-                ${teamBnfc.name}</p>
+                ${TEAM.name}</p>
                             `.trim(),
         },
         {
@@ -47,7 +47,7 @@ export const youthTemplates = (match: IMatch, official: { requester: IStaff }) =
 <p>Please let us know if your youth squad is available.</p>
 
 <p>Warm regards,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
         {
@@ -66,7 +66,7 @@ ${teamBnfc.name}</p>
 
 <p>Best wishes,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
         {
@@ -86,7 +86,7 @@ ${teamBnfc.name}</p>
 <p>We look forward to your response.</p>
 
 <p>Sincerely,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
         {
@@ -107,7 +107,7 @@ ${teamBnfc.name}</p>
 
 <p>Kind regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
         {
@@ -127,7 +127,7 @@ ${teamBnfc.name}</p>
 <p>Please confirm if your youth team is available.</p>
 
 <p>Best regards,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
         {
@@ -148,7 +148,7 @@ ${teamBnfc.name}</p>
 
 <p>Warm regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
         {
@@ -168,7 +168,7 @@ ${teamBnfc.name}</p>
 <p>Kindly confirm your availability.</p>
 
 <p>Sincerely,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
         {
@@ -189,7 +189,7 @@ ${teamBnfc.name}</p>
 
 <p>Regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
         {
@@ -210,7 +210,7 @@ ${teamBnfc.name}</p>
 
 <p>Yours faithfully,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
     ];

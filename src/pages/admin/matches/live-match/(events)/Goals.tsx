@@ -208,7 +208,7 @@ export function ScoreEventsTab({ players, match }: ScoreEventsTabProps) {
 
             <div className="gap-6 flex items-center mt-8">
               <Button
-                className="  justify-center _primaryBtn grow"
+                className=" grow"
                 waiting={isLoading}
                 primaryText=" Add Goal"
                 waitingText="Adding Goal"

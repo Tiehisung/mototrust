@@ -73,7 +73,7 @@ export function PlayerHeader({ player }: PlayerHeaderProps) {
           <AVATAR
             src={player?.avatar}
             alt={fullName}
-            fallbackText={getInitials(fullName)}
+          
             size={"2xl"}
           />
           <div className="absolute -top-2 -right-2">

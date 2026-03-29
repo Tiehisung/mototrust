@@ -17,7 +17,7 @@ import { generatePlayerAbout } from "@/data/about";
 import GalleryGrid from "@/components/Gallery/GallaryGrid";
 import { GalleryUpload } from "@/components/Gallery/GalleryUpload";
 import { IPlayerStats } from "@/types/stats";
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 
 const statsData = [
   { stat: "PAS", value: 82 },

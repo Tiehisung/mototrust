@@ -1,8 +1,8 @@
 
-import { teamBnfc } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { checkTeams } from "@/lib/compute/match";
 import { formatDate } from "@/lib/timeAndDate";
- 
+
 import { IMatch } from "@/types/match.interface";
 import { IStaff } from "@/types/staff.interface";
 
@@ -39,7 +39,7 @@ export const competitionTemplates = (
 <p>Sincerely,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
       `.trim(),
     },
 
@@ -61,7 +61,7 @@ ${teamBnfc.name}</p>
 
 <p>Best regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
       `.trim(),
     },
 
@@ -105,7 +105,7 @@ ${official?.requester?.phone}</p>
 <p>We appreciate your prompt response to ensure smooth match operations.</p>
 
 <p>Kind regards,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
       `.trim(),
     },
 
@@ -127,7 +127,7 @@ ${teamBnfc.name}</p>
 
 <p>Sincerely,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
       `.trim(),
     },
 
@@ -149,7 +149,7 @@ ${teamBnfc.name}</p>
 
 <p>Best regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
       `.trim(),
     },
 
@@ -192,7 +192,7 @@ ${official?.requester?.phone}</p>
 <p>Your confirmation will allow us to finalize match operations professionally.</p>
 
 <p>Warm regards,<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
       `.trim(),
     },
 
@@ -214,7 +214,7 @@ ${teamBnfc.name}</p>
 
 <p>Regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
       `.trim(),
     },
 
@@ -237,7 +237,7 @@ ${teamBnfc.name}</p>
 <p>Yours faithfully,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
       `.trim(),
     },
   ];

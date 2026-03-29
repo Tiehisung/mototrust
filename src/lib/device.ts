@@ -1,10 +1,10 @@
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 
 // utils/device-id.ts
 export function getDeviceId(): string {
     if (typeof window === "undefined") return "";
 
-    const KEY =`${TEAM.alias.replaceAll(' ', '_')}_device_id`;
+    const KEY = `${TEAM.alias.replaceAll(' ', '_')}_device_id`;
 
     let id = localStorage.getItem(KEY);
 

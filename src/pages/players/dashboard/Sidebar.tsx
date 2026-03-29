@@ -160,7 +160,7 @@ export function PlayerSidebar({ player }: PlayerSidebarProps) {
             <AVATAR
               src={player?.avatar as string}
               alt={manager?.fullname}
-              fallbackText={getInitials(manager?.fullname as string)}
+             
               className="h-8 w-8"
             />
             <div className="min-w-0 flex-1">

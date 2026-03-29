@@ -10,7 +10,6 @@ import {
 import { DIALOG } from "@/components/Dialog";
 import { View } from "lucide-react";
 
-
 import SquadCard from "../admin/squad/SquadCard";
 import { IMatch } from "@/types/match.interface";
 
@@ -26,8 +25,8 @@ export function MatchFixtureCard({ match }: { match?: IMatch }) {
             status == "LIVE"
               ? "destructive"
               : status == "FT"
-              ? "secondary"
-              : "outline"
+                ? "secondary"
+                : "outline"
           }
         >
           {status}
@@ -85,7 +84,7 @@ export function MatchFixtureCard({ match }: { match?: IMatch }) {
               title=""
               className="min-w-[80vw]"
             >
-              <SquadCard squad={match?.squad} match={match} />
+              <SquadCard match={match} />
             </DIALOG>
           )}
         </div>

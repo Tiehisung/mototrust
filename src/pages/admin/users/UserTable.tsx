@@ -266,7 +266,7 @@ export default function UserTable({ users: propUsers }: UserTableProps) {
                       <div className="flex items-center gap-3">
                         <AVATAR
                           src={user?.image}
-                          fallbackText={getInitials(user?.name?.split(" "), 2)}
+                          alt={getInitials(user?.name?.split(" "), 2)}
                           className="uppercase"
                         />
                         <div>

@@ -24,7 +24,7 @@ export const SecondaryFixtureCard = ({
               <AVATAR
                 src={home?.logo as string}
                 alt={home?.name as string}
-                fallbackText={home?.name as string}
+               
                 className="h-8 w-8 aspect-square "
               />
               <span className="w-36 line-clamp-1 _label">{home?.name}</span>
@@ -33,7 +33,7 @@ export const SecondaryFixtureCard = ({
             <div className="flex items-center gap-2.5">
               <AVATAR
                 src={away?.logo as string}
-                fallbackText={home?.name as string}
+                
                 alt={away?.name as string}
                 className="h-8 w-8 aspect-square "
               />
@@ -71,7 +71,7 @@ export const SecondaryFixtureCard = ({
             <AVATAR
               src={home?.logo as string}
               alt={home?.name as string}
-              fallbackText={home?.name as string}
+              
               className="h-8 w-8 aspect-square "
             />
             <span className="w-36 line-clamp-1 _label">{home?.name}</span>
@@ -80,7 +80,7 @@ export const SecondaryFixtureCard = ({
           <div className="flex items-center gap-2.5">
             <AVATAR
               src={away?.logo as string}
-              fallbackText={home?.name as string}
+             
               alt={away?.name as string}
               className="h-8 w-8 aspect-square "
             />
@@ -106,7 +106,7 @@ export const SecondaryFixtureCard = ({
           <AVATAR
             src={home?.logo as string}
             alt={home?.name as string}
-            fallbackText={home?.name as string}
+           
             className="h-8 w-8 aspect-square "
           />
           <span className="w-36 line-clamp-1 _label">{home?.name}</span>
@@ -115,7 +115,7 @@ export const SecondaryFixtureCard = ({
         <div className="flex items-center gap-2.5">
           <AVATAR
             src={away?.logo as string}
-            fallbackText={home?.name as string}
+            
             alt={away?.name as string}
             className="h-8 w-8 aspect-square "
           />

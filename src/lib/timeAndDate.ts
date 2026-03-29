@@ -21,7 +21,7 @@ export const getAgeFromDOB = (dob: string): number => {
 
 export const formatDate = (
   dateString?: string | Date,
-  format?:
+  format:
     | "dd/mm/yyyy"
     | "dd-mm-yyyy"
     | "yyyy-mm-dd"
@@ -33,7 +33,7 @@ export const formatDate = (
     | "HH:MM:SS A"
     | "full"
     | "iso"
-    | "timestamp",
+    | "timestamp" = 'MAR 28, 2025',
 ) => {
   if (!dateString) return "";
 
@@ -217,4 +217,53 @@ export const getYears = (
     from = from + 1;
   }
   return asc ? years : years.sort((a, b) => b - a);
+};
+
+
+export const isLateByDays = (
+  date: Date | string,
+  days: number = 0,
+): boolean => {
+  const target = new Date(date);
+  const today = new Date();
+
+  // Normalize both to midnight
+  target.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const diffInMs = today.getTime() - target.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+  if (diffInDays < 0) return false; // future dates are not late
+
+  return diffInDays >= days;
+};
+
+/**
+ * 
+ * @param date Date set as deadline.
+ * @param extraDays Optional for adjusting date.
+ * @returns  - { isPassed: true/false , deadline: datestring,}
+ */
+
+
+export const getDeadlineInfo = (
+  date: Date | string,
+  extraDays: number = 0,
+) => {
+  const base = new Date(date);
+  const today = new Date();
+
+  base.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const deadline = new Date(base);
+  deadline.setDate(deadline.getDate() + extraDays);
+
+  const isPassed = today >= deadline;
+
+  return {
+    isPassed,
+    deadline: formatDate(deadline, ),
+  };
 };

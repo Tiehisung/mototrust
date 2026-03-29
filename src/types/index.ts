@@ -45,6 +45,15 @@ export interface IPageProps {
   params: Promise<Record<string, string | undefined>>;
 }
 
+export interface IFormEvents<
+  TSuccess = any,
+  TError = any,
+  TClose = any
+> {
+  onError?: (error?: TError) => void;
+  onSuccess?: (data?: TSuccess) => void;
+  onClose?: (data?: TClose) => void;
+}
 export interface IPagination {
   page: number;
   limit: number;

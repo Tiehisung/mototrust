@@ -1,7 +1,7 @@
-import { teamBnfc } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { checkTeams } from "@/lib/compute/match";
 import { formatDate } from "@/lib/timeAndDate";
- 
+
 import { IMatch } from "@/types/match.interface";
 import { IStaff } from "@/types/staff.interface";
 
@@ -32,7 +32,7 @@ export const friendlyTemplates = (match: IMatch, official: { requester: IStaff }
             <p>Kind regards,<br/>
             <b>${official?.requester?.fullname}</b><br/>
             ${official?.requester?.phone}<br/>
-            ${teamBnfc.name}</p>
+            ${TEAM.name}</p>
                         `.trim(),
         },
 
@@ -54,7 +54,7 @@ export const friendlyTemplates = (match: IMatch, official: { requester: IStaff }
             <p>Please let us know if your team is available.</p>
 
             <p>Best regards,<br/>
-            ${teamBnfc.name}</p>
+            ${TEAM.name}</p>
                         `.trim(),
         },
 
@@ -77,7 +77,7 @@ export const friendlyTemplates = (match: IMatch, official: { requester: IStaff }
 <p>Sincerely,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -101,7 +101,7 @@ ${teamBnfc.name}</p>
 <p>Warm regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -124,7 +124,7 @@ ${teamBnfc.name}</p>
 <p>Best wishes,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -147,7 +147,7 @@ ${teamBnfc.name}</p>
 <p>Kind regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -170,7 +170,7 @@ ${teamBnfc.name}</p>
 <p>Best regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -193,7 +193,7 @@ ${teamBnfc.name}</p>
 <p>Sincerely,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -216,7 +216,7 @@ ${teamBnfc.name}</p>
 <p>Warm regards,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
 
@@ -239,7 +239,7 @@ ${teamBnfc.name}</p>
 <p>Yours sincerely,<br/>
 <b>${official?.requester?.fullname}</b><br/>
 ${official?.requester?.phone}<br/>
-${teamBnfc.name}</p>
+${TEAM.name}</p>
             `.trim(),
         },
     ];

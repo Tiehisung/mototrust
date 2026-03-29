@@ -13,24 +13,20 @@ import { DIALOG } from "@/components/Dialog";
 import SquadCard from "../squad/SquadCard";
 import { UpdateFixtureMatch } from "./CreateFixture";
 import SquadForm from "../squad/SquadForm";
-import { IPlayer } from "@/types/player.interface";
 import { IMatch, ITeam } from "@/types/match.interface";
 import { ResizableContent } from "@/components/resizables/ResizableContent";
 import { Link } from "react-router-dom";
 import { useDeleteMatchMutation } from "@/services/match.endpoints";
 import { smartToast } from "@/utils/toast";
 
+interface Props{
+  match?: IMatch;
+  teams?: ITeam[];
+}
 export function AdminMatchCard({
   match,
   teams,
-  matches,
-  players,
-}: {
-  match?: IMatch;
-  teams?: ITeam[];
-  players?: IPlayer[];
-  matches?: IMatch[];
-}) {
+}: Props) {
   const { away, home } = checkTeams(match);
   const scores = checkMatchMetrics(match);
   const status = match?.status;
@@ -126,14 +122,10 @@ export function AdminMatchCard({
             trigger="Squad"
             variant="ghost"
             triggerStyles="justify-start"
-            title={`Select Squad for ${match?.title}`}
+            title={` Squad for ${match?.title}`}
             className="min-w-[80vw]"
           >
-            <SquadForm
-              players={players}
-              matches={matches}
-              defaultMatch={match}
-            />
+            <SquadForm defaultMatch={match} />
           </DIALOG>
         )}
 

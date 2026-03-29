@@ -41,7 +41,7 @@ export default function PlayerFeatureStatsCard({
         <AVATAR
           src={avatar}
           alt={getInitials(name)}
-          fallbackText={getInitials(name)}
+        
         />
         {/* Player Info */}
         <div className="z-10 w-full text-left ">

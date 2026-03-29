@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Menu, Search } from "lucide-react";
 import { Drawer } from "@/components/headlessUI/Drawer";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AVATAR } from "@/components/ui/avatar";
 import { logos } from "@/assets/images";
 import { scrollToSection } from "@/lib/dom";
@@ -10,6 +10,8 @@ import { Button } from "@/components/buttons/Button";
 import { fireEscape } from "@/hooks/Esc";
 import UserLogButtons from "./UserLogger";
 import { LogoutBtn } from "./auth/LogoutButton";
+import { PrimarySearch } from "./Search";
+import { ThemeModeToggle } from "./ThemeToggle";
 
 interface ILink {
   label: string;
@@ -22,6 +24,7 @@ export default function MainNavbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { pathname } = useLocation();
   const isLanding = pathname == "/";
+  const navigate = useNavigate();
 
   const mainpage = pathname.split("/")[1] || "Home";
 
@@ -37,14 +40,14 @@ export default function MainNavbar() {
 
   return (
     <>
-      <nav className=" bg-primary sticky top-0 z-40">
+      <nav className=" bg-primary dark:bg-accent backdrop-blur-xs sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-start items-center h-16 text-white">
             {/* Left Section - Menu Button (Mobile) */}
             <div className="flex items-center lg:hidden">
               <button
                 onClick={() => setIsMenuOpen(true)}
-                className="p-2 rounded-md hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-Red transition-colors"
+                className="p-2 rounded-md hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary transition-colors"
                 aria-label="Open menu"
               >
                 <Menu className="h-6 w-6" />
@@ -70,13 +73,13 @@ export default function MainNavbar() {
             {/* Right Section - User & Search */}
             <div className="flex items-center gap-2">
               {/* Search Button */}
-              <button
+              <Button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 rounded-md text-white hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-Red transition-colors"
-                aria-label="Search"
+                className="p-2 rounded-md transition-colors"
+                variant={"ghost"}
               >
                 <Search className="h-5 w-5" />
-              </button>
+              </Button>
 
               <UserLogButtons />
             </div>
@@ -125,34 +128,29 @@ export default function MainNavbar() {
       >
         <nav className="flex flex-col p-4 gap-2 ">
           {navLinks.map((item) => {
-            if (item?.id && isLanding)
-              return (
-                <Button
-                  variant={"ghost"}
-                  key={item.label}
-                  onClick={() => {
+            return (
+              <Button
+                key={item.label}
+                onClick={() => {
+                  if (item?.id && isLanding) {
                     scrollToSection(item?.id as string);
-                    fireEscape();
-                  }}
-                  className="h-16 px-6 bg-white text-primary transition-colors font-medium justify-start py-3"
-                >
-                  {item.label}
-                </Button>
-              );
-            if (item?.href)
-              return (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="rounded-md px-6 py-5 text-base font-medium bg-white text-primary hover:bg-gray-50 transition-colors"
-                >
-                  {item.label}
-                </Link>
-              );
+                  } else {
+                    navigate(item?.href as string);
+                  }
+                  fireEscape();
+                }}
+                className="h-16 px-6 transition-colors font-medium justify-start py-3"
+              >
+                {item.label}
+              </Button>
+            );
           })}
 
-          <LogoutBtn text="Logout" className="grow" />
+          <div className="flex items-center gap-4 py-2 pt-5">
+            <ThemeModeToggle />
+
+            <LogoutBtn text="Logout" className="grow" />
+          </div>
         </nav>
       </Drawer>
 
@@ -165,15 +163,7 @@ export default function MainNavbar() {
         title="Search"
       >
         <div className="p-4">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search products, articles, and more..."
-              className="w-full px-4 py-2 pl-10 pr-4 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              autoFocus
-            />
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-          </div>
+          <PrimarySearch placeholder="Search players, articles, and more..." />
 
           {/* Recent Searches (Optional) */}
           <div className="mt-6">
@@ -181,13 +171,13 @@ export default function MainNavbar() {
               Recent Searches
             </h3>
             <div className="mt-2 space-y-2">
-              {["laptop", "headphones", "keyboard"].map((search) => (
-                <button
+              {["player", "match", "article"].map((search) => (
+                <Button
                   key={search}
-                  className="block w-full text-left px-2 py-1 text-sm text-gray-700 hover:bg-gray-50 rounded"
+                  className="block w-full text-left px-2 py-1 text-sm rounded"
                 >
                   {search}
-                </button>
+                </Button>
               ))}
             </div>
           </div>

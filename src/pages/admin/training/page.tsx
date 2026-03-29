@@ -78,8 +78,8 @@ export default function TrainingSettingsAdm() {
                   <AVATAR
                     className="h-12 w-12"
                     src={player?.avatar}
-                    alt={player?.lastName}
-                    fallbackText={`${player.firstName} ${player.lastName}`}
+                     
+                    alt={`${player.firstName} ${player.lastName}`}
                   />
                   <span>
                     {`${player.firstName} ${player.lastName} (${player.number})`}

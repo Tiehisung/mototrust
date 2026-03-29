@@ -1,5 +1,3 @@
- 
-
 import { CSSProperties, MouseEventHandler } from "react";
 import { VscLoading } from "react-icons/vsc";
 import { TButtonSize, TButtonVariant, Button as Btn } from "../ui/button";
@@ -26,7 +24,6 @@ interface ClickButtonProps extends ButtonProps {
 export function Button({
   primaryText,
   waiting = false,
-  waitingText = "",
   className = "",
   disabled = false,
   type = "button",
@@ -52,19 +49,9 @@ export function Button({
       style={styles}
       id={id}
     >
-      {waiting ? (
-        <span
-          className={`flex items-center gap-2 w-fit min-w-max justify-between whitespace-nowrap transition-all`}
-        >
-          <VscLoading className={` animate-spin `} />
-          {waitingText}
-        </span>
-      ) : (
-        <>
-          {children}
-          <span hidden={!primaryText}>{primaryText}</span>
-        </>
-      )}
+      {children}
+      <span hidden={!primaryText}>{primaryText}</span>
+      {waiting && <VscLoading className={` animate-spin `} />}
     </Btn>
   );
 }

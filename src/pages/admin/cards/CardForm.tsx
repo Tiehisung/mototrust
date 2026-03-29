@@ -121,9 +121,9 @@ export function CardForm({ match, card, player: defaultPlayer }: IProps) {
         <h2 className="mb-6 text-2xl font-bold flex items-center justify-between">
           {card ? `Edit - ${card?.player?.name}` : "Add card"}:
           <AVATAR
-            alt="card player"
+            alt="IP"
             src={selectedPlayer?.avatar as string}
-            fallbackText="IP"
+            
           />
         </h2>
 
@@ -229,7 +229,7 @@ export function CardForm({ match, card, player: defaultPlayer }: IProps) {
           <Button
             type="submit"
             waiting={!card ? creating : updating}
-            className="w-full _primaryBtn"
+            className="w-full"
             primaryText={card ? "Edit card" : "Add card"}
             waitingText={card ? "Editing card" : "Adding card"}
           >

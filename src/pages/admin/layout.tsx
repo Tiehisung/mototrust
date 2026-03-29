@@ -14,7 +14,7 @@ export default function AdminLayout() {
       <LeftPaneDesktop />
       <section className="flex-1 md:h-screen md:overflow-y-auto">
         <Header />
-        <div className="pt-4 md:pt-2 bg-accent">
+        <div className="pt-4 md:pt-2 bg-background">
           <Outlet />
         </div>
         <AdminFooter />
@@ -31,7 +31,7 @@ const Header = () => {
 
   if (isLoading) {
     return (
-      <header className="flex justify-between px-6 p-1 sticky top-0.5 bg-accent z-20 items-center border-b border-border">
+      <header className="flex justify-between px-6 p-1 sticky top-0.5 bg-accent z-20 items-center border-b border-border backdrop-blur-sm">
         <LeftPaneMobile />
         <div className="hidden sm:flex items-center gap-4 flex-wrap">
           <BackBtn />

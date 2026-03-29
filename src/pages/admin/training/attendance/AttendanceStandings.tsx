@@ -65,7 +65,7 @@ export function AttendanceStandingsTable({ trainingSessions }: IProps) {
                   <span className="text-xs text-muted-foreground">{i + 1}</span>
                   <AVATAR
                     src={player?.avatar as string}
-                    fallbackText={getInitials(player?.name)}
+                    alt={getInitials(player?.name)}
                   />
                   <span>
                     {player?.name}({player.number})

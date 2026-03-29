@@ -85,7 +85,7 @@ export function GeneralEventsTab({ match }: GeneralEventsTabProps) {
               className="overflow-x-auto _hideScrollbar"
             />
             <Button
-              className="w-full justify-center _primaryBtn"
+              className="w-full "
               waiting={isLoading}
               primaryText=" Add Event"
               waitingText="Adding Event"

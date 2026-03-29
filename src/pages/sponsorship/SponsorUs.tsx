@@ -1,6 +1,6 @@
 import { Mail, Phone, HandshakeIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 
 export default function SponsorUs() {
   return (
@@ -65,9 +65,7 @@ export default function SponsorUs() {
             variant="outline"
             className="h-12 _secondaryBtn text-lg rounded-xl"
           >
-            <a
-              href={`tel:${TEAM.contact?.general?.phone || "+232XXXXXXXXX"}`}
-            >
+            <a href={`tel:${TEAM.contact?.general?.phone || "+232XXXXXXXXX"}`}>
               Call Us
             </a>
           </Button>

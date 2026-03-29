@@ -2,6 +2,7 @@
 import { Fragment, type ReactNode } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { X } from "lucide-react";
+import { Button } from "../buttons/Button";
 
 export type DrawerSize = "sm" | "md" | "lg" | "xl" | "full";
 export type DrawerPosition = "right" | "left" | "top" | "bottom";
@@ -126,21 +127,21 @@ export function Drawer({
                     {(title || showCloseButton) && (
                       <div className="flex items-center justify-between px-4 py-6 sm:px-6 border-b border-gray-200">
                         {title && (
-                          <Dialog.Title className="text-lg font-medium text-gray-900">
+                          <Dialog.Title className="text-lg font-medium text-primary">
                             {title}
                           </Dialog.Title>
                         )}
                         {showCloseButton && (
                           <div className="ml-3 flex h-7 items-center">
-                            <button
-                              type="button"
-                              className="relative -m-2 p-2 text-gray-400 hover:text-gray-500 rounded-md hover:bg-gray-100 transition-colors"
+                            <Button
+                               variant={'outline'}
+                              className="relative -m-2 p-2 rounded-md transition-colors"
                               onClick={onClose}
                             >
                               <span className="absolute -inset-0.5" />
                               <span className="sr-only">Close panel</span>
                               <X className="h-6 w-6" aria-hidden="true" />
-                            </button>
+                            </Button>
                           </div>
                         )}
                       </div>

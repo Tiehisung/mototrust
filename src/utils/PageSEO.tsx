@@ -1,5 +1,5 @@
 // components/SEO/PageSEO.tsx
-import { TEAM } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
 import { Helmet } from "react-helmet";
 
 interface IPageSEOProps {

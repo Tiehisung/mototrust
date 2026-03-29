@@ -6,61 +6,38 @@ import HEADER from "@/components/Element";
 import { PrimaryTabs } from "@/components/Tabs";
 import { EMatchStatus } from "@/types/match.interface";
 import { useSearchParams } from "react-router-dom";
-import { useGetSquadsQuery } from "@/services/squad.endpoints";
 import Loader from "@/components/loaders/Loader";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PrimaryAccordion } from "@/components/ui/accordion";
 import { useGetMatchesQuery } from "@/services/match.endpoints";
-import { useGetPlayersQuery } from "@/services/player.endpoints";
-import { useGetStaffMembersQuery } from "@/services/staff.endpoints";
 
 const SquadPage = () => {
   const [searchParams] = useSearchParams();
-  const paramsString = searchParams.toString();
+
   const targetMatchId = searchParams.get("matchId");
 
-  const { data: playersData, isLoading: playersLoading } =
-    useGetPlayersQuery(paramsString);
-
-  const { data: managersData, isLoading: managersLoading } =
-    useGetStaffMembersQuery('');
-
-  const { data: matchesData, isLoading: matchesLoading } = useGetMatchesQuery({
+  const { data: matchesData, isLoading } = useGetMatchesQuery({
     status: EMatchStatus.UPCOMING,
   });
 
-  const {
-    data: squadsData,
-    isLoading: squadsLoading,
-    error: squadsError,
-  } = useGetSquadsQuery(paramsString);
-
-  const isLoading =
-    playersLoading || managersLoading || matchesLoading || squadsLoading;
-  const players = playersData;
-  const managers = managersData;
-  console.log(managers);
   const matches = matchesData;
-  const squads = squadsData;
 
   const targetMatch = matches?.data?.find((m) => m._id === targetMatchId);
 
-  const accordion = squads?.data?.map((squad) => ({
+  const accordion = matches?.data?.map((match) => ({
     trigger: (
-      <div className="flex items-center gap-1 justify-between">
-        <span>{squad?.title}</span>
-        <span className="_label">
-          {squad.match?.isHome ? " Home" : " Away"}
-        </span>
-        {" - "}
-        <span>
-          {formatDate(squad.match?.date, "March 2, 2025")}, {squad.match?.time}
-        </span>
+      <div className="flex items-center gap-4 justify-between">
+        <div>
+          <p>{match?.title}</p>
+          <p className="font-light italic">{match?.isHome ? "HOME" : "AWAY"}</p>
+        </div>
+        <div className="text-sm font-light">
+          <p>{formatDate(match?.date, "March 2, 2025")}</p>
+          <p className="italic">{match?.time}</p>
+        </div>
       </div>
     ),
-    content: <SquadCard squad={squad} />,
-    value: squad._id ?? "",
+    content: <SquadCard match={match} />,
+    value: match?._id ?? "",
   }));
 
   if (isLoading) {
@@ -74,47 +51,20 @@ const SquadPage = () => {
     );
   }
 
-  if (squadsError) {
-    return (
-      <div className="px-4">
-        <HEADER title="SQUAD" />
-        <main className="_page px-3 mt-6">
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>
-              Failed to load squads:{" "}
-              {(squadsError as any)?.message || "Unknown error"}
-            </AlertDescription>
-          </Alert>
-        </main>
-      </div>
-    );
-  }
-
   return (
-    <div className="px-4">
+    <div className="">
       <HEADER title="SQUAD" />
       <main className="_page px-3 mt-6">
         <PrimaryTabs
           tabs={[
-            { label: "New Squad", value: "new-squad" },
             { label: "All Squads", value: "all-squads" },
+            { label: "New Squad", value: "new-squad" },
           ]}
           defaultValue="new-squad"
           className=""
         >
-          <section>
-            <SquadForm
-              players={players?.data}
-              matches={matches?.data}
-              defaultMatch={targetMatch}
-            />
-          </section>
-
           <section className="mt-12 space-y-6">
             <PrimarySearch
-              className="bg-popover"
               inputStyles="h-9"
               placeholder="Search Squad"
               searchKey="squad_search"
@@ -124,6 +74,9 @@ const SquadPage = () => {
               className=""
               triggerStyles="cursor-pointer _card"
             />
+          </section>
+          <section>
+            <SquadForm defaultMatch={targetMatch} />
           </section>
         </PrimaryTabs>
       </main>
