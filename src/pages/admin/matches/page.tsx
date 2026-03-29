@@ -6,7 +6,6 @@ import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGetMatchesQuery } from "@/services/match.endpoints";
-import { useGetPlayersQuery } from "@/services/player.endpoints";
 import { useGetTeamsQuery } from "@/services/team.endpoints";
 import { IQueryResponse } from "@/types";
 import { IMatch } from "@/types/match.interface";
@@ -15,7 +14,7 @@ export default function AdminFixtures() {
   // const [searchParams] = useSearchParams();
   // const paramsString = searchParams.toString();
 
-  // Multiple queries in parallel
+ 
   const {
     data: fixtures,
     isLoading: fixturesLoading,
@@ -24,7 +23,6 @@ export default function AdminFixtures() {
 
   const { data: teams, isLoading: teamsLoading } = useGetTeamsQuery({});
 
-  const { data: players, isLoading: playersLoading } = useGetPlayersQuery("");
 
   const isLoading = fixturesLoading || teamsLoading || playersLoading;
 
@@ -64,7 +62,7 @@ export default function AdminFixtures() {
         <DisplayFixtures
           fixtures={fixtures as IQueryResponse<IMatch[]>}
           teams={teams?.data}
-          players={players?.data}
+     
         />
 
         <Separator />

@@ -115,7 +115,7 @@ export function AdminMatchCard({
             title=""
             className="min-w-[80vw]"
           >
-            <SquadCard squad={match?.squad} match={match} />
+            <SquadCard  match={match} />
           </DIALOG>
         ) : (
           <DIALOG

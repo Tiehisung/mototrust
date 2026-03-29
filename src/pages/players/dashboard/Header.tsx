@@ -9,13 +9,11 @@ import {
   Edit,
   Mail,
   Phone,
-  
   Award,
   Tag,
 } from "lucide-react";
 import { EPlayerAvailability, IPlayer } from "@/types/player.interface";
 import { EPlayerPosition } from "@/types/player.interface";
-import { getInitials } from "@/lib";
 import { POPOVER } from "@/components/ui/popover";
 import { SocialShare } from "@/components/SocialShare";
 

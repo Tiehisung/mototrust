@@ -61,7 +61,7 @@ export const PageSEO = ({
   title: customTitle,
   description: customDescription,
   image,
-  url = TEAM.website.url,
+  url = TEAM.url,
 }: IPageSEOProps) => {
   const config = pageConfig[page as keyof typeof pageConfig];
   const title = customTitle || config.title;
@@ -87,7 +87,7 @@ export const PageSEO = ({
 
       <link
         rel="canonical"
-        href={`${TEAM.website.url}/${page === "home" ? "" : page}`}
+        href={`${TEAM.url}/${page === "home" ? "" : page}`}
       />
     </Helmet>
   );

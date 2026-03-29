@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Pagination } from "@/components/pagination/Pagination";
 import { IQueryResponse } from "@/types";
 import { AdminMatchCard } from "./MatchCard";
-import { IPlayer } from "@/types/player.interface";
 import { IMatch, ITeam } from "@/types/match.interface";
 import { useUpdateMatchStatusMutation } from "@/services/match.endpoints";
 import { showToast } from "@/utils/toast";
@@ -12,26 +11,15 @@ import { showToast } from "@/utils/toast";
 interface DisplayFixturesProps {
   fixtures: IQueryResponse<IMatch[]>;
   teams?: ITeam[];
-  players?: IPlayer[];
 }
 // Fixture is  match that is not yet played successfully
 
-export function DisplayFixtures({
-  fixtures,
-  teams,
-  players,
-}: DisplayFixturesProps) {
+export function DisplayFixtures({ fixtures, teams }: DisplayFixturesProps) {
   return (
     <div>
       <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5">
         {fixtures?.data?.map((fx) => (
-          <AdminMatchCard
-            key={fx?._id}
-            match={fx}
-            teams={teams}
-            matches={fixtures?.data}
-            players={players}
-          />
+          <AdminMatchCard key={fx?._id} match={fx} teams={teams} />
         ))}
       </div>
 
