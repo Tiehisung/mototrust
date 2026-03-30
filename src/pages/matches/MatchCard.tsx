@@ -1,6 +1,6 @@
 import { AVATAR } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { checkMatchMetrics, checkTeams } from "@/lib/compute/match";
+import {   checkTeams } from "@/lib/compute/match";
 import {
   formatDate,
   formatTimeToAmPm,
@@ -8,15 +8,19 @@ import {
 } from "@/lib/timeAndDate";
 
 import { DIALOG } from "@/components/Dialog";
-import { Users,  } from "lucide-react";
+import { Users } from "lucide-react";
 
 import SquadCard from "../admin/squad/SquadCard";
 import { IMatch } from "@/types/match.interface";
 
 export function MatchFixtureCard({ match }: { match?: IMatch }) {
   const { away, home } = checkTeams(match);
-  const scores = checkMatchMetrics(match);
   const status = match?.status;
+
+  const score = {
+    home: match?.computed?.scoreline?.split("-")?.[0],
+    away: match?.computed?.scoreline?.split("-")?.[1],
+  };
   return (
     <div className="bg-card border p-4 space-y-2.5">
       <div className="flex justify-between gap-5">
@@ -59,8 +63,8 @@ export function MatchFixtureCard({ match }: { match?: IMatch }) {
         <div className="font-semibold">
           {status == "FT" ? (
             <div className="grid">
-              <span className="px-3 text-lg">{scores?.goals?.home}</span>
-              <span className="px-3 text-lg">{scores?.goals?.away}</span>
+              <span className="px-3 text-lg">{score?.home}</span>
+              <span className="px-3 text-lg">{score?.away}</span>
             </div>
           ) : status == "LIVE" ? (
             <span className="text-destructive "> Live</span>
