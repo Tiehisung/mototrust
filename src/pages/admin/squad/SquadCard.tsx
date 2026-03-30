@@ -5,7 +5,12 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  AVATAR,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Users, CalendarDays, MapPin, Clock, UserCog } from "lucide-react";
@@ -77,7 +82,7 @@ const SquadCard = ({ match }: SquadDisplayProps) => {
     );
 
   return (
-    <Card className="p-2 shadow-lg border-0 overflow-hidden rounded-none ml-2.5 mb-12">
+    <Card className="p-2 border-0 overflow-hidden rounded-none ml-2.5 mb-12">
       <CardHeader className="bg-muted/40 py-5 px-0">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between">
           <div>
@@ -117,17 +122,14 @@ const SquadCard = ({ match }: SquadDisplayProps) => {
           {squad?.players?.map((player) => (
             <div
               key={player?._id}
-              className="flex items-center gap-3 bg-muted/30 p-3 rounded-xl border border-border hover:shadow-md transition"
+              className="flex items-center gap-3 bg-muted/30 overflow-hidden rounded-xl border border-border hover:shadow-md transition"
             >
-              <Avatar className="h-12 w-12">
-                <AvatarImage src={player?.avatar} alt={player?.name} />
-                <AvatarFallback>
-                  {player?.name
-                    ?.split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </AvatarFallback>
-              </Avatar>
+              <AVATAR
+                src={player?.avatar as string}
+                alt={player?.name}
+                shape="square"
+                size='xl'
+              />
               <div className="flex flex-col">
                 <span className="font-semibold text-sm uppercase">
                   {player?.name}
@@ -135,6 +137,8 @@ const SquadCard = ({ match }: SquadDisplayProps) => {
                 <Badge variant="outline" className="text-xs mt-1 capitalize">
                   {player?.position}
                 </Badge>
+
+                <span>{player?.number}</span>
               </div>
             </div>
           ))}
@@ -199,38 +203,38 @@ const SquadCard = ({ match }: SquadDisplayProps) => {
       </CardContent>
 
       <footer className="justify-between text-sm text-muted-foreground ">
-        <p className="italic">
-          Modified: {formatDate(squad?.createdAt)} (
-          {getTimeLeftOrAgo(squad?.createdAt as string).formatted})
-        </p>
-
-        <p className="text-sm font-thin p-2 border border-destructive text-destructive rounded-lg my-3 ">
-          Can not modify after{" "}
-          <Badge variant={"secondary"}>
-            {getDeadlineInfo(match?.date as string, 5).deadline}
-          </Badge>
-        </p>
-
         {user?.role?.includes("admin") && (
-          <div className="flex items-center gap-5 ">
-            <Button
-              onClick={() => setSearchParams("sq_mode", "editing")}
-              disabled={isLocked}
-              variant={"secondary"}
-            >
-              Edit
-            </Button>
+          <>
+            <p className="italic">
+              Modified: {formatDate(squad?.createdAt)} (
+              {getTimeLeftOrAgo(squad?.createdAt as string).formatted})
+            </p>
+            <p className="text-sm font-thin p-2 border border-destructive text-destructive rounded-lg my-3 ">
+              Can not modify after{" "}
+              <Badge variant={"secondary"}>
+                {getDeadlineInfo(match?.date as string, 5).deadline}
+              </Badge>
+            </p>
+            <div className="flex items-center gap-5 ">
+              <Button
+                onClick={() => setSearchParams("sq_mode", "editing")}
+                disabled={isLocked}
+                variant={"secondary"}
+              >
+                Edit
+              </Button>
 
-            <ConfirmActionButton
-              primaryText="Delete Squad"
-              onConfirm={handleDelete}
-              variant="destructive"
-              title="Delete Squad"
-              confirmText={`Are you sure you want to delete "${squad?.title}" Squad?`}
-              isLoading={deletingSquad}
-              disabled={isLocked}
-            />
-          </div>
+              <ConfirmActionButton
+                primaryText="Delete Squad"
+                onConfirm={handleDelete}
+                variant="destructive"
+                title="Delete Squad"
+                confirmText={`Are you sure you want to delete "${squad?.title}" Squad?`}
+                isLoading={deletingSquad}
+                disabled={isLocked}
+              />
+            </div>
+          </>
         )}
       </footer>
     </Card>

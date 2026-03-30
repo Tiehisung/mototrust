@@ -15,8 +15,8 @@ import { DIALOG } from "../Dialog";
 import { MdOutlineDownload, MdOutlinePreview } from "react-icons/md";
 import { VscLoading } from "react-icons/vsc";
 import { FaWpforms } from "react-icons/fa";
-import { TITLE } from "../Element";
-import { CLUB } from "@/data/club";
+import { TITLE } from "../Element";;
+import { TEAM } from "@/data/team";
 
 // Styles
 const styles = StyleSheet.create({
@@ -83,7 +83,7 @@ export default function PlayerConsentForm({ player }: PlayerConsentFormProps) {
         <View style={styles.sectionBorder}>
           <View style={styles.row}>
             <Image
-              src={CLUB.logo}
+              src={TEAM.logo}
               style={{
                 width: 90,
                 height: 90,

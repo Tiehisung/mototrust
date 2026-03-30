@@ -1,16 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Card } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Plus, X } from "lucide-react";
 import { Input } from "@/components/input/Inputs";
-
-import { IPlayer } from "@/types/player.interface";
 import { Button } from "@/components/buttons/Button";
 
 import { IGoal, IMatch, ITeam } from "@/types/match.interface";
@@ -22,14 +13,18 @@ import {
   useDeleteGoalMutation,
 } from "@/services/goals.endpoints";
 import { smartToast } from "@/utils/toast";
+import { useGetPlayersQuery } from "@/services/player.endpoints";
+import SELECT from "@/components/select/Select";
 
 interface ScoreEventsTabProps {
-  players: IPlayer[];
   opponent?: ITeam;
   match: IMatch;
 }
 
-export function ScoreEventsTab({ players, match }: ScoreEventsTabProps) {
+export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
+  const { data: playersData } = useGetPlayersQuery("");
+
+  const players = playersData?.data || [];
   const [addGoal, { isLoading }] = useCreateGoalMutation();
   const [form, setForm] = useState({
     scorer: "",
@@ -115,95 +110,74 @@ export function ScoreEventsTab({ players, match }: ScoreEventsTabProps) {
               name="forkfc"
               onCheckedChange={(ch) => setForm((p) => ({ ...p, forKFC: ch }))}
               checked={form.forKFC}
-              className=""
+              className="" 
             />
           </h2>
 
           <div className="space-y-4">
             {form.forKFC && (
               <div className="grid grid-cols-1 gap-4 ">
-                <div>
-                  <label className="mb-2 block text-sm font-medium">
-                    Scorer
-                  </label>
-                  <Select
-                    value={form.scorer}
-                    onValueChange={(value) =>
-                      setForm((prev) => ({ ...prev, scorer: value }))
-                    }
-                  >
-                    <SelectTrigger className="grow w-full ">
-                      <SelectValue placeholder="Select scorer" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {players?.map((player) => (
-                        <SelectItem key={player._id} value={player._id}>
-                          {`${player?.number ?? player?.number} - ${
-                            player.lastName
-                          } ${player?.firstName}`}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium">
-                    Assist (Optional)
-                  </label>
-                  <Select
-                    value={form.assist}
-                    onValueChange={(value) =>
-                      setForm((prev) => ({ ...prev, assist: value }))
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select assist player" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {players?.map((player) => (
-                        <SelectItem key={player._id} value={player._id}>
-                          {`${player?.number ?? player?.number} - ${
-                            player.lastName
-                          } ${player?.firstName}`}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <SELECT
+                  label="Scorer"
+                  options={players?.map((p) => ({
+                    label: `${
+                      p.lastName
+                    } ${p?.firstName}(${p?.number ?? p?.number})`,
+                    value: p._id,
+                  }))}
+                  placeholder="Scored by"
+                  className="grid"
+                  onChange={(id) =>
+                    setForm((prev) => ({ ...prev, scorer: id }))
+                  }
+                  value={form.scorer}
+                />
+
+                <SELECT
+                  label="Assist (Optional)"
+                  options={players?.map((p) => ({
+                    label: `${
+                      p.lastName
+                    } ${p?.firstName}(${p?.number ?? p?.number})`,
+                    value: p._id,
+                  }))}
+                  placeholder="Assisted by"
+                  className="grid"
+                  onChange={(id) =>
+                    setForm((prev) => ({ ...prev, assist: id }))
+                  }
+                  value={form.assist}
+                  disabled={!form.scorer}
+                />
               </div>
             )}
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div>
-                <label className="mb-2 block text-sm font-medium">Minute</label>
-                <Input
-                  type="number"
-                  others={{ min: "0", max: "120" }}
-                  placeholder="e.g., 45"
-                  value={form.minute}
-                  required
-                  onChange={(e) =>
-                    setForm((prev) => ({ ...prev, minute: e.target.value }))
-                  }
-                  name={"goalMinute"}
-                />
-              </div>
-              <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Description
-                </label>
-                <Input
-                  placeholder="e.g., VAR Review, Penalty Decision, etc."
-                  value={form.description}
-                  onChange={(e) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      description: e.target.value,
-                    }))
-                  }
-                  name={"goalDescription"}
-                />
-              </div>
+              <Input
+                type="number"
+                others={{ min: "0", max: "120" }}
+                placeholder="e.g., 45"
+                value={form.minute}
+                required
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, minute: e.target.value }))
+                }
+                name={"goalMinute"}
+                label="Minute"
+              />
+
+              <Input
+                placeholder="e.g., VAR Review, Penalty Decision, etc."
+                value={form.description}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+                name={"goalDescription"}
+                label="Comment"
+              />
             </div>
 
             <div className="gap-6 flex items-center mt-8">
@@ -230,7 +204,7 @@ export function ScoreEventsTab({ players, match }: ScoreEventsTabProps) {
         >
           <div
             className={
-              "flex items-center gap-5 flex-wrap" +
+              "flex items-center gap-5 flex-wrap " +
               (isLoading ? "opacity-70 pointer-events-none cursor-wait" : "")
             }
           >

@@ -6,7 +6,7 @@ import BackToTopButton from "@/components/scroll/ToTopBtn";
 import { Swinger } from "@/components/Animate/Swing";
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "@/utils/ScrollToTop";
-import Footer from "./home/Footer";
+import Footer from "./Footer";
 import MainNavbar from "../components/MainNavbar";
 
 export default function HomeLayout() {

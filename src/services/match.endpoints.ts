@@ -190,17 +190,7 @@ const matchApi = api.injectEndpoints({
                 method: "PUT",
                 body,
             }),
-            invalidatesTags: (_result, _error, { _id:id }) => [
-                { type: 'Matches', id: 'LIST' },
-                { type: 'Matches', id: id },
-                { type: 'Matches', id: 'UPCOMING' },
-                { type: 'Matches', id: 'RECENT' },
-                { type: 'Matches', id: 'SEASON_' },
-                { type: 'Matches', id: 'TOURNAMENT_' },
-                { type: 'Matches', id: 'TEAM_' },
-                { type: 'Matches', id: `STATS_${id}` },
-                { type: 'Matches', id: `TIMELINE_${id}` },
-            ],
+            invalidatesTags: ['Matches'],
         }),
 
         // PATCH match (partial update)

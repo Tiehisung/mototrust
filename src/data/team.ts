@@ -1,15 +1,16 @@
+import { ENV } from "@/lib/env";
 import { ITeam } from "@/types/match.interface";
 
 export const TEAM: ITeam & { url: string, officialSignature: string } = {
-    _id: 'teamBnfc',
-    url: 'https://bunyenifc.vercel.app',
-    name: 'Bunyeni FC',
-    alias: 'Yeni FC',
+    _id: ENV.TEAM_ID,// Example ObjectId
+    url: ENV.APP_URL,
+    name: ENV.TEAM_NAME,
+    alias: ENV.TEAM_ALIAS,
     community: "Wa-Konjiehi",
-    logo: 'https://res.cloudinary.com/djzfztrig/image/upload/v1774785880/assets-storage/zccn69hm4oe7dvcbbdvo.png',
-    officialSignature: 'https://res.cloudinary.com/dgp4vzn3m/image/upload/v1766906326/assets-storage/signature_alypm1.png',
+    logo: ENV.LOGO_URL,
+    officialSignature: ENV.OFFICIAL_SIGNATURE_URL,
     currentPlayers: [],
-    contact: "0241508430",
+    contact: ENV.CONTACT.PHONE,
     contactName: "Adam Wahid",
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",

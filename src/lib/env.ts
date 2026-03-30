@@ -1,0 +1,46 @@
+// config/env.ts
+const e = import.meta.env;
+
+export const ENV = {
+    // App
+    APP_URL: e.VITE_APP_URL,
+    API_URL: e.VITE_API_URL,
+
+    // TEAM Info
+    TEAM_ID: e.VITE_TEAM_ID ,
+    
+    TEAM_NAME: e.VITE_TEAM_NAME,
+    TEAM_ALIAS: e.VITE_TEAM_ALIAS,
+    SHORT_NAME: e.VITE_APP_SHORT_NAME,
+    TAGLINE: e.VITE_APP_TAGLINE,
+ 
+    // Assets
+    LOGO_URL: e.VITE_LOGO_URL,
+    LOGO_NO_BG: e.VITE_LOGO_NO_BG_URL,
+    FAVICON_URL: e.VITE_FAVICON_URL,
+    OFFICIAL_SIGNATURE_URL: e.VITE_OFFICIAL_SIGNATURE_URL,
+
+    // Cloudinary
+    CLOUDINARY: {
+        CLOUD_NAME: e.VITE_CLOUDINARY_CLOUD_NAME,
+        UPLOAD_PRESET: e.VITE_CLOUDINARY_UPLOAD_PRESET,
+    },
+
+    // Contact
+    CONTACT: {
+        EMAIL: e.VITE_CONTACT_EMAIL,
+        PHONE: e.VITE_CONTACT_PHONE,
+        MEDIA_EMAIL: e.VITE_MEDIA_EMAIL,
+        SPONSORSHIP_EMAIL: e.VITE_SPONSORSHIP_EMAIL,
+    },
+
+    // Social
+    SOCIAL: {
+        FACEBOOK: e.VITE_FACEBOOK_URL,
+        INSTAGRAM: e.VITE_INSTAGRAM_URL,
+        TWITTER: e.VITE_TWITTER_URL,
+        YOUTUBE: e.VITE_YOUTUBE_URL,
+        WHATSAPP: e.VITE_WHATSAPP_URL,
+        TIKTOK: e.VITE_TIKTOK_URL,
+    },
+} as const;

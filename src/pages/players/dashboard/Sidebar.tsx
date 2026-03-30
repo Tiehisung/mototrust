@@ -14,7 +14,6 @@ import {
 import { EPlayerFitness, IPlayer } from "@/types/player.interface";
 import { formatDate } from "@/lib/timeAndDate";
 import { Progress } from "@/components/ui/progress";
-import { getInitials } from "@/lib";
 
 interface PlayerSidebarProps {
   player?: IPlayer;
@@ -160,7 +159,6 @@ export function PlayerSidebar({ player }: PlayerSidebarProps) {
             <AVATAR
               src={player?.avatar as string}
               alt={manager?.fullname}
-             
               className="h-8 w-8"
             />
             <div className="min-w-0 flex-1">

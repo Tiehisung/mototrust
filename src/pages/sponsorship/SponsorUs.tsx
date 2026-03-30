@@ -1,7 +1,7 @@
 import { Mail, Phone, HandshakeIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TEAM } from "@/data/team";
-import { CLUB } from "@/data/club";
+ 
 
 export default function SponsorUs() {
   return (
@@ -54,7 +54,7 @@ export default function SponsorUs() {
             className="_primaryBtn h-12 text-lg rounded-xl"
           >
             <a
-              href={`mailto:${CLUB.contact?.general?.email || "info@bunyenifc.com"}?subject=Sponsorship%20Inquiry`}
+              href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL}?subject=Sponsorship%20Inquiry`}
             >
               Become a Sponsor
             </a>
@@ -66,9 +66,7 @@ export default function SponsorUs() {
             variant="outline"
             className="h-12 _secondaryBtn text-lg rounded-xl"
           >
-            <a href={`tel:${TEAM.contact || "+232XXXXXXXXX"}`}>
-              Call Us
-            </a>
+            <a href={`tel:${TEAM.contact || "+232XXXXXXXXX"}`}>Call Us</a>
           </Button>
         </div>
 

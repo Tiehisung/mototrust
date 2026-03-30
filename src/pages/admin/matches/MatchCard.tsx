@@ -1,7 +1,5 @@
-import { ConfirmActionButton } from "@/components/buttons/ConfirmAction";
 import { AVATAR } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { shortText } from "@/lib";
 import { checkMatchMetrics, checkTeams } from "@/lib/compute/match";
 import {
   formatDate,
@@ -16,32 +14,15 @@ import SquadForm from "../squad/SquadForm";
 import { IMatch, ITeam } from "@/types/match.interface";
 import { ResizableContent } from "@/components/resizables/ResizableContent";
 import { Link } from "react-router-dom";
-import { useDeleteMatchMutation } from "@/services/match.endpoints";
-import { smartToast } from "@/utils/toast";
 
-interface Props{
+interface Props {
   match?: IMatch;
   teams?: ITeam[];
 }
-export function AdminMatchCard({
-  match,
-  teams,
-}: Props) {
+export function AdminMatchCard({ match, teams }: Props) {
   const { away, home } = checkTeams(match);
   const scores = checkMatchMetrics(match);
   const status = match?.status;
-
-  const [deleteMatch, { isLoading: isDeleting }] = useDeleteMatchMutation();
-
-  const handleDelete = async () => {
-    if (!match?._id) return;
-    try {
-      const result = await deleteMatch(match._id).unwrap();
-      smartToast(result);
-    } catch (error) {
-      smartToast({ error });
-    }
-  };
 
   return (
     <div className="bg-card border p-4 space-y-2.5 max-w-[90vw]">
@@ -114,8 +95,9 @@ export function AdminMatchCard({
             triggerStyles="justify-start"
             title=""
             className="min-w-[80vw]"
+            variant={"ghost"}
           >
-            <SquadCard  match={match} />
+            <SquadCard match={match} />
           </DIALOG>
         ) : (
           <DIALOG
@@ -135,22 +117,6 @@ export function AdminMatchCard({
         >
           View
         </Link>
-
-        <ConfirmActionButton
-          primaryText="Delete"
-          trigger="Delete"
-          triggerStyles="justify-start"
-          onConfirm={handleDelete}
-          isLoading={isDeleting}
-          variant="destructive"
-          confirmVariant="delete"
-          title={shortText(match?.title ?? "Match")}
-          confirmText={`Are you sure you want to delete "<b>${shortText(
-            match?.title ?? "Match",
-            40,
-          )}</b>"?`}
-          escapeOnEnd
-        />
       </ResizableContent>
     </div>
   );

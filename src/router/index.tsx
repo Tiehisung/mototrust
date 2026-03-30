@@ -1,11 +1,9 @@
-import NotFoundPage from "@/pages/NotFound";
 import UsersPage from "@/pages/Users";
 import { createBrowserRouter } from "react-router-dom";
 import { adminRoutes } from "./admin.routes";
 import ScrollToTop from "@/utils/ScrollToTop";
 import TestPage from "@/pages/test/page";
 import SponsorsPage from "@/pages/sponsorship/page";
-import ContactPage from "@/pages/contact-us/page";
 import MatchHighlightsPage from "@/pages/highlights/page";
 import GalleryPage from "@/pages/gallery/page";
 import MatchesPage from "@/pages/matches/page";
@@ -29,6 +27,8 @@ import PlayerGalleriesPage from "@/pages/players/dashboard/galleries/page";
 import TopFansPage from "@/pages/TopFans";
 import LandingPage from "@/pages/LandingPage";
 import LatestMatchSquadPage from "@/pages/squad/Squad";
+import NotFound from "@/pages/NotFound";
+import ContactPage from "@/pages/Contact";
 
 // Wrapper component for AdminLayout with ScrollToTop
 const AdminLayoutWithScrollToTop = () => (
@@ -119,7 +119,7 @@ const applicationRouter = createBrowserRouter([
 
       {
         path: "*", // Catch-all route for 404 pages
-        element: <NotFoundPage />,
+        element: <NotFound />,
       },
     ],
   },

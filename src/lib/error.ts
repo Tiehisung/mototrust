@@ -7,62 +7,56 @@ export function getErrorMessage(
 ): string {
     if (!error) return "Unknown error occurred";
 
-    // ✅ handle string FIRST
-    if (typeof error === "string") return error;
+    const err = error as Record<string, unknown>;
 
-    // ✅ Fetch Response
+    // 1. Fetch-based API errors
     if (error instanceof Response) {
         return `Request failed: ${error.status} ${error.statusText}`;
     }
 
-    // ✅ ensure it's an object before accessing properties
-    if (typeof error !== "object") {
-        return customMessage ?? "Something went wrong. Please try again.";
-    }
+    // 2. Server returned structured JSON { error, message }
+    if (err.error && typeof err.error === "string") return err.error;
 
-    const err = error as Record<string, unknown>;
+    if (err.message && typeof err.message === "string") return err.message;
 
-    // 1. Structured API errors
-    if (typeof err.error === "string") return err.error;
-    if (typeof err.message === "string") return err.message;
-
-    // 2. Axios errors
+    // 3. Axios errors
     if (err.response && typeof err.response === "object") {
         const response = err.response as Record<string, unknown>;
-
         if (response.data && typeof response.data === "object") {
             const data = response.data as Record<string, unknown>;
-
-            if (typeof data.message === "string") return data.message;
-            if (typeof data.error === "string") return data.error;
+            if (data.message && typeof data.message === "string") return data.message;
+            if (data.error && typeof data.error === "string") return data.error;
         }
     }
 
-    // 3. Validation errors
-    if (Array.isArray(err.details)) {
-        return err.details
-            .map((d: any) => d?.message)
-            .filter(Boolean)
+    // 4. Zod/Joi/Mongoose validation errors
+
+    if (err.details && Array.isArray(err.details) && err.details.length) {
+        return err.details.map((d: { message: string }) => d.message).join(", ");
+    }
+
+    // Zod v3 errors (ZodError)
+    if (err.name === 'ZodError' && Array.isArray(err.issues)) {
+        return (err.issues as Array<{ message: string }>)
+            .map(i => i.message)
+            .join(', ');
+    }
+    // Mongoose validation error
+    if (err.name === "ValidationError" && err.errors && typeof err.errors === "object") {
+        return Object.values(err.errors)
+            .map((e: { message: string }) => e.message)
             .join(", ");
     }
 
-    // Mongoose validation
-    if (
-        err.name === "ValidationError" &&
-        err.errors &&
-        typeof err.errors === "object"
-    ) {
-        return Object.values(err.errors as any)
-            .map((e: any) => e?.message)
-            .filter(Boolean)
-            .join(", ");
-    }
-
-    // 4. Network errors
+    // 5. Network errors
     if (err.name === "NetworkError") {
         return "Network error — please check your connection.";
     }
 
+    // 6. String errors
+    if (typeof error === "string") return error;
+
+    // 7. Default fallback
     return customMessage ?? "Something went wrong. Please try again.";
 }
 

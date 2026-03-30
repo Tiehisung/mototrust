@@ -10,7 +10,7 @@ import { GalleryThumbnails } from "lucide-react";
 import { fireEscape } from "@/hooks/Esc";
 import { useAuth } from "@/store/hooks/useAuth";
 import { GrDashboard } from "react-icons/gr";
-import { CLUB } from "@/data/club";
+import { ENV } from "@/lib/env";
 
 export default function HeaderCp() {
   const location = useLocation();
@@ -25,7 +25,7 @@ export default function HeaderCp() {
       <Link to="/">
         <div className="flex items-center gap-2 w-fit">
           <span className="text-Orange first-letter:capitalize font-bold">
-            {CLUB.alias}
+            {ENV.CLUB_ALIAS}
           </span>
         </div>
       </Link>

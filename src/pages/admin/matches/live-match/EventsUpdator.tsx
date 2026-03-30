@@ -1,7 +1,6 @@
 import { TABS } from "@/components/ui/tabs";
 import { GeneralEventsTab } from "./(events)/General";
 import { ScoreEventsTab } from "./(events)/Goals";
-import { IPlayer } from "@/types/player.interface";
 import { Button } from "@/components/buttons/Button";
 import { Trash2, Bandage, Info, Crown } from "lucide-react";
 
@@ -12,13 +11,15 @@ import { MVPForm } from "../mvps/MvpForm";
 import { Separator } from "@/components/ui/separator";
 import { smartToast } from "@/utils/toast";
 import { useUpdateMatchMutation } from "@/services/match.endpoints";
+import { useAuth } from "@/store/hooks/useAuth";
+import { getDeadlineInfo } from "@/lib/timeAndDate";
 
 interface IProps {
-  players?: IPlayer[];
   opponent?: ITeam;
   match: IMatch;
 }
-export function MatchEventsAdmin({ players, opponent, match }: IProps) {
+export function MatchEventsAdmin({ opponent, match }: IProps) {
+  const { user } = useAuth();
   const sortedEvents = match?.events
     ? [...match.events].sort(
         (a, b) => Number(b.minute ?? 0) - Number(a.minute ?? 0),
@@ -50,29 +51,37 @@ export function MatchEventsAdmin({ players, opponent, match }: IProps) {
       icon: <Crown className="h-5 w-5 text-red-500" />,
     },
   ];
+
+  const isLocked =
+    user?.role !== "super_admin" &&
+    getDeadlineInfo(match?.date as string, 3).isPassed;
+
   return (
     <div>
       <h1 className="_label my-3">EVENTS LOGGER</h1>
 
-      <TABS
-        tabs={tabs}
-        listClassName="flex w-full overflow-x-auto h-14 rounded-none"
-        triggerClassName={`whitespace-nowrap data-[state=active]:border-Green data-[state=active]:text-Green rounded-none`}
-        className="border"
-      >
-        <GeneralEventsTab match={match} />
+      {isLocked ? (
+        <div>
+          Match is closed for updates since{" "}
+          {getDeadlineInfo(match?.date as string, 3).deadline}
+        </div>
+      ) : (
+        <TABS
+          tabs={tabs}
+          listClassName="flex w-full overflow-x-auto h-14 rounded-none"
+          triggerClassName={`whitespace-nowrap data-[state=active]:border-Green data-[state=active]:text-Green rounded-none`}
+          className="border"
+        >
+          <GeneralEventsTab match={match} />
 
-        <ScoreEventsTab
-          players={players as IPlayer[]}
-          opponent={opponent}
-          match={match}
-        />
+          <ScoreEventsTab opponent={opponent} match={match} />
 
-        <CardForm match={match} />
+          <CardForm match={match} />
 
-        <InjuryForm match={match} />
-        <MVPForm match={match} />
-      </TABS>
+          <InjuryForm match={match} />
+          <MVPForm match={match} />
+        </TABS>
+      )}
 
       <Separator className="my-4" />
 

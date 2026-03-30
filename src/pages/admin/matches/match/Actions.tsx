@@ -9,7 +9,6 @@ import {
   useUpdateMatchMutation,
   useDeleteMatchMutation,
 } from "@/services/match.endpoints";
-
 import { smartToast } from "@/utils/toast";
 import { fireEscape } from "@/hooks/Esc";
 
@@ -53,7 +52,11 @@ const MatchActions = ({ match, teams }: Props) => {
       <fieldset className="border p-3">
         <legend>Match Actions</legend>
         <div className="flex items-center gap-5 flex-wrap mb-4">
-          <UpdateFixtureMatch teams={teams} fixture={match} />
+          <UpdateFixtureMatch
+            teams={teams}
+            fixture={match}
+            variant={"outline"}
+          />
 
           {match?.squad ? (
             <DIALOG

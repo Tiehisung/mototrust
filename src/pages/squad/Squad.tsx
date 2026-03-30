@@ -15,17 +15,17 @@ export default function LatestMatchSquadPage() {
     );
   }
   return (
-    <section id="squad" className="py-24 bg-white">
+    <section id="squad" className="py-24 ">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
-          <span className="text-emerald-600 font-semibold tracking-wide uppercase text-sm">
+          <span className="text-primary font-semibold tracking-wide uppercase text-sm">
             The Team
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-2 mb-4 text-gray-800">
+          <h2 className="text-4xl md:text-5xl font-bold mt-2 mb-4 ">
             First Team Squad
           </h2>
-          <div className="w-20 h-1 bg-emerald-600 mx-auto"></div>
-          <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+          <div className="w-20 h-1 bg-primary mx-auto"></div>
+          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
             Meet the talented players representing Bunyeni FC with pride and
             passion
           </p>
@@ -34,7 +34,7 @@ export default function LatestMatchSquadPage() {
           {squad?.players?.map((player, index) => (
             <div
               key={index}
-              className="group bg-white rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-100"
+              className="group bg-card rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border border-border"
             >
               <div className="relative h-64 overflow-hidden bg-gray-100">
                 <img
@@ -42,15 +42,15 @@ export default function LatestMatchSquadPage() {
                   alt={player.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                 />
-                <div className="absolute top-3 left-3 bg-emerald-600 uppercase text-white font-bold w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                <div className="absolute top-3 left-3 bg-primary uppercase font-bold w-10 h-10 rounded-full flex items-center justify-center shadow-md">
                   {player?.number || getInitials(player?.position?.split(" "))}
                 </div>
               </div>
               <div className="p-4 text-center">
-                <h3 className="font-bold text-xl text-gray-800">
+                <h3 className="font-bold text-xl ">
                   {player.name}
                 </h3>
-                <p className="text-emerald-600 text-sm mb-1 font-semibold">
+                <p className="text-primary text-sm mb-1 font-semibold capitalize">
                   {player.position}
                 </p>
               </div>
@@ -58,7 +58,7 @@ export default function LatestMatchSquadPage() {
           ))}
         </div>
         <div className="text-center mt-12">
-          <button className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white px-8 py-3 rounded-full font-semibold transition-all shadow-md hover:shadow-lg">
+          <button className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-full font-semibold transition-all shadow-md hover:shadow-lg">
             View Full Squad →
           </button>
         </div>

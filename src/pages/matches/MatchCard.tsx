@@ -8,7 +8,7 @@ import {
 } from "@/lib/timeAndDate";
 
 import { DIALOG } from "@/components/Dialog";
-import { View } from "lucide-react";
+import { Users,  } from "lucide-react";
 
 import SquadCard from "../admin/squad/SquadCard";
 import { IMatch } from "@/types/match.interface";
@@ -72,17 +72,17 @@ export function MatchFixtureCard({ match }: { match?: IMatch }) {
       <hr />
       <div>
         <div className="flex items-center text-sm gap-5">
-          <span className="w-20 py-2 font-semibold">{match?.status}</span>
           {match?.squad && (
             <DIALOG
               trigger={
-                <span className="flex items-center gap-1 font-light _hover _shrink">
-                  <View size={16} />
+                <>
+                  <Users size={16} />
                   Squad
-                </span>
+                </>
               }
               title=""
               className="min-w-[80vw]"
+              variant={"ghost"}
             >
               <SquadCard match={match} />
             </DIALOG>

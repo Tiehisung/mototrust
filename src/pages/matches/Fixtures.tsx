@@ -4,6 +4,7 @@ import { MotionWrapper } from "@/components/Animate/MotionWrapper";
 import { MatchFixtureCard } from "./MatchCard";
 import InfiniteLimitScroller from "@/components/InfiniteScroll";
 import { IMatch } from "@/types/match.interface";
+import ModernFixtureCard from "./(fixturesAndResults)/cards/Modern";
 
 interface IProps {
   fixtures?: IQueryResponse<IMatch[]>;
@@ -41,6 +42,20 @@ const FixturesSection = ({ fixtures }: IProps) => {
               index={index}
             >
               <MatchFixtureCard match={f} />
+            </MotionWrapper>
+          ))}
+        </section>
+
+        
+        <section className="max-w-4xl mx-auto space-y-4 mt-12">
+          {fixtures?.data?.map((f, index) => (
+            <MotionWrapper
+              hoverEffect={false}
+              direction="right"
+              key={f._id}
+              index={index}
+            >
+              <ModernFixtureCard key={index} match={f} />
             </MotionWrapper>
           ))}
         </section>

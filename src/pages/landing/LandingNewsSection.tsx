@@ -85,40 +85,36 @@ const Desktop: React.FC<Props> = ({ newsItems }) => {
       <div className="py-6 md:py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {subs?.map((item) => (
-            <div
-              key={item._id}
-              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100"
-            >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={item?.headline?.image}
-                  alt={item?.headline?.text}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 left-3 bg-primary text-white text-xs font-semibold px-2 py-1 rounded">
-                  {"category"}
-                </div>
-              </div>
-              <div className="p-5">
-                <div className="flex items-start gap-3">
-                  <div className="bg-red-100 p-2 rounded-lg group-hover:bg-primary transition-colors duration-300 shrink-0">
-                    <TrendingUpIcon className="w-5 h-5 text-primary group-hover:text-white transition-colors duration-300" />
+            <Link to={`/news/${item?.slug}`} key={item._id}>
+              <div className="group bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={item?.headline?.image}
+                    alt={item?.headline?.text}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3 bg-primary text-white text-xs font-semibold px-2 py-1 rounded">
+                    {"category"}
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 text-lg mb-2 group-hover:text-primary transition-colors line-clamp-3">
-                      {item?.headline?.text}
-                    </h3>
-                    <Link
-                      to={`/news/${item?.slug}`}
-                      className="flex items-center gap-1 text-primary text-sm font-medium"
-                    >
-                      <span>Read more</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                </div>
+                <div className="p-5">
+                  <div className="flex items-start gap-3">
+                    <div className="bg-primary/20 p-2 rounded-lg group-hover:bg-primary transition-colors duration-300 shrink-0">
+                      <TrendingUpIcon className="w-5 h-5  group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-3 min-h-20">
+                        {item?.headline?.text}
+                      </h3>
+                      <div className="flex items-center gap-1 text-primary text-sm font-medium">
+                        <span>Read more</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

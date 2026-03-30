@@ -13,8 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import { MVPForm } from "./MvpForm";
 import { IMVP } from "@/types/mvp.interface";
 import { useDeleteMvpMutation } from "@/services/mvps.endpoints";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { smartToast } from "@/utils/toast";
+import { fireEscape } from "@/hooks/Esc";
 
 interface IProps {
   mvp: IMVP;
@@ -22,19 +22,17 @@ interface IProps {
 }
 
 const MvpCard = ({ mvp, selectedPlayer }: IProps) => {
-  const navigate = useNavigate();
+
   const [deleteMvp] = useDeleteMvpMutation();
   const ui = PLAYER_POSITION_UI_MAP[mvp.positionPlayed as EPlayerPosition];
 
   const handleDelete = async () => {
     try {
       const result = await deleteMvp(mvp._id).unwrap();
-      if (result.success) {
-        toast.success(result.message);
-        navigate(0);
-      }
+     smartToast(result);
+     fireEscape()
     } catch (error) {
-      toast.error("Failed to delete MVP");
+      smartToast({error});
     }
   };
 

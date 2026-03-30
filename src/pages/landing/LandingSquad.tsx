@@ -1,11 +1,11 @@
 // components/Squad.tsx
 import Loader from "@/components/loaders/Loader";
 import { symbols } from "@/data";
-import { shortText } from "@/lib";
+import { getInitials, shortText } from "@/lib";
 import { formatDate, getTimeLeftOrAgo } from "@/lib/timeAndDate";
 import { useGetSquadsQuery } from "@/services/squad.endpoints";
 import { ISquad } from "@/types/squad.interface";
-import { ArrowRight, Calendar, ChevronRight } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -55,7 +55,7 @@ const Desktop: React.FC<Props> = ({ squad }) => {
           {squad?.players?.slice(0, 3)?.map((player) => (
             <div
               key={player?._id}
-              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100"
+              className="group bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border "
             >
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -63,14 +63,14 @@ const Desktop: React.FC<Props> = ({ squad }) => {
                   alt={player?.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-3 left-3 bg-primary text-white text-xs font-semibold px-2 py-1 rounded">
+                <div className="absolute top-3 left-3 bg-primary capitalize text-white text-xs font-semibold px-2 py-1 rounded">
                   {player?.position}
                 </div>
               </div>
               <div className="p-5">
                 <div className="flex items-start gap-3">
                   <div>
-                    <h3 className="font-semibold text-gray-800 text-lg mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
                       {player?.name}
                     </h3>
                     <Link
@@ -129,10 +129,10 @@ const Mobile: React.FC<Props> = ({ squad }) => {
             {squad?.description}
           </p>
           {squad?.match?.date && (
-            <div className="flex items-center gap-2 pt-2 text-white">
+            <div className="flex items-center gap-2 pt-2 text-white font-thin">
               <Calendar size={14} />
               {formatDate(squad?.match?.date, "MAR 28, 2025")}{" "}
-              {`${symbols.dot} ${getTimeLeftOrAgo(squad?.match?.date)}`}
+              {`${symbols.dot} ${getTimeLeftOrAgo(squad?.match?.date).formatted}`}
             </div>
           )}
         </div>
@@ -140,36 +140,57 @@ const Mobile: React.FC<Props> = ({ squad }) => {
 
       {/* Trending Items List - Mobile with Images */}
       <div className="my-5">
-        <div className="space-y-4 mb-5">
-          {squad?.players?.slice(0, 3)?.map((player) => (
+        <div className=" mb-5 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {squad?.players?.slice(0, 6)?.map((player) => (
+            // <div
+            //   key={player?._id}
+            //   className="bg-card overflow-hidden active:bg-card/50 transition-colors cursor-pointer"
+            // >
+            //   <div className="flex">
+            //     <div className="w-24 h-24 shrink-0">
+            //       <img
+            //         src={player?.avatar}
+            //         alt={player?.name}
+            //         className="w-full h-full object-cover"
+            //       />
+            //     </div>
+            //     <div className="flex-1 p-3">
+            //       <div className="flex items-start gap-2">
+            //         <div className="flex-1 min-w-0">
+            //           <h3 className="font-semibold text-sm leading-tight line-clamp-2 uppercase">
+            //             {player?.name}
+            //           </h3>
+            //           <Link
+            //             to={`/players/details?playerId=${player?._id}`}
+            //             className="flex items-center gap-1 text-primary text-xs font-medium mt-2"
+            //           >
+            //             <span>Read more</span>
+            //             <ChevronRight className="w-3 h-3" />
+            //           </Link>
+            //         </div>
+            //       </div>
+            //     </div>
+            //   </div>
+            // </div>
             <div
               key={player?._id}
-              className="bg-gray-50 overflow-hidden active:bg-gray-100 transition-colors cursor-pointer"
+              className="group bg-card rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border border-border"
             >
-              <div className="flex">
-                <div className="w-24 h-24 shrink-0">
-                  <img
-                    src={player?.avatar}
-                    alt={player?.name}
-                    className="w-full h-full object-cover"
-                  />
+              <div className="relative h-32 overflow-hidden bg-gray-100">
+                <img
+                  src={player.avatar}
+                  alt={player.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                />
+                <div className="absolute top-3 left-3 bg-primary uppercase font-bold w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                  {player?.number || getInitials(player?.position?.split(" "))}
                 </div>
-                <div className="flex-1 p-3">
-                  <div className="flex items-start gap-2">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-800 text-sm leading-tight line-clamp-2">
-                        {player?.name}
-                      </h3>
-                      <Link
-                        to={`/players/details?playerId=${player?._id}`}
-                        className="flex items-center gap-1 text-primary text-xs font-medium mt-2"
-                      >
-                        <span>Read more</span>
-                        <ChevronRight className="w-3 h-3" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+              </div>
+              <div className="p-4 text-center">
+                <h3 className="font-semibold md:font-bold text-sm md:text-xl ">{player.name}</h3>
+                <p className="text-primary text-sm mb-1 font-semibold capitalize">
+                  {player.position}
+                </p>
               </div>
             </div>
           ))}
@@ -202,7 +223,7 @@ const LandingMatchSquad: React.FC<TrendingProps> = ({ className = "" }) => {
   const { data: squadsData, isLoading } = useGetSquadsQuery("");
   const squad = squadsData?.data ? squadsData?.data[0] : undefined;
 
-  console.log({squad})
+  console.log({ squad });
 
   if (isLoading) {
     return (
@@ -212,7 +233,7 @@ const LandingMatchSquad: React.FC<TrendingProps> = ({ className = "" }) => {
     );
   }
   return (
-    <div className={`container ${className}`} id='squad'>
+    <div className={`container ${className}`} id="squad">
       <div className="hidden md:block">
         <Desktop squad={squad} />
       </div>

@@ -26,6 +26,7 @@ import {
 } from "@/services/match.endpoints";
 import { smartToast } from "@/utils/toast";
 import { TEAM } from "@/data/team";
+import { TButtonVariant } from "@/components/ui/button";
 
 const CreateFixture = ({ teams }: { teams?: ITeam[] }) => {
   const [waiting, setWaiting] = useState(false);
@@ -150,10 +151,11 @@ export default CreateFixture;
 
 export const UpdateFixtureMatch = ({
   fixture: fx,
-  teams,
+  teams,variant='ghost'
 }: {
   fixture?: IMatch;
   teams?: ITeam[];
+  variant?: TButtonVariant;
 }) => {
   const [waiting, setWaiting] = useState(false);
   const [updateMatch] = useUpdateMatchMutation();
@@ -213,7 +215,7 @@ export const UpdateFixtureMatch = ({
       title="UPDATE FIXTURE"
       className="bg-popover"
       description={`${home?.name} vs ${away?.name}`.toUpperCase()}
-      variant="outline"
+      variant={variant}
     >
       <div className="">
         <form

@@ -9,7 +9,6 @@ import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGetMatchQuery } from "@/services/match.endpoints";
-import { useGetPlayersQuery } from "@/services/player.endpoints";
 import { useGetTeamsQuery } from "@/services/team.endpoints";
 import { AVATAR } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -20,13 +19,17 @@ export default function MatchPage() {
   const { data: matchData, isLoading: matchLoading } = useGetMatchQuery(
     slug || "",
   );
-  const { data: playersData, isLoading: playersLoading } =
-    useGetPlayersQuery("");
-  const { data: teamsData, isLoading: teamsLoading } = useGetTeamsQuery({});
 
-  const isLoading = matchLoading || playersLoading || teamsLoading;
+  const { data: teamsData, isLoading: teamsLoading } = useGetTeamsQuery({});
   const match = matchData?.data;
-  const players = playersData;
+
+  const { home, away } = checkTeams(match);
+
+  const matchMetrics = checkMatchMetrics(match);
+  const isMobile = useIsMobile();
+
+  const isLoading = matchLoading || teamsLoading;
+
   const teams = teamsData;
 
   if (isLoading) {
@@ -53,10 +56,6 @@ export default function MatchPage() {
     );
   }
 
-  const { home, away } = checkTeams(match);
-  const matchMetrics = checkMatchMetrics(match);
-  const isMobile = useIsMobile();
-
   return (
     <div className="container mx-auto p-4 _page">
       <h1 className="text-2xl font-bold mb-4 text-primaryRed">
@@ -65,10 +64,7 @@ export default function MatchPage() {
       <MatchActions match={match} teams={teams?.data as ITeam[]} />
 
       <div className="my-6 flex items-center justify-between gap-6 border p-3 bg-secondary">
-        <section
-          className="flex flex-col justify-center items-center gap-2.5 pointer-events-none"
- 
-        >
+        <section className="flex flex-col justify-center items-center gap-2.5 pointer-events-none">
           <AVATAR
             src={home?.logo as string}
             alt={home?.name}
@@ -102,7 +98,6 @@ export default function MatchPage() {
 
       {match && (
         <MatchEventsAdmin
-          players={players?.data}
           opponent={match?.opponent as ITeam}
           match={match as IMatch}
         />

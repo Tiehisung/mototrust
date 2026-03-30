@@ -1,5 +1,3 @@
- 
-
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,20 +24,24 @@ export function ThemeModeToggle({
       <div
         className={`flex items-center gap-0.5 rounded-full p-1 w-fit ${className}`}
       >
-     
-
         {theme === "dark" ? (
-          <MdOutlineWbSunny
-            size={32}
-            className={`rounded-full p-1.5 cursor-pointer _hover bg-muted text-muted-foreground`}
+          <Button
+            size={"icon"}
             onClick={() => setTheme("light")}
-          />
+            className={`rounded-full`}
+            variant={"outline"}
+          >
+            <MdOutlineWbSunny size={32} />
+          </Button>
         ) : (
-          <RiMoonClearLine
-            size={32}
-            className={`rounded-full p-1.5 cursor-pointer _hover bg-muted text-muted-foreground`}
+          <Button
+            size={"icon"}
             onClick={() => setTheme("dark")}
-          />
+            className={`rounded-full`}
+            variant={"outline"}
+          >
+            <RiMoonClearLine size={32} />
+          </Button>
         )}
       </div>
     );

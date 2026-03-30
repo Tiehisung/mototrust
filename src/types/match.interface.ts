@@ -28,16 +28,23 @@ export interface IMatch {
   cards: Array<ICard>;
   squad?: ISquad
   competition?: string
-  
-  resultStatus: 'win' | 'draw' | 'loss'
-  result?: string // eg 3-1
+
+//Virtual field
+  computed?: {
+    teamGoals: IGoal[];
+    opponentGoals: IGoal[];
+    teamScore: number;
+    opponentScore: number;
+    scoreline: string;
+    result: 'win' | 'draw' | 'loss'
+  }
 }
 export interface IMatchMetrics {
   goals: {
     home: number;
     away: number;
-    kfc: IGoal[];
-    opponent: IGoal[];
+    teamGoals: IGoal[];
+    opponentGoals: IGoal[];
   };
   winStatus: string;
   teams: {
@@ -77,6 +84,7 @@ export interface IGoal {
   description?: string
   match: string
   forKFC: boolean
+  teamId: string
   videoUrl?: string;
 }
 

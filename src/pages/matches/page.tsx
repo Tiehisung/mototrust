@@ -13,6 +13,8 @@ export default function MatchesPage() {
 
   const { data: fixtures, isLoading, error } = useGetMatchesQuery({});
 
+  console.log(fixtures)
+
   if (isLoading) {
     return (
       <div>

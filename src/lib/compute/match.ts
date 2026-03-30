@@ -1,7 +1,7 @@
 
 
 import { TEAM } from "@/data/team";
-import { IMatch, IMatchMetrics } from "@/types/match.interface";
+import { IGoal, IMatch, IMatchMetrics } from "@/types/match.interface";
 
 export const checkTeams = (match?: IMatch) => {
 
@@ -13,21 +13,26 @@ export const checkTeams = (match?: IMatch) => {
         away: TEAM,
     }
 };
-
-export const checkMatchMetrics = (match?: IMatch): IMatchMetrics => {
-    const kfc = match?.goals?.filter(g => g.forKFC) ?? []
-    const opponent = match?.goals?.filter(g => !g.forKFC) ?? []
-
-    const status = kfc?.length < opponent?.length ? 'loss' : kfc?.length > opponent.length ? 'win' : 'draw'
+export const splitGoals = (goals: IGoal[]) => {
+    return {
+        teamGoals: goals.filter(g => g.teamId == TEAM._id),
+        opponentGoals: goals.filter(g => g.teamId !== TEAM._id),
+    };
+};
+export const checkMatchMetrics = (match?: IMatch ): IMatchMetrics => {
+    const { teamGoals, opponentGoals } = splitGoals(match?.goals||[]);
+ 
+    const status = teamGoals?.length < opponentGoals?.length ? 'loss' : teamGoals?.length > opponentGoals.length ? 'win' : 'draw'
     const { home, away } = checkTeams(match)
 
     const goals = match?.isHome
-        ? { home: kfc.length, away: opponent.length }
-        : { home: opponent.length, away: kfc.length }
+        ? { home: teamGoals.length, away: opponentGoals.length }
+        : { home: opponentGoals.length, away: teamGoals.length }
 
     return {
-        goals: { kfc, opponent, ...goals },
+        goals: { teamGoals, opponentGoals, ...goals },
         winStatus: status,
         teams: { home, away }
     }
 };
+
