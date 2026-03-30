@@ -40,7 +40,7 @@ export const MatchFixtureCard: React.FC<IMatchFixtureCardProps> = ({
           <div className="flex flex-col items-center space-y-1">
             <span className=" text-gray-500">{match?.date}</span>
             <div className="bg-gray-100 text-gray-800 rounded-lg px-4 py-1 font-medium">
-              {match?.time}
+              {match?.computed?.result?match.computed.scoreline:match.time}
             </div>
           </div>
 

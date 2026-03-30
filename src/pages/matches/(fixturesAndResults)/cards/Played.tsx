@@ -46,7 +46,7 @@ export const PlayedMatchCard: React.FC<{
           </div>
 
           {/* Team Score */}
-          {/* <span className="text-xl font-bold">{match.goals.kfc}</span> */}
+          {/* <span className="text-xl font-bold">{match.computed?.}</span> */}
         </div>
       ))}
     </Card>

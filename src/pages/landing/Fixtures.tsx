@@ -4,9 +4,6 @@ import { useGetMatchesQuery } from "@/services/match.endpoints";
 import React from "react";
 import { Link } from "react-router-dom";
 import ModernFixtureCard from "../matches/(fixturesAndResults)/cards/Modern";
-import { MatchFixtureCard } from "../matches/(fixturesAndResults)/cards/Fixture";
-import { EMatchStatus, IMatch } from "@/types/match.interface";
-import { PlayedMatchCard } from "../matches/(fixturesAndResults)/cards/Played";
 
 const LandingFixtures: React.FC = () => {
   const { data: matchesData, isLoading } = useGetMatchesQuery({});
@@ -39,27 +36,7 @@ const LandingFixtures: React.FC = () => {
 
         <br />
 
-        <div className="grid lg:grid-cols-3 gap-[3vw] justify-center px-2 mt-5">
-          {matchesData?.data?.slice(0, 3)?.map((match) => {
-            if (match.status == EMatchStatus.FT)
-              return (
-                <PlayedMatchCard
-                  key={match._id}
-                  match={match as IMatch}
-                  league="Circuit Galla"
-                  className="max-sm:grow"
-                />
-              );
-
-            return (
-              <MatchFixtureCard
-                match={match as IMatch}
-                className="grow sm:max-w-lg"
-                key={match._id}
-              />
-            );
-          })}
-        </div>
+        
 
         <div className="text-center mt-10">
           <Link
