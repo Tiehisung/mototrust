@@ -16,7 +16,8 @@ export default function LiveMatchPage() {
     error: matchError,
   } = useGetLiveMatchQuery({});
 
-  const { data: playersData, isLoading: playersLoading } = useGetPlayersQuery('');
+  const { data: playersData, isLoading: playersLoading } =
+    useGetPlayersQuery("");
 
   const isLoading = matchLoading || playersLoading;
   const match = matchData;
@@ -159,7 +160,6 @@ export default function LiveMatchPage() {
 
       {match?.data?.status === "LIVE" && match?.data?.squad && (
         <MatchEventsAdmin
-      
           opponent={match?.data?.opponent as ITeam}
           match={match?.data as IMatch}
         />
