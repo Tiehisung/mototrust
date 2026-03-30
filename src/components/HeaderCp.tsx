@@ -25,7 +25,7 @@ export default function HeaderCp() {
       <Link to="/">
         <div className="flex items-center gap-2 w-fit">
           <span className="text-Orange first-letter:capitalize font-bold">
-            {ENV.CLUB_ALIAS}
+            {ENV.TEAM_ALIAS}
           </span>
         </div>
       </Link>

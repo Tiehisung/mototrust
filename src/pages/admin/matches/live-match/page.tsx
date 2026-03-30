@@ -159,7 +159,7 @@ export default function LiveMatchPage() {
 
       {match?.data?.status === "LIVE" && match?.data?.squad && (
         <MatchEventsAdmin
-          players={players?.data}
+      
           opponent={match?.data?.opponent as ITeam}
           match={match?.data as IMatch}
         />
