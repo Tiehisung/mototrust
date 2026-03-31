@@ -98,7 +98,7 @@ export default function MainNavbar() {
                     <div
                       key={link.label}
                       onClick={() => scrollToSection(link.id)}
-                      className="inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-primary border-transparent border-b-2 hover:border-primary transition-colors cursor-pointer "
+                      className="inline-flex items-center px-1 pt-1 text-sm font-light hover:text-primary border-transparent border-b-2 hover:border-primary transition-colors cursor-pointer "
                     >
                       {link.label}
                     </div>
@@ -108,7 +108,7 @@ export default function MainNavbar() {
                     <Link
                       key={link.label}
                       to={link.href}
-                      className="inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-primary border-transparent border-b-2 hover:border-primary transition-colors"
+                      className="inline-flex items-center px-1 pt-1 text-sm font-light hover:text-primary border-transparent border-b-2 hover:border-primary transition-colors"
                     >
                       {link.label}
                     </Link>
