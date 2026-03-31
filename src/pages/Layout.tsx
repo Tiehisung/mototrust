@@ -13,7 +13,7 @@ export default function HomeLayout() {
       <ScrollToTop />
  
       <MainNavbar />
-      <div className={`min-h-screen overflow-x-hidden px-4`}>
+      <div className={`min-h-screen overflow-x-hidden px-4 pb-6`}>
         <Outlet />
         <Swinger className="fixed bottom-6 right-6 z-30">
           <BackToTopButton />

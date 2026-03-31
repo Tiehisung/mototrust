@@ -5,7 +5,7 @@ import { IGallery } from "@/types/file.interface";
 import { shortText } from "@/lib";
 import { PrimarySearch } from "@/components/Search";
 import { ClearFiltersBtn } from "@/components/buttons/ClearFilters";
-import { getVideoThumbnail } from "@/lib/file";
+import { getThumbnail } from "@/lib/file";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -81,10 +81,9 @@ export function GalleryThumbnail({ gallery, className = "" }: GalleryProps) {
     gallery?.files?.find((f) => f.resource_type == "image") ??
     gallery?.files?.[0];
 
-  const thumbnail_url =
-    thumbnailFile?.resource_type == "video"
-      ? getVideoThumbnail(thumbnailFile.public_id)
-      : thumbnailFile.secure_url;
+  const thumbnail_url = getThumbnail(thumbnailFile);
+
+  console.log(thumbnail_url);
 
   return (
     <>

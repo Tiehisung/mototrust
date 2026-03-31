@@ -28,7 +28,7 @@ import TopFansPage from "@/pages/TopFans";
 import LandingPage from "@/pages/LandingPage";
 import LatestMatchSquadPage from "@/pages/squad/Squad";
 import NotFound from "@/pages/NotFound";
-import ContactPage from "@/pages/Contact";
+import ContactPage from "@/pages/Contact/Page";
 
 // Wrapper component for AdminLayout with ScrollToTop
 const AdminLayoutWithScrollToTop = () => (

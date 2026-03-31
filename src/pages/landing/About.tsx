@@ -1,5 +1,6 @@
 // components/About.tsx
 import { AnimateOnView } from "@/components/Animate/AnimateOnView";
+import { GlassmorphicGradient } from "@/components/Glasmorphic/Gradient";
 import React from "react";
 
 const About: React.FC = () => {
@@ -31,8 +32,8 @@ const About: React.FC = () => {
     },
   ];
   return (
-    <section id="about" className="py-24 bg-accent ">
-      <div className="container mx-auto px-4 md:px-6">
+    <GlassmorphicGradient className="py-24" gradient="accent" >
+      <div id="about" className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <span className="text-primary font-semibold tracking-wide uppercase text-sm">
             Our Story
@@ -84,7 +85,7 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </GlassmorphicGradient>
   );
 };
 

@@ -1,11 +1,12 @@
 // components/Contact.tsx
 import { MotionWrapper } from "@/components/Animate/MotionWrapper";
 import { Button } from "@/components/buttons/Button";
+import { GlassmorphicGradient } from "@/components/Glasmorphic/Gradient";
 import { Input, TextArea } from "@/components/input/Inputs";
 import { SocialMediaHandles } from "@/components/SocialShare";
 import React, { useState } from "react";
 
-const ContactPage: React.FC = () => {
+const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,8 +33,8 @@ const ContactPage: React.FC = () => {
   ];
 
   return (
-    <section id="contact" className="py-24">
-      <div className="container mx-auto px-4 md:px-6">
+   <GlassmorphicGradient className="py-24 " gradient="accent" >
+      <div id="contact" className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <span className="text-primary font-semibold tracking-wide uppercase text-sm">
             Get In Touch
@@ -107,8 +108,8 @@ const ContactPage: React.FC = () => {
           </form>
         </div>
       </div>
-    </section>
+    </GlassmorphicGradient>
   );
 };
 
-export default ContactPage;
+export default Contact;

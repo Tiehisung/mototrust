@@ -6,6 +6,8 @@ import { share, ShareOptions } from "@/lib/share";
 import { ReactNode } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import { cn } from "@/lib/utils";
+import { ENV } from "@/lib/env";
+import { BsTiktok } from "react-icons/bs";
 
 interface IProps extends ShareOptions {
   isMini?: boolean;
@@ -107,7 +109,7 @@ export const SharePage = ({
       {socialLinks.map((sl) => (
         <Button
           size="icon"
-          className={cn(`gap-2 text-white ${sl.color} `,className)}
+          className={cn(`gap-2 text-white ${sl.color} `, className)}
           onClick={() => {
             share
               .toSocial(
@@ -138,44 +140,62 @@ export const SharePage = ({
   );
 };
 
-export const SocialMediaHandles = ({ url,className }: { url?: string,className?:string }) => {
+export const SocialMediaHandles = ({
+  className,
+}: {
+  url?: string;
+  className?: string;
+}) => {
+  console.log(ENV.SOCIAL);
   const socialLinks = [
     {
       platform: "whatsapp",
       icon: <ImWhatsapp />,
       color: "bg-Green",
-      url: "",
+      url: ENV.SOCIAL.WHATSAPP,
     },
     {
       platform: "facebook",
       icon: <Facebook />,
       color: "bg-[#1877f2]",
-      url: "",
+      url: ENV.SOCIAL.FACEBOOK,
     },
     {
       platform: "twitter",
       icon: <FaXTwitter />,
       color: "bg-[#000000]",
-      url: "",
+      url: ENV.SOCIAL.TWITTER,
     },
     {
       platform: "telegram",
       icon: <PiTelegramLogoLight />,
       color: "bg-[#3390ec]",
-      url: "",
+      url: ENV.SOCIAL.TELEGRAM,
+    },
+    {
+      platform: "tiktok",
+      icon: <BsTiktok />,
+      color: "bg-purple-500",
+      url: ENV.SOCIAL.TIKTOK,
     },
   ];
   return (
     <div className="flex gap-4 pt-2">
-      {socialLinks.map((social) => (
-        <a
-          key={social.color}
-          href={url || "#"}
-          className={cn(`w-10 h-10 text-white/80 rounded-full flex items-center justify-center hover:text-white transition-all ${social.color}`,className)}
-        >
-          {social.icon}
-        </a>
-      ))}
+      {socialLinks.map((social) => {
+        if (social.url)
+          return (
+            <a
+              key={social.platform}
+              href={social.url}
+              className={cn(
+                `w-10 h-10 text-white/80 rounded-full flex items-center justify-center hover:text-white transition-all ${social.color}`,
+                className,
+              )}
+            >
+              {social.icon}
+            </a>
+          );
+      })}
     </div>
   );
 };
