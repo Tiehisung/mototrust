@@ -49,7 +49,7 @@ export default function MainNavbar() {
             <div className="flex items-center lg:hidden">
               <button
                 onClick={() => setIsMenuOpen(true)}
-                className="p-2 rounded-md hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary transition-colors"
+                className="p-2 rounded-md hover:bg-accent/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary transition-colors"
                 aria-label="Open menu"
               >
                 <Menu className="h-6 w-6" />
@@ -68,7 +68,7 @@ export default function MainNavbar() {
               <AVATAR
                 src={logos.logoTrans}
                 size={"md"}
-                className="scale-110 bg-white/90 backdrop-blur-3xl drop-shadow-accent drop-shadow-md"
+                className="scale-110 bg-accent/90 backdrop-blur-3xl drop-shadow-accent drop-shadow-md"
               />
             </div>
 
@@ -91,14 +91,14 @@ export default function MainNavbar() {
         {/* Desktop Navigation Links (Optional) */}
         <div className="hidden lg:block border-t border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-center space-x-8 h-12">
+            <div className="flex justify-center space-x-8 h-10">
               {navLinks.map((link) => {
                 if (link.id && isLanding)
                   return (
                     <div
                       key={link.label}
                       onClick={() => scrollToSection(link.id)}
-                      className="inline-flex items-center px-1 pt-1 text-sm font-medium text-white hover:text-Red hover:border-b-2 hover:border-Red transition-colors cursor-pointer "
+                      className="inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-primary border-transparent border-b-2 hover:border-primary transition-colors cursor-pointer "
                     >
                       {link.label}
                     </div>
@@ -108,7 +108,7 @@ export default function MainNavbar() {
                     <Link
                       key={link.label}
                       to={link.href}
-                      className="inline-flex items-center px-1 pt-1 text-sm font-medium text-white hover:text-Red hover:border-b-2 hover:border-Red transition-colors"
+                      className="inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-primary border-transparent border-b-2 hover:border-primary transition-colors"
                     >
                       {link.label}
                     </Link>
