@@ -19,7 +19,7 @@ const CardLoader = ({ className, message }: CardLoaderProps) => {
           {[...Array(2)].map((_, i) => (
             <div
               key={i}
-              className={`w-36 h-5 bg-popover rounded animate-pulse ${className}`}
+              className={`w-36 h-5 bg-card rounded animate-pulse ${className}`}
             />
           ))}
         </div>
@@ -29,7 +29,7 @@ const CardLoader = ({ className, message }: CardLoaderProps) => {
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
-              className={`w-40 h-5 bg-popover rounded animate-pulse ${className}`}
+              className={`w-40 h-5 bg-card rounded animate-pulse ${className}`}
             />
           ))}
         </div>
@@ -39,7 +39,7 @@ const CardLoader = ({ className, message }: CardLoaderProps) => {
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className={`w-44 h-5 bg-popover rounded animate-pulse ${className}`}
+              className={`w-44 h-5 bg-card rounded animate-pulse ${className}`}
             />
           ))}
         </div>
@@ -49,7 +49,7 @@ const CardLoader = ({ className, message }: CardLoaderProps) => {
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
-              className={`w-48 h-5 bg-popover rounded animate-pulse ${className}`}
+              className={`w-48 h-5 bg-card rounded animate-pulse ${className}`}
             />
           ))}
         </div>
@@ -59,7 +59,7 @@ const CardLoader = ({ className, message }: CardLoaderProps) => {
           {[...Array(10)].map((_, i) => (
             <div
               key={i}
-              className={`w-52 h-5 bg-popover rounded animate-pulse ${className}`}
+              className={`w-52 h-5 bg-card rounded animate-pulse ${className}`}
             />
           ))}
         </div>

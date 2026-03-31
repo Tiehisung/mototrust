@@ -10,12 +10,12 @@ import GalleryGrid from "@/components/Gallery/GallaryGrid";
 import { Link } from "react-router-dom";
 import { PlayerFeatureMedia } from "./FeatureMedia";
 import { useGetPlayerQuery } from "@/services/player.endpoints";
-import Loader from "@/components/loaders/Loader";
 import { TEAM } from "@/data/team";
 import { useGetGalleriesQuery } from "@/services/gallery.endpoints";
 import { useAppSelector } from "@/store/hooks/store";
 import DataErrorAlert from "@/components/error/DataError";
 import { PageSEO } from "@/utils/PageSEO";
+import PageLoader from "@/components/loaders/Page";
 
 export default function PlayerDashboardPage() {
   const { user } = useAppSelector((s) => s.auth);
@@ -40,9 +40,7 @@ export default function PlayerDashboardPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-accent p-4 md:p-8 pt-20 md:pt-20">
-        <div className="max-w-7xl mx-auto flex justify-center items-center min-h-100">
-          <Loader message="Loading player dashboard..." />
-        </div>
+            <PageLoader />
       </div>
     );
   }

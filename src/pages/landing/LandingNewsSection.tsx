@@ -3,8 +3,8 @@ import { ArrowRight, ChevronRight, TrendingUpIcon } from "lucide-react";
 
 import { INewsItem, INewsProps, INewsSection } from "@/types/news.interface";
 import { useGetNewsQuery } from "@/services/news.endpoints";
-import Loader from "@/components/loaders/Loader";
 import { Link } from "react-router-dom";
+import { NewsSectionSkeleton } from "./skeletons/news-section";
 
 // Main News Section Props Interface
 export interface INewsSectionProps extends INewsSection {
@@ -237,7 +237,7 @@ const NEWSSECTION: React.FC<TrendingProps> = ({ className = "" }) => {
   if (isLoading) {
     return (
       <div className="py-12 px-4 space-y-8 _page flex justify-center items-center min-h-100">
-        <Loader message="Loading news..." />
+        <NewsSectionSkeleton/>
       </div>
     );
   }

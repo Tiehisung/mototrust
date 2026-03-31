@@ -1,10 +1,10 @@
 import { markupToPlainText } from "@/lib/dom";
 import NewsCard from "./NewsCard";
 import { useGetNewsQuery } from "@/services/news.endpoints";
-import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { H } from "@/components/Element";
+import PageLoader from "@/components/loaders/Page";
 
 export function LatestNews() {
   const { data: newsData, isLoading, error } = useGetNewsQuery("");
@@ -17,7 +17,7 @@ export function LatestNews() {
       <div>
         <H >LATEST NEWS</H>
         <div className="flex justify-center items-center min-h-75">
-          <Loader message="Loading news..." />
+          <PageLoader />
         </div>
       </div>
     );

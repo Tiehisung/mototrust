@@ -2,8 +2,6 @@ import { IPlayer } from "@/types/player.interface";
 import PlayerProfile from "./Profile";
 import { PlayerHeadList } from "./PlayerHeadList";
 import { useSearchParams } from "react-router-dom";
-
-import Loader from "@/components/loaders/Loader";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGetGalleriesQuery } from "@/services/gallery.endpoints";
@@ -13,6 +11,7 @@ import {
 } from "@/services/player.endpoints";
 import { PageSEO } from "@/utils/PageSEO";
 import { TEAM } from "@/data/team";
+import PageLoader from "@/components/loaders/Page";
 
 export default function PlayerProfilePage() {
   const [searchParams] = useSearchParams();
@@ -36,7 +35,7 @@ export default function PlayerProfilePage() {
   if (isLoading) {
     return (
       <main className="_page flex justify-center items-center min-h-100">
-        <Loader message="Loading player profile..." />
+          <PageLoader />
       </main>
     );
   }
@@ -63,15 +62,15 @@ export default function PlayerProfilePage() {
     <>
       <PageSEO page="players" title={title} description={description} />
 
-      <main className="_page">
-        <div
+      <main className="pl-2">
+        {/* <div
           className="h-screen w-full z-[-1] fixed inset-0 bottom-0 bg-no-repeat bg-cover"
           style={{
             backgroundImage: `url(${
               player?.featureMedia?.[0]?.secure_url ?? player?.avatar
             })`,
           }}
-        />
+        /> */}
         <PlayerProfile
           players={players?.data as IPlayer[]}
           galleries={galleries?.data}

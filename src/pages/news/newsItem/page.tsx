@@ -6,9 +6,10 @@ import {
   useGetNewsItemQuery,
   useGetNewsQuery,
 } from "@/services/news.endpoints";
-import Loader from "@/components/loaders/Loader";
-import { TEAM,   } from "@/data/team";
+ 
+import { TEAM } from "@/data/team";
 import { PageSEO } from "@/utils/PageSEO";
+import PageLoader from "@/components/loaders/Page";
 
 export default function NewsItemPage() {
   const newsSlug = useParams().newsSlug;
@@ -20,7 +21,7 @@ export default function NewsItemPage() {
   );
 
   const newsItem = newsItemData?.data;
-  console.log(newsItemData);
+ 
 
   const { data: newsData, isLoading: newsLoading } =
     useGetNewsQuery(paramsString);
@@ -32,9 +33,7 @@ export default function NewsItemPage() {
   if (isLoading) {
     return (
       <div className="flex max-lg:flex-wrap items-start gap-6 relative pt-6 p-4 md:pl-10">
-        <div className="flex justify-center items-center min-h-100 w-full">
-          <Loader message="Loading article..." />
-        </div>
+        <PageLoader />
       </div>
     );
   }

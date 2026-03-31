@@ -8,14 +8,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { IPlayer } from "@/types/player.interface";
-
 import CardCarousel from "@/components/carousel/cards";
 import { usePlayerGalleryUtils } from "@/hooks/usePlayerGallery";
 import { IGallery } from "@/types/file.interface";
 import { scrollToElement } from "@/lib/dom";
 import { generatePlayerAbout } from "@/data/about";
 import GalleryGrid from "@/components/Gallery/GallaryGrid";
-import { GalleryUpload } from "@/components/Gallery/GalleryUpload";
 import { IPlayerStats } from "@/types/stats";
 import { TEAM } from "@/data/team";
 
@@ -57,7 +55,7 @@ export default function PlayerProfile({
 
   if (!player) {
     return (
-      <main className="min-h-screen bg-popover flex flex-col items-center p-10">
+      <main className="min-h-screen bg-card flex flex-col items-center p-10">
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-red-500">
             Player not found
@@ -77,7 +75,7 @@ export default function PlayerProfile({
 
   return (
     <main
-      className="min-h-screen bg-popover flex flex-col items-center px-2 py-16"
+      className="min-h-screen bg-accent flex flex-col items-center px-2 py-16"
       id="overview"
     >
       {/* Header */}
@@ -256,16 +254,9 @@ export default function PlayerProfile({
       </section>
 
       <section>
-        <div className="my-6 _title _gradient p-4 flex items-center gap-6 justify-between">
+        <div className="my-6 _title p-4 flex items-center gap-6 justify-between">
           <span>GALLERIES</span>
-          <GalleryUpload
-            tags={
-              [player?.lastName, player?.firstName, playerId].filter(
-                Boolean,
-              ) as string[]
-            }
-            players={players}
-          />
+           
         </div>
         <GalleryGrid galleries={galleries as IGallery[]} />
       </section>
