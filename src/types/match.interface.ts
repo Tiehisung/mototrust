@@ -83,7 +83,6 @@ export interface IGoal {
   modeOfScore?: EGoalType
   description?: string
   match: string
-  forKFC: boolean
   teamId: string
   videoUrl?: string;
 }

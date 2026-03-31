@@ -43,7 +43,7 @@ const goalApi = api.injectEndpoints({
                 method: "POST",
                 body,
             }),
-            invalidatesTags: ["Goals"],
+            invalidatesTags: ["Goals",'Matches', 'Players'],
         }),
 
         // UPDATE goal
@@ -53,7 +53,7 @@ const goalApi = api.injectEndpoints({
                 method: "PUT",
                 body,
             }),
-            invalidatesTags: ["Goals"],
+            invalidatesTags: ["Goals",'Matches', 'Players'],
         }),
 
         // DELETE goal
@@ -62,7 +62,7 @@ const goalApi = api.injectEndpoints({
                 url: `/goals/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: ["Goals"],
+            invalidatesTags: ["Goals",'Matches', 'Players'],
         }),
 
         // BULK DELETE goals
@@ -72,7 +72,7 @@ const goalApi = api.injectEndpoints({
                 method: "POST",
                 body: { goalIds },
             }),
-            invalidatesTags: ["Goals"],
+            invalidatesTags: ["Goals",'Matches', 'Players'],
         }),
 
     }),

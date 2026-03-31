@@ -1,3 +1,4 @@
+import { CHECKBOX } from "@/components/input/Checkbox";
 import { useClearParams, useUpdateSearchParams } from "@/hooks/params";
 import { useLocation } from "react-router-dom";
 
@@ -23,51 +24,38 @@ export default function NewsFilter() {
   const { clearOnly } = useClearParams();
 
   return (
-    <div className="space-y-4 p-4 border rounded-xl shadow-sm">
+    <div className="space-y-4 p-4 rounded-xl ">
       <h2 className="text-lg font-semibold">Filter News</h2>
 
       {/* Boolean Filters */}
-      <div className="grid grid-cols-3 gap-4">
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={isTrending === "true"}
-            onChange={(e) =>
-              setParam("isTrending", e.target.checked.toString())
-            }
-          />
-          <span>Trending</span>
-        </label>
+      <div className="flex flex-wrap gap-4">
+        <CHECKBOX
+          label="Trending"
+          checked={isTrending === "true"}
+          onChange={(e) => setParam("isTrending", e.target.checked.toString())}
+        />
 
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={isLatest === "true"}
-            onChange={(e) => setParam("isLatest", e.target.checked.toString())}
-          />
-          <span>Latest</span>
-        </label>
+        <CHECKBOX
+          label="Latest"
+          checked={isLatest === "true"}
+          onChange={(e) => setParam("isLatest", e.target.checked.toString())}
+        />
 
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={isPublished === "true"}
-            onChange={(e) =>
-              setParam("isPublished", e.target.checked ? "true" : "")
-            }
-          />
-          <span>Published</span>
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={isPublished === "false"}
-            onChange={(e) =>
-              setParam("isPublished", e.target.checked ? "false" : "")
-            }
-          />
-          <span>Unpublished</span>
-        </label>
+        <CHECKBOX
+          label="Published"
+          checked={isPublished === "true"}
+          onChange={(e) =>
+            setParam("isPublished", e.target.checked ? "true" : "")
+          }
+        />
+
+        <CHECKBOX
+          label="Unpublished"
+          checked={isPublished === "false"}
+          onChange={(e) =>
+            setParam("isPublished", e.target.checked ? "false" : "")
+          }
+        />
       </div>
 
       {/* Date Filters */}

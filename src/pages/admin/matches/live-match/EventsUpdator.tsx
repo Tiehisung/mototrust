@@ -86,7 +86,7 @@ export function MatchEventsAdmin({ opponent, match }: IProps) {
       <Separator className="my-4" />
 
       <div className="mt-6 ">
-        <h1 className="_label mb-3">LIVE EVENTS</h1>
+        <h1 className="_label mb-3"> EVENTS</h1>
         {sortedEvents.map((event, index) => (
           <MatchEventCard event={event} key={index} match={match} />
         ))}

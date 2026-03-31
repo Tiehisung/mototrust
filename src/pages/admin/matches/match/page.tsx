@@ -4,19 +4,18 @@ import { MatchEventsAdmin } from "../live-match/EventsUpdator";
 import MatchActions from "./Actions";
 import { Badge } from "@/components/ui/badge";
 import { useParams } from "react-router-dom";
-
-import Loader from "@/components/loaders/Loader";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGetMatchQuery } from "@/services/match.endpoints";
 import { useGetTeamsQuery } from "@/services/team.endpoints";
 import { AVATAR } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import PageLoader from "@/components/loaders/Page";
+import DataErrorAlert from "@/components/error/DataError";
+import { getErrorMessage } from "@/lib/error";
 
 export default function MatchPage() {
   const slug = useParams().matchSlug;
 
-  const { data: matchData, isLoading: matchLoading } = useGetMatchQuery(
+  const { data: matchData, isLoading: matchLoading,error } = useGetMatchQuery(
     slug || "",
   );
 
@@ -36,7 +35,7 @@ export default function MatchPage() {
     return (
       <div className="container mx-auto p-4 _page">
         <div className="flex justify-center items-center min-h-100">
-          <Loader message="Loading match details..." />
+          <PageLoader />
         </div>
       </div>
     );
@@ -45,13 +44,7 @@ export default function MatchPage() {
   if (!match) {
     return (
       <div className="container mx-auto p-4 _page">
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Match Not Found</AlertTitle>
-          <AlertDescription>
-            The match you're looking for doesn't exist or has been removed.
-          </AlertDescription>
-        </Alert>
+         <DataErrorAlert message={getErrorMessage(error)} />
       </div>
     );
   }

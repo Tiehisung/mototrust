@@ -7,12 +7,13 @@ import { IQueryResponse } from "@/types";
 import { Link } from "react-router-dom";
 import { FC } from "react";
 import NewsFilter from "./Filters";
-import { SecondaryDropdown } from "@/components/Dropdown";
+import { PrimaryDropdown } from "@/components/Dropdown";
+import { SlidersHorizontal } from "lucide-react";
 
 const AdminNews: FC<{ news?: IQueryResponse<INewsProps[]> }> = ({ news }) => {
   return (
-    <div className="my-24">
-      <h1 className="_gradient text-xl font-semibold mb-4 p-3">News📰</h1>
+    <div className="my-24 px-4 ">
+      <h1 className=" text-xl font-semibold mb-4 ">News📰</h1>
       <header className="flex items-center gap-2.5 my-6">
         <PrimarySearch
           className="w-fit"
@@ -22,9 +23,14 @@ const AdminNews: FC<{ news?: IQueryResponse<INewsProps[]> }> = ({ news }) => {
           placeholder="Search News"
         />
 
-        <SecondaryDropdown>
+        <PrimaryDropdown
+          trigger={<SlidersHorizontal />}
+          variant={"secondary"}
+      
+          triggerStyles="rounded"
+        >
           <NewsFilter />
-        </SecondaryDropdown>
+        </PrimaryDropdown>
       </header>
       <ul className="grid md:grid-cols-2 gap-3 xl:grid-cols-3">
         {news?.data?.map((item) => {

@@ -1,10 +1,13 @@
 import AdminNews from "./News";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetNewsQuery } from "@/services/news.endpoints";
-import Loader from "@/components/loaders/Loader";
-import { AlertCircle, Plus } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/buttons/Button";
+import TableLoader from "@/components/loaders/Table";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { H } from "@/components/Element";
+import DataErrorAlert from "@/components/error/DataError";
+import { getErrorMessage } from "@/lib/error";
 
 const AdminNewsPage = () => {
   const [searchParams] = useSearchParams();
@@ -12,6 +15,7 @@ const AdminNewsPage = () => {
 
   const { data: news, isLoading, error } = useGetNewsQuery(paramsString);
   const navigate = useNavigate();
+  const ismobile = useIsMobile();
 
   if (isLoading) {
     return (
@@ -20,7 +24,11 @@ const AdminNewsPage = () => {
           News Publisher
         </h1>
         <div className="flex justify-center items-center min-h-100">
-          <Loader message="Loading news..." />
+          <TableLoader
+            className="h-24 rounded-md"
+            cols={ismobile ? 1 : 3}
+            rows={ismobile ? 2 : 3}
+          />
         </div>
       </div>
     );
@@ -29,28 +37,17 @@ const AdminNewsPage = () => {
   if (error) {
     return (
       <div>
-        <h1 className="_title px-6 text-primaryRed uppercase">
-          News Publisher
-        </h1>
-        <div className="px-6">
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>
-              Failed to load news: {(error as any)?.message || "Unknown error"}
-            </AlertDescription>
-          </Alert>
-        </div>
+        <H>News Publisher</H>
+
+        <DataErrorAlert message={getErrorMessage(error)} />
       </div>
     );
   }
 
   return (
     <div>
-      <header className="flex items-center gap-4 flex-wrap justify-between">
-        <h1 className="_title px-6 text-primaryRed uppercase">
-          News Publisher{" "}
-        </h1>
+      <header className="flex items-center gap-4 px-3 flex-wrap justify-between uppercase">
+        <H>News Publisher </H>
         <Button onClick={() => navigate("/admin/news/create-news")}>
           <Plus /> Create
         </Button>
