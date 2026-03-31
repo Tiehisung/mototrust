@@ -49,9 +49,9 @@ export function Button({
       style={styles}
       id={id}
     >
-      {children}
+       
       <span hidden={!primaryText}>{primaryText}</span>
-      {waiting && <VscLoading className={` animate-spin `} />}
+      {waiting ? <VscLoading className={` animate-spin `} />:children}
     </Btn>
   );
 }

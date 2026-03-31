@@ -15,6 +15,7 @@ import {
 import { smartToast } from "@/utils/toast";
 import { useGetPlayersQuery } from "@/services/player.endpoints";
 import SELECT from "@/components/select/Select";
+import { TEAM } from "@/data/team";
 
 interface ScoreEventsTabProps {
   opponent?: ITeam;
@@ -31,7 +32,7 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
     assist: "",
     minute: "",
     description: "",
-    forKFC: true,
+    teamId: TEAM._id,
   });
 
   const handleAddGoal = async (e: FormEvent<HTMLFormElement>) => {
@@ -66,7 +67,7 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
         match: match?._id,
       };
 
-      if (form.forKFC)
+      if (form.teamId)
         newGoal = {
           ...newGoal,
           scorer: {
@@ -76,12 +77,10 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
             number: scorer?.number,
           },
           assist,
-          forKFC: true,
+          teamId: form.teamId,
         };
 
       const results = await addGoal(newGoal).unwrap();
-
-      // onAddGoal(newGoal);
 
       if (results.success)
         setForm({
@@ -89,7 +88,7 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
           assist: "",
           minute: "",
           description: "",
-          forKFC: true,
+          teamId: TEAM._id,
         });
       smartToast(results);
     } catch (error) {
@@ -104,18 +103,20 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
       >
         <form onSubmit={handleAddGoal}>
           <h2 className="mb-6 text-2xl font-bold flex items-center gap-6 justify-between border-b">
-            Add Goal{" "}
+            Add Goal
             <SWITCH
-              label="For KFC"
-              name="forkfc"
-              onCheckedChange={(ch) => setForm((p) => ({ ...p, forKFC: ch }))}
-              checked={form.forKFC}
-              className="" 
+              label={
+                form.teamId===TEAM._id ? TEAM.alias : match.opponent.alias || "Opponent"
+              }
+              name="teamId"
+              onCheckedChange={(checked) => setForm((p) => ({ ...p, teamId: checked ? TEAM._id : match.opponent._id }))}
+              checked={form.teamId==TEAM._id}
+              className=""
             />
           </h2>
 
           <div className="space-y-4">
-            {form.forKFC && (
+            {form.teamId===TEAM._id && (
               <div className="grid grid-cols-1 gap-4 ">
                 <SELECT
                   label="Scorer"
@@ -236,7 +237,7 @@ function Goal({ goal }: { goal: IGoal }) {
       className="flex items-center gap-2 bg-muted px-4 py-2 rounded-lg"
       key={goal._id}
     >
-      {`${goal.minute}' ${goal.scorer?.name ?? " Opponent"}`}{" "}
+      {`${goal.minute}' ${goal.teamId===TEAM._id ? goal.scorer?.name : "Opponent"}`} 
       <Button
         onClick={() => handleRemoveGoal(goal)}
         size="sm"
