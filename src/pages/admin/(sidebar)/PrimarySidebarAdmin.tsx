@@ -52,8 +52,8 @@ export function SidebarLink({
         <Link
           to={item.path}
           className={cn(
-            "flex items-center gap-2 flex-1 pl-1.5 py-1.5 mt-1 _hover text-sm transition-colors ",
-            isActiveLink(item.path) ? "text-Orange " : "",
+            "flex items-center gap-2 relative _hoverBefore flex-1 pl-1.5 py-1.5 mt-1 _hover text-sm transition-colors ",
+            isActiveLink(item.path) ? "text-primary " : "",
           )}
         >
           {item.icon && (

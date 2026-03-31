@@ -14,7 +14,6 @@ interface MotionWrapperProps {
 
 export const MotionWrapper: React.FC<MotionWrapperProps> = ({
   children,
- 
   duration = 0.5,
   direction = "up",
   hoverEffect = true,

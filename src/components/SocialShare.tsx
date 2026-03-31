@@ -138,7 +138,7 @@ export const SharePage = ({
   );
 };
 
-export const SocialMediaHandles = ({ url }: { url?: string }) => {
+export const SocialMediaHandles = ({ url,className }: { url?: string,className?:string }) => {
   const socialLinks = [
     {
       platform: "whatsapp",
@@ -171,7 +171,7 @@ export const SocialMediaHandles = ({ url }: { url?: string }) => {
         <a
           key={social.color}
           href={url || "#"}
-          className={`w-10 h-10 text-white/80 rounded-full flex items-center justify-center hover:text-white transition-all ${social.color}`}
+          className={cn(`w-10 h-10 text-white/80 rounded-full flex items-center justify-center hover:text-white transition-all ${social.color}`,className)}
         >
           {social.icon}
         </a>

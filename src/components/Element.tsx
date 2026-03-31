@@ -26,8 +26,12 @@ export default function HEADER({
       )}
     >
       <div className={`mx-auto`}>
-        <H>{title}</H>
-        {subtitle && <div className={`font-light`}>{subtitle}</div>}
+        <H >{title}</H>
+        {subtitle && (
+          <div className={`font-light text-muted-foreground text-lg`}>
+            {subtitle}
+          </div>
+        )}
       </div>
       <div>{children}</div>
     </header>

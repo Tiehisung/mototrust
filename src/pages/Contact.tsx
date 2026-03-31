@@ -1,4 +1,5 @@
 // components/Contact.tsx
+import { MotionWrapper } from "@/components/Animate/MotionWrapper";
 import { Button } from "@/components/buttons/Button";
 import { Input, TextArea } from "@/components/input/Inputs";
 import { SocialMediaHandles } from "@/components/SocialShare";
@@ -18,7 +19,17 @@ const ContactPage: React.FC = () => {
     setFormData({ name: "", email: "", message: "" });
   };
 
- 
+  const data = [
+    {
+      label: "Park Address",
+      value: "Bunyeni Sports Complex, Main Road, Konjiehi, Wa Metro District",
+    },
+    { label: "Email Us", value: "bunyenifc@gmail.com" },
+    {
+      label: "Call Us",
+      value: "+233 55970 8485 | Office Hours: Mon-Fri 9AM-6PM",
+    },
+  ];
 
   return (
     <section id="contact" className="py-24">
@@ -34,43 +45,27 @@ const ContactPage: React.FC = () => {
         </div>
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
           <div className="space-y-6">
-            <div className="flex gap-4 p-4 bg-secondary/30 rounded-xl">
-              <div className="w-12 h-12 bg-secondary/80 rounded-full flex items-center justify-center shrink-0">
-                <i className="fas fa-map-marker-alt text-primary text-xl"></i>
-              </div>
-              <div>
-                <h3 className="font-bold text-lg ">
-                  Park Address
-                </h3>
-                <p className="text-muted-foreground">
-                  Bunyeni Sports Complex, Main Road, Konjiehi, Wa Metro District
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4 p-4 bg-secondary/30 rounded-xl">
-              <div className="w-12 h-12 bg-secondary/80 rounded-full flex items-center justify-center shrink-0">
-                <i className="fas fa-envelope text-primary text-xl"></i>
-              </div>
-              <div>
-                <h3 className="font-bold text-lg ">Email Us</h3>
-                <p className="text-muted-foreground">bunyenifc@gmail.com</p>
-              </div>
-            </div>
-            <div className="flex gap-4 p-4 bg-secondary/30 rounded-xl">
-              <div className="w-12 h-12 bg-secondary/80 rounded-full flex items-center justify-center shrink-0">
-                <i className="fas fa-phone-alt text-primary text-xl"></i>
-              </div>
-              <div>
-                <h3 className="font-bold text-lg ">Call Us</h3>
-                <p className="text-muted-foreground">
-                  +233 55970 8485 | Office Hours: Mon-Fri 9AM-6PM
-                </p>
-              </div>
-            </div>
+            {data.map((cd, index) => (
+              <MotionWrapper index={index} key={cd.label} hoverEffect>
+                <div className="flex gap-4 p-4 bg-primary/30 rounded-xl">
+                  <div className="w-12 h-12 bg-primary/80 rounded-full flex items-center justify-center shrink-0">
+                    <i className="fas fa-map-marker-alt text-primary text-xl"></i>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg ">{cd.label}</h3>
+                    <p className="text-muted-foreground">{cd.value}</p>
+                  </div>
+                </div>
+              </MotionWrapper>
+            ))}
+
             <SocialMediaHandles />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4 border p-4 pt-8 border-t-4 border-t-primary rounded-2xl"
+          >
             <Input
               type="text"
               placeholder="Your Name"
@@ -99,7 +94,7 @@ const ContactPage: React.FC = () => {
               onChange={(e) =>
                 setFormData({ ...formData, message: e.target.value })
               }
-              className="w-full px-5 py-3 resize-none"
+              className="w-full px-5 py-3 resize-none "
               required
               name={"message"}
             />
