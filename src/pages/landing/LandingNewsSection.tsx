@@ -176,7 +176,7 @@ const Mobile: React.FC<Props> = ({ newsItems }) => {
           {subs?.map((item) => (
             <div
               key={item?._id}
-              className="bg-gray-50 overflow-hidden active:bg-gray-100 transition-colors cursor-pointer"
+              className="bg-card overflow-hidden transition-colors cursor-pointer"
             >
               <div className="flex">
                 <div className="w-24 h-24 shrink-0">
@@ -188,11 +188,11 @@ const Mobile: React.FC<Props> = ({ newsItems }) => {
                 </div>
                 <div className="flex-1 p-3">
                   <div className="flex items-start gap-2">
-                    <div className="bg-red-100 p-1.5 rounded-lg shrink-0">
+                    <div className="bg-card p-1.5 rounded-lg shrink-0">
                       <TrendingUpIcon className="w-3.5 h-3.5 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-800 text-sm leading-tight line-clamp-2">
+                      <h3 className="font-semibold text-sm leading-tight line-clamp-2">
                         {item.headline?.text}
                       </h3>
                       <Link

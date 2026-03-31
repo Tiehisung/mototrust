@@ -7,24 +7,26 @@ import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="py-8 bg-gray-900 text-gray-400">
+    <footer className="py-8 bg-accent ">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <AVATAR src={TEAM.logo} size={"sm"} />
-              <span className="font-bold text-white">
+              <span className="font-bold">
                 Bunyeni <span className="text-primary">FC</span>
               </span>
             </div>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm ">
               Building champions, uniting communities since 2024.
             </p>
 
             <ThemeModeToggle />
           </div>
           <div>
-            <h4 className="font-semibold text-white mb-3">Quick Links</h4>
+            <h4 className="font-semibold mb-3 text-sm text-muted-foreground">
+              Quick Links
+            </h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/about" className="hover:text-primary transition">
@@ -52,7 +54,9 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-white mb-3">Support</h4>
+            <h4 className="font-semibold mb-3 text-sm text-muted-foreground">
+              Support
+            </h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="#" className="hover:text-primary transition">
@@ -77,10 +81,12 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-white mb-3">Official Partners</h4>
+            <h4 className="font-semibold mb-3 text-sm text-muted-foreground">
+              Official Partners
+            </h4>
             <ul className="space-y-2 text-sm">
-              <li className="text-gray-500">Zenis Water, Konjiehi</li>
-              <li className="text-gray-500">Miami Camp, Konjiehi</li>
+              <li className="">Zenis Water, Konjiehi</li>
+              <li className="">Miami Camp, Konjiehi</li>
             </ul>
           </div>
         </div>

@@ -141,7 +141,9 @@ export default function SELECT({
   loading,
   ...props
 }: ISELECT) {
-  const { setParam } = useUpdateSearchParams();
+  const { setParam ,} = useUpdateSearchParams();
+
+ const defaultSP = useGetParam(paramKey as string);
 
   const handleOnChange = (val: string) => {
     if (typeof onChange !== "undefined") {
@@ -150,6 +152,7 @@ export default function SELECT({
       if (paramKey) setParam((paramKey as string) ?? "filter", val);
     }
   };
+
   return (
     <div className={cn("flex items-center gap-2 relative", className)}>
       {label && (
@@ -158,10 +161,10 @@ export default function SELECT({
         </Label>
       )}
       <select
-        value={value}
+        value={value||defaultSP}
         onChange={(e) => handleOnChange?.(e.target.value)}
         className={cn(
-          `text-sm border px-2 h-9 bg-background text-foreground border-input rounded-md py-2
+          `text-sm border px-2 h-9 border-input rounded-md py-2
     focus:outline-none focus:ring-2 focus:ring-ring
     disabled:cursor-not-allowed disabled:opacity-50`,
           selectStyles,
@@ -172,7 +175,7 @@ export default function SELECT({
           {props.placeholder}
         </option>
         {options?.map((op, i) => (
-          <option key={i} value={op.value}>
+          <option key={i} value={op.value} selected={op.value == (value || defaultSP)} className="bg-accent">
             {op.label}
           </option>
         ))}
@@ -180,7 +183,7 @@ export default function SELECT({
 
       {error && (
         <p
-          className={`absolute top-full text-red-500 text-left text-sm font-light`}
+          className={`absolute top-full text-red-500 text-left text-sm font-light `}
         >
           {error}
         </p>

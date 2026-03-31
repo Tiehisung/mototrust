@@ -10,8 +10,8 @@ import { Button } from "@/components/buttons/Button";
 import { fireEscape } from "@/hooks/Esc";
 import UserLogButtons from "./UserLogger";
 import { LogoutBtn } from "./auth/LogoutButton";
-import { PrimarySearch } from "./Search";
 import { ThemeModeToggle } from "./ThemeToggle";
+import { GlobalSearch } from "./searcher/Global";
 
 interface ILink {
   label: string;
@@ -33,16 +33,18 @@ export default function MainNavbar() {
     { label: "Squad", id: "squad", href: "/squad" },
     { label: "Players", id: "players", href: "/players" },
     { label: "Fixtures", id: "fixtures", href: "/matches" },
+    { label: "News", href: "/news" },
+    { label: "Highlights", href: "/highlights" },
+    { label: "Gallery", href: "/gallery" },
     { label: "Contact", href: "/contact" },
     { label: "About", id: "about" },
-    { label: "News", href: "/news" },
   ];
 
   return (
     <>
-      <nav className=" bg-primary dark:bg-accent backdrop-blur-xs sticky top-0 z-40">
+      <nav className="bg-accent backdrop-blur-xs sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start items-center h-16 text-white">
+          <div className="flex justify-start items-center h-16 text-">
             {/* Left Section - Menu Button (Mobile) */}
             <div className="flex items-center lg:hidden">
               <button
@@ -123,7 +125,16 @@ export default function MainNavbar() {
         onClose={() => setIsMenuOpen(false)}
         position="top"
         size="sm"
-        title="Menu"
+        title={
+          <div className=" flex items-center gap-4 font-bold">
+            <AVATAR
+              src={logos.logoTrans}
+              size={"md"}
+              className="scale-110 bg-white/90 backdrop-blur-3xl drop-shadow-accent drop-shadow-md"
+            />
+            {`/ ${mainpage.toUpperCase()}`}
+          </div>
+        }
         className=" max-h-[75vh]"
       >
         <nav className="flex flex-col p-4 gap-2 ">
@@ -139,14 +150,15 @@ export default function MainNavbar() {
                   }
                   fireEscape();
                 }}
-                className="h-16 px-6 transition-colors font-medium justify-start py-3"
+                className="h-12 px-6 transition-colors font-medium justify-start py-3"
+                variant={"outline"}
               >
                 {item.label}
               </Button>
             );
           })}
 
-          <div className="flex items-center gap-4 py-2 pt-5">
+          <div className="flex items-center gap-4 py-2 pl-4 pt-5">
             <ThemeModeToggle />
 
             <LogoutBtn text="Logout" className="grow" />
@@ -163,9 +175,8 @@ export default function MainNavbar() {
         title="Search"
       >
         <div className="p-4">
-          <PrimarySearch placeholder="Search players, articles, and more..." />
+          {/* <PrimarySearch placeholder="Search players, articles, and more..." />
 
-          {/* Recent Searches (Optional) */}
           <div className="mt-6">
             <h3 className="text-sm font-medium text-gray-500">
               Recent Searches
@@ -180,7 +191,8 @@ export default function MainNavbar() {
                 </Button>
               ))}
             </div>
-          </div>
+          </div> */}
+          <GlobalSearch />
         </div>
       </Drawer>
     </>

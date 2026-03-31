@@ -10,7 +10,7 @@ export type DrawerPosition = "right" | "left" | "top" | "bottom";
 interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  title?: string;
+  title?: ReactNode;
   children: ReactNode;
   size?: DrawerSize;
   position?: DrawerPosition;

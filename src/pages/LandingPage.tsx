@@ -1,14 +1,12 @@
 import About from "./landing/About";
 import LandingFixtures from "./landing/Fixtures";
 import Newsletter from "./landing/Newsletter";
-import TrendingNews from "./landing/TrendingNews";
-
 import NEWSSECTION from "./landing/LandingNewsSection";
 import { LiveMatchCard } from "./matches/live/Live";
 import LandingNewsHeadlines from "./landing/LandingNews";
 import LandingMatchSquad from "./landing/LandingSquad";
 import LandingPlayers from "./landing/LandingPlayers";
-import Contact from "./Contact";
+import Contact from "./Contact/Contact";
 
 const LandingPage = () => {
   return (
@@ -31,7 +29,7 @@ const LandingPage = () => {
 
       <Newsletter />
 
-      <TrendingNews />
+      {/* <TrendingNews /> */}
     </div>
   );
 };

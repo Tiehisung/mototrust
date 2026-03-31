@@ -1,6 +1,6 @@
 import { Button } from "@/components/buttons/Button";
 import { IComment, INewsProps } from "@/types/news.interface";
-import { ThumbsUp, ThumbsDown, Trash, Eye } from "lucide-react";
+import { ThumbsDown, Trash, Eye } from "lucide-react";
 import { POPOVER } from "@/components/ui/popover";
 import SocialShare, { SharePage } from "@/components/SocialShare";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { IoShareSocial } from "react-icons/io5";
 import { AVATAR } from "@/components/ui/avatar";
 import { getTimeLeftOrAgo } from "@/lib/timeAndDate";
 import { shortText } from "@/lib";
-import { BsDot } from "react-icons/bs";
+import { BsDot, BsFillHandThumbsUpFill } from "react-icons/bs";
 import { DIALOG } from "@/components/Dialog";
 import { getDeviceId } from "@/lib/device";
 import LoginController from "@/components/auth/LoginModal";
@@ -81,12 +81,12 @@ export function NewsReactions({ newsItem }: { newsItem?: INewsProps }) {
           <Button
             onClick={handleLike}
             className={`p-1.5 _shrink rounded-none  ${
-              localLiked ? "text-Blue " : ""
+              localLiked ? "text-primary " : ""
             }`}
             variant="ghost"
             waiting={isLiking}
           >
-            {localLiked ? <ThumbsDown size={24} /> : <ThumbsUp size={24} />}
+            {localLiked ?  <BsFillHandThumbsUpFill size={24} />: <ThumbsDown size={24} />}
             <span
               className="font-light text-xs text-foreground"
               onClick={() => toggleClick("likes-trigger")}
@@ -160,7 +160,7 @@ export function NewsReactions({ newsItem }: { newsItem?: INewsProps }) {
 
       <div>
         <p className="text-primary text-sm">Share this article</p>
-        <SharePage className="rounded-full" />
+        <SharePage className="rounded-full bg-primary/90" />
       </div>
 
       <br />

@@ -83,7 +83,7 @@ export function TextArea({
           onChange(e);
         }}
         className={cn(
-          `bg-background outline-none border _borderColor focus:border-primary shadow-teal-100/50 rounded px-2 w-full min-h-20 focus:outline-none focus:ring-2 focus:ring-primary`,
+          `bg-background text-secondary-foreground outline-none border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary shadow-teal-100/50 rounded px-2 w-full placeholder:line-clamp-1  min-h-20 `,
           className,
         )}
         onFocus={() => setIsFocus(true)}
