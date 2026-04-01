@@ -68,8 +68,8 @@ export function MatchEventsAdmin({ opponent, match }: IProps) {
       ) : (
         <TABS
           tabs={tabs}
-          listClassName="flex w-full overflow-x-auto h-14 rounded-none"
-          triggerClassName={`whitespace-nowrap data-[state=active]:border-primary data-[state=active]:text-primary rounded-none`}
+          listClassName="flex w-full overflow-x-auto h-12 rounded-none"
+          triggerClassName={` whitespace-nowrap data-[state=active]:border-primary data-[state=active]:text-primary rounded-none`}
           className="border"
         >
           <GeneralEventsTab match={match} />

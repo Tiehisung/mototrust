@@ -14,9 +14,9 @@ import {
 import { smartToast } from "@/utils/toast";
 import { useGetPlayersQuery } from "@/services/player.endpoints";
 import SELECT from "@/components/select/Select";
-import { TEAM } from "@/data/team";
 import RadioButtons from "@/components/input/Radio";
 import { cn } from "@/lib/utils";
+import { ENV } from "@/lib/env";
 
 interface ScoreEventsTabProps {
   opponent?: ITeam;
@@ -34,19 +34,19 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
     minute: "",
     description: "",
     modeOfScore: EGoalType.OPEN_PLAY,
-    teamId: TEAM._id,
+    teamId: ENV.TEAM_ID,
   });
 
   const teams = [
-    { label: TEAM.alias, value: TEAM._id },
-    { label: match.opponent.alias || "Opponent", value: match.opponent._id },
+    { label: ENV.TEAM_NAME, value: ENV.TEAM_ID },
+    { label: match.opponent.name || "Opponent", value: match.opponent._id },
   ];
 
   const handleAddGoal = async (e: FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
 
-      console.log({ TEAM }, { form });
+      console.log(ENV.TEAM_ID,  form.teamId  );
 
       if (!form.minute)
         return smartToast({
@@ -77,7 +77,7 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
         teamId: form.teamId,
       };
 
-      if (form.teamId == TEAM._id && scorer) {
+      if (form.teamId == ENV.TEAM_ID && scorer) {
         newGoal = {
           ...newGoal,
           scorer: {
@@ -158,7 +158,7 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
             label="Comment"
           />
 
-          {form.teamId === TEAM._id && (
+          {form.teamId === ENV.TEAM_ID && (
             <div className="grid grid-cols-1 gap-4 ">
               <SELECT
                 label="Scorer"
@@ -262,7 +262,7 @@ function Goal({ goal }: { goal: IGoal }) {
     }
   };
 
-  const isTeamGoal = goal.teamId === TEAM._id;
+  const isTeamGoal = goal.teamId === ENV.TEAM_ID;
   return (
     <div
       className={cn(
@@ -271,7 +271,7 @@ function Goal({ goal }: { goal: IGoal }) {
       )}
       key={goal._id}
     >
-      {`${goal.minute}' ${isTeamGoal ? goal.scorer?.name || `${TEAM.alias} Player` : "Opponent"}`}
+      {`${goal.minute}' ${isTeamGoal ? goal.scorer?.name || `${ENV.TEAM_ALIAS} Player` : "Opponent"}`}
       <Button
         onClick={() => handleRemoveGoal(goal)}
         size="sm"
