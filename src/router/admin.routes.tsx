@@ -23,7 +23,7 @@ import DocsPage from "@/pages/admin/docs/page";
 import AllDocsPage from "@/pages/admin/docs/files/page";
 import FolderPage from "@/pages/admin/docs/[folder]/page";
 import CardsPage from "@/pages/admin/cards/page";
-import TeamsFeature from "@/pages/admin/teams/page";
+import TeamsPage from "@/pages/admin/teams/page";
 import TrainingSettingsAdm from "@/pages/admin/training/page";
 import AttendancePage from "@/pages/admin/training/attendance/page";
 import { InjuriesManager } from "@/pages/admin/injuries/InjuresManager";
@@ -40,6 +40,8 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { EUserRole } from "@/types/user";
 import UploadPage from "@/pages/admin/media/upload/page";
 import CreateNewsPage from "@/pages/admin/news/create-news/page";
+import AdminTeamsLayout from "@/pages/admin/teams/layout";
+import TeamPage from "@/pages/admin/teams/team/Page";
 
 export const adminRoutes: RouteObject[] = [
   { path: "", element: <AdminDashboardPage /> },
@@ -121,7 +123,14 @@ export const adminRoutes: RouteObject[] = [
   { path: "squad", element: <SquadPage /> },
   { path: "cards", element: <CardsPage /> },
   { path: "mvps", element: <MVPsPage /> },
-  { path: "teams", element: <TeamsFeature /> },
+  {
+    path: "teams",
+    element: <AdminTeamsLayout />,
+    children: [
+      { index: true, element: <TeamsPage /> },
+      { path: ":teamId", element: <TeamPage /> },
+    ],
+  },
   { path: "injuries", element: <InjuriesManager /> },
 
   // Operations

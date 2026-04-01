@@ -121,7 +121,7 @@ export const sidebarLinks: ILinkItem[] = [
 
       {
         title: "Match Request",
-        path: "/admin/request",
+        path: "/admin/matches/request",
         icon: <LetterText className="w-4 h-4" />,
       },
     ],

@@ -39,7 +39,7 @@ export function INPUT(props: IInputProps) {
         onChange={(e) => {
           props.onChange(e);
         }}
-        className={`bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none ${props.className}`}
+        className={`bg-input appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none ${props.className}`}
       />
       {props.error && (
         <p className={` text-red-500  text-sm mt-1`}>{props.error}</p>

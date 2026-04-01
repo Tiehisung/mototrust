@@ -7,13 +7,15 @@ import {
   SidebarLink,
   sidebarLinks,
 } from "./(sidebar)/PrimarySidebarAdmin";
+import { AVATAR } from "@/components/ui/avatar";
+import { ENV } from "@/lib/env";
 
 export function LeftPaneDesktop() {
   return (
     <div className="max-md:hidden bg-accent max-h-screen overflow-y-auto py-6">
       <div className="p-6 flex items-center gap-6 justify-between">
-        <Link to="/" className="text-2xl font-semibold grow flex" title="Home">
-          ⚽ KonFC
+        <Link to="/" className="text-2xl font-semibold grow flex gap-2 items-center" title="Home">
+          <AVATAR src={ENV.LOGO_NO_BG_URL} /> {ENV.TEAM_ALIAS}
         </Link>
         <ThemeModeToggle />
       </div>

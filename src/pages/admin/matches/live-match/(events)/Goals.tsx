@@ -4,8 +4,7 @@ import { Plus, X } from "lucide-react";
 import { Input } from "@/components/input/Inputs";
 import { Button } from "@/components/buttons/Button";
 
-import { IGoal, IMatch, ITeam } from "@/types/match.interface";
-import { SWITCH } from "@/components/ui/switch";
+import { EGoalType, IGoal, IMatch, ITeam } from "@/types/match.interface";
 import { PrimaryCollapsible } from "@/components/Collapsible";
 
 import {
@@ -16,6 +15,8 @@ import { smartToast } from "@/utils/toast";
 import { useGetPlayersQuery } from "@/services/player.endpoints";
 import SELECT from "@/components/select/Select";
 import { TEAM } from "@/data/team";
+import RadioButtons from "@/components/input/Radio";
+import { cn } from "@/lib/utils";
 
 interface ScoreEventsTabProps {
   opponent?: ITeam;
@@ -32,8 +33,14 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
     assist: "",
     minute: "",
     description: "",
+    modeOfScore: EGoalType.OPEN_PLAY,
     teamId: TEAM._id,
   });
+
+  const teams = [
+    { label: TEAM.alias, value: TEAM._id },
+    { label: match.opponent.alias || "Opponent", value: match.opponent._id },
+  ];
 
   const handleAddGoal = async (e: FormEvent<HTMLFormElement>) => {
     try {
@@ -65,9 +72,10 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
         description: `⚽ ${form.description}`,
         modeOfScore: "Open Play Goal",
         match: match?._id,
+        teamId: form.teamId,
       };
 
-      if (form.teamId)
+      if (form.teamId == TEAM._id && scorer) {
         newGoal = {
           ...newGoal,
           scorer: {
@@ -76,9 +84,15 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
             avatar: scorer?.avatar,
             number: scorer?.number,
           },
-          assist,
-          teamId: form.teamId,
         };
+
+        if (form.assist) {
+          newGoal = {
+            ...newGoal,
+            assist,
+          };
+        }
+      }
 
       const results = await addGoal(newGoal).unwrap();
 
@@ -88,7 +102,8 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
           assist: "",
           minute: "",
           description: "",
-          teamId: TEAM._id,
+          modeOfScore: EGoalType.OPEN_PLAY,
+          teamId: "",
         });
       smartToast(results);
     } catch (error) {
@@ -101,97 +116,109 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
       <Card
         className={`p-6 rounded-none ${isLoading ? "pointer-events-none" : ""}`}
       >
-        <form onSubmit={handleAddGoal}>
+        <form onSubmit={handleAddGoal} className="space-y-4">
           <h2 className="mb-6 text-2xl font-bold flex items-center gap-6 justify-between border-b">
             Add Goal
-            <SWITCH
-              label={
-                form.teamId===TEAM._id ? TEAM.alias : match.opponent.alias || "Opponent"
-              }
-              name="teamId"
-              onCheckedChange={(checked) => setForm((p) => ({ ...p, teamId: checked ? TEAM._id : match.opponent._id }))}
-              checked={form.teamId==TEAM._id}
-              className=""
-            />
           </h2>
+          <SELECT
+            label="Team"
+            options={match.isHome ? teams : teams.reverse()}
+            placeholder="Select Team"
+            className="grid mb-3"
+            onChange={(id) => setForm((prev) => ({ ...prev, teamId: id }))}
+            value={form.teamId}
+            required
+          />
 
-          <div className="space-y-4">
-            {form.teamId===TEAM._id && (
-              <div className="grid grid-cols-1 gap-4 ">
-                <SELECT
-                  label="Scorer"
-                  options={players?.map((p) => ({
-                    label: `${
-                      p.lastName
-                    } ${p?.firstName}(${p?.number ?? p?.number})`,
-                    value: p._id,
-                  }))}
-                  placeholder="Scored by"
-                  className="grid"
-                  onChange={(id) =>
-                    setForm((prev) => ({ ...prev, scorer: id }))
-                  }
-                  value={form.scorer}
-                />
+          <Input
+            type="number"
+            others={{ min: "0", max: "120" }}
+            placeholder="e.g., 45"
+            value={form.minute}
+            required
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, minute: e.target.value }))
+            }
+            name={"goalMinute"}
+            label="Minute"
+          />
 
-                <SELECT
-                  label="Assist (Optional)"
-                  options={players?.map((p) => ({
-                    label: `${
-                      p.lastName
-                    } ${p?.firstName}(${p?.number ?? p?.number})`,
-                    value: p._id,
-                  }))}
-                  placeholder="Assisted by"
-                  className="grid"
-                  onChange={(id) =>
-                    setForm((prev) => ({ ...prev, assist: id }))
-                  }
-                  value={form.assist}
-                  disabled={!form.scorer}
-                />
-              </div>
-            )}
+          <Input
+            placeholder="e.g., VAR Review, Penalty Decision, etc."
+            value={form.description}
+            onChange={(e) =>
+              setForm((prev) => ({
+                ...prev,
+                description: e.target.value,
+              }))
+            }
+            name={"goalDescription"}
+            label="Comment"
+          />
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <Input
-                type="number"
-                others={{ min: "0", max: "120" }}
-                placeholder="e.g., 45"
-                value={form.minute}
-                required
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, minute: e.target.value }))
-                }
-                name={"goalMinute"}
-                label="Minute"
+          {form.teamId === TEAM._id && (
+            <div className="grid grid-cols-1 gap-4 ">
+              <SELECT
+                label="Scorer"
+                options={players?.map((p) => ({
+                  label: `${
+                    p.lastName
+                  } ${p?.firstName}(${p?.number ?? p?.number})`,
+                  value: p._id,
+                }))}
+                placeholder="Scored by"
+                className="grid"
+                onChange={(id) => setForm((prev) => ({ ...prev, scorer: id }))}
+                value={form.scorer}
               />
 
-              <Input
-                placeholder="e.g., VAR Review, Penalty Decision, etc."
-                value={form.description}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    description: e.target.value,
-                  }))
-                }
-                name={"goalDescription"}
-                label="Comment"
+              <SELECT
+                label="Assist (Optional)"
+                options={players?.map((p) => ({
+                  label: `${
+                    p.lastName
+                  } ${p?.firstName}(${p?.number ?? p?.number})`,
+                  value: p._id,
+                }))}
+                placeholder="Assisted by"
+                className="grid"
+                onChange={(id) => setForm((prev) => ({ ...prev, assist: id }))}
+                value={form.assist}
+                disabled={!form.scorer}
               />
             </div>
+          )}
 
-            <div className="gap-6 flex items-center mt-8">
-              <Button
-                className=" grow"
-                waiting={isLoading}
-                primaryText=" Add Goal"
-                waitingText="Adding Goal"
-                type="submit"
-              >
-                <Plus className="mr-2 h-4 w-4" />
-              </Button>
-            </div>
+          <PrimaryCollapsible
+            header={{
+              label: `Goal Type(${form.modeOfScore})`,
+              className: "_label",
+            }}
+          >
+            <RadioButtons
+              defaultValue={EGoalType.OPEN_PLAY}
+              setSelectedValue={(value) =>
+                setForm((prev) => ({
+                  ...prev,
+                  modeOfScore: value as EGoalType,
+                }))
+              }
+              values={Object.values(EGoalType)}
+              label=""
+              wrapperStyles="flex gap-3 items-center flex-wrap"
+            />
+          </PrimaryCollapsible>
+
+          <div className="gap-6 flex items-center mt-8">
+            <Button
+              className=" grow"
+              waiting={isLoading}
+              primaryText=" Add Goal"
+              waitingText="Adding Goal"
+              type="submit"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+            </Button>
           </div>
         </form>
 
@@ -232,12 +259,17 @@ function Goal({ goal }: { goal: IGoal }) {
       smartToast({ error });
     }
   };
+
+  const isTeamGoal = goal.teamId === TEAM._id;
   return (
     <div
-      className="flex items-center gap-2 bg-muted px-4 py-2 rounded-lg"
+      className={cn(
+        "flex items-center gap-2 bg-muted px-4 py-2 rounded-lg",
+        isTeamGoal ? "" : "text-destructive",
+      )}
       key={goal._id}
     >
-      {`${goal.minute}' ${goal.teamId===TEAM._id ? goal.scorer?.name : "Opponent"}`} 
+      {`${goal.minute}' ${isTeamGoal ? goal.scorer?.name || `${TEAM.alias} Player` : "Opponent"}`}
       <Button
         onClick={() => handleRemoveGoal(goal)}
         size="sm"

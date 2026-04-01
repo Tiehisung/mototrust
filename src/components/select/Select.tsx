@@ -83,7 +83,7 @@ export function PrimarySelect({ clearable = true, ...props }: ISelect) {
       >
         <SelectTrigger
           disabled={props.disabled}
-          className={`${props.triggerStyles}`}
+          className={`bg-input dark:bg-input ${props.triggerStyles}`}
           id={props.name}
         >
           <SelectValue placeholder={props.placeholder ?? "Select"} />
@@ -141,9 +141,9 @@ export default function SELECT({
   loading,
   ...props
 }: ISELECT) {
-  const { setParam ,} = useUpdateSearchParams();
+  const { setParam } = useUpdateSearchParams();
 
- const defaultSP = useGetParam(paramKey as string);
+  const defaultSP = useGetParam(paramKey as string);
 
   const handleOnChange = (val: string) => {
     if (typeof onChange !== "undefined") {
@@ -154,41 +154,48 @@ export default function SELECT({
   };
 
   return (
-    <div className={cn("flex items-center gap-2 relative", className)}>
-      {label && (
-        <Label htmlFor={name} className="_label text-muted-foreground">
-          {label}
-        </Label>
-      )}
-      <select
-        value={value||defaultSP}
-        onChange={(e) => handleOnChange?.(e.target.value)}
-        className={cn(
-          `text-sm border px-2 h-9 border-input rounded-md py-2
-    focus:outline-none focus:ring-2 focus:ring-ring
-    disabled:cursor-not-allowed disabled:opacity-50`,
-          selectStyles,
+    <>
+      <div className={cn("flex items-center gap-2 relative", className)}>
+        {label && (
+          <Label htmlFor={name} className="_label text-muted-foreground">
+            {label}
+          </Label>
         )}
-        {...props}
-      >
-        <option value="" hidden>
-          {props.placeholder}
-        </option>
-        {options?.map((op, i) => (
-          <option key={i} value={op.value} selected={op.value == (value || defaultSP)} className="bg-accent">
-            {op.label}
+        <select
+          value={value || defaultSP}
+          onChange={(e) => handleOnChange?.(e.target.value)}
+          className={cn(
+            `bg-input text-sm border px-2 h-9 border-input rounded py-2
+    focus:outline-none focus:ring-2 focus:ring-primary
+    disabled:cursor-not-allowed disabled:opacity-50`,
+            selectStyles,
+          )}
+          {...props}
+        >
+          <option value="" hidden>
+            {props.placeholder}
           </option>
-        ))}
-      </select>
+          {options?.map((op, i) => (
+            <option
+              key={i}
+              value={op.value}
+              selected={op.value == (value || defaultSP)}
+              className="bg-accent"
+            >
+              {op.label}
+            </option>
+          ))}
+        </select>
 
+        {loading && <OverlayLoader isLoading />}
+      </div>
       {error && (
         <p
-          className={`absolute top-full text-red-500 text-left text-sm font-light `}
+          className={` text-destructive text-left text-sm font-light line-clamp-2`}
         >
           {error}
         </p>
       )}
-      {loading && <OverlayLoader isLoading />}
-    </div>
+    </>
   );
 }

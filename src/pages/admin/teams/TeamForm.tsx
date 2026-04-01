@@ -2,7 +2,6 @@ import { Button } from "@/components/buttons/Button";
 import { IconInputWithLabel } from "@/components/input/Inputs";
 import { Card } from "@/components/ui/card";
 import React, { ChangeEvent, useState } from "react";
-import { toast } from "sonner";
 import { fireDoubleEscape } from "@/hooks/Esc";
 import { ITeam } from "@/types/match.interface";
 import { getErrorMessage } from "@/lib/error";
@@ -11,6 +10,8 @@ import {
   useUpdateTeamMutation,
 } from "@/services/team.endpoints";
 import { ImageUploadWidget } from "@/components/cloudinary/ImageUploadWidget";
+import { smartToast } from "@/utils/toast";
+import { ENV } from "@/lib/env";
 
 export interface IPostTeam {
   name: string;
@@ -27,9 +28,10 @@ export interface IUpdateTeam extends IPostTeam {
 
 interface IProps {
   team?: ITeam;
+  onSuccess?: () => void;
 }
 
-export const TeamForm = ({ team }: IProps) => {
+export const TeamForm = ({ team, onSuccess }: IProps) => {
   const [waiting, setWaiting] = useState(false);
   const [createTeam] = useCreateTeamMutation();
   const [updateTeam] = useUpdateTeamMutation();
@@ -42,7 +44,7 @@ export const TeamForm = ({ team }: IProps) => {
           alias: team.alias || "",
           contact: team.contact || "",
           contactName: team.contactName || "",
-          logo: team.logo || "",
+          logo: team.logo || ENV.OPPONENT_LOGO_NO_BG_URL,
         }
       : {
           name: "",
@@ -50,7 +52,7 @@ export const TeamForm = ({ team }: IProps) => {
           alias: "",
           contact: "",
           contactName: "",
-          logo: "",
+          logo: ENV.OPPONENT_LOGO_NO_BG_URL,
         },
   );
 
@@ -61,11 +63,6 @@ export const TeamForm = ({ team }: IProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!formData.logo) {
-      toast.error("Logo is required");
-      return;
-    }
 
     try {
       setWaiting(true);
@@ -81,7 +78,7 @@ export const TeamForm = ({ team }: IProps) => {
       }
 
       if (result.success) {
-        toast.success(result.message);
+        smartToast(result);
 
         if (!team) {
           setFormData({
@@ -89,17 +86,17 @@ export const TeamForm = ({ team }: IProps) => {
             community: "",
             alias: "",
             contact: "",
-            logo: "",
+            logo: ENV.OPPONENT_LOGO_NO_BG_URL,
             contactName: "",
           });
         }
-
+        onSuccess?.();
         fireDoubleEscape();
       } else {
-        toast.error(result.message);
+        smartToast(result);
       }
     } catch (error) {
-      toast.error(getErrorMessage(error));
+      smartToast({ error: getErrorMessage(error) });
     } finally {
       setWaiting(false);
     }
@@ -107,27 +104,24 @@ export const TeamForm = ({ team }: IProps) => {
 
   return (
     <Card className="w-fit p-3 mx-auto grow">
-      <h1 className="font-bold text-lg mb-2 text-teal-700 text-center uppercase">
+      <h1 className="font-bold text-lg mb-2 text-primary text-center uppercase">
         {team ? `Update ${team?.name}` : "Register New Opponent Team"}
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="p-4 pt-10 border max-w-md flex flex-col gap-4 gap-y-8 items-center justify-center mx-center w-full grow md:min-w-sm"
+        className="p-4 pt-10 max-w-md flex flex-col gap-4 gap-y-8 items-center justify-center mx-center w-full grow md:min-w-sm"
       >
         <div className="flex flex-col items-center justify-center gap-2 mx-auto">
           <ImageUploadWidget
             onUpload={(file) =>
               setFormData({ ...formData, logo: file?.secure_url ?? "" })
             }
-            initialImage={team?.logo}
+            initialImage={team?.logo || ENV.OPPONENT_LOGO_NO_BG_URL}
             onRemove={() =>
               setFormData({ ...formData, logo: team?.logo || "" })
             }
           />
-          {!formData.logo && (
-            <p className="text-red-500 text-xs">Logo is required</p>
-          )}
         </div>
 
         <IconInputWithLabel

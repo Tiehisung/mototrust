@@ -83,7 +83,7 @@ export function TextArea({
           onChange(e);
         }}
         className={cn(
-          `bg-background text-secondary-foreground outline-none border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary shadow-teal-100/50 rounded px-2 w-full placeholder:line-clamp-1  min-h-20 `,
+          `bg-input text-secondary-foreground outline-none border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary shadow-teal-100/50 rounded px-2 w-full placeholder:line-clamp-1  min-h-20 `,
           className,
         )}
         onFocus={() => setIsFocus(true)}
@@ -155,7 +155,7 @@ export function Input({
             ? placeholder.substring(0, 27) + "..."
             : placeholder
         }
-        className={`bg-background text-secondary-foreground outline-none border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary shadow-teal-100/50 h-9 rounded px-2 w-full placeholder:line-clamp-1 _slowTrans ${className}`}
+        className={`bg-input text-secondary-foreground outline-none border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring shadow-teal-100/50 h-9 rounded px-2 w-full placeholder:line-clamp-1 ${className}`}
         {...others}
         required={required}
       />
@@ -215,7 +215,7 @@ export function DateTimeInput({
         onChange={(e) => {
           onChange(e);
         }}
-        className={`bg-accent/40 grow w-full min-w-full border px-2 py-2 uppercase rounded focus:border-teal-500 ${className}`}
+        className={`bg-accent/40 grow w-full min-w-full border px-2 py-2 uppercase rounded focus:border-border ${className}`}
         {...others}
         required={required}
       />
@@ -247,7 +247,7 @@ export function IconInputWithLabel({
   return (
     <div className="grow w-full">
       <div
-        className={`flex items-center relative pl-0.5 border bg-accent/40 focus-within:border-teal-400 shadow-teal-100/50 w-full rounded ${wrapperStyles} `}
+        className={`flex items-center relative pl-0.5 border bg-accent/40 focus-within:border-border shadow-primary/50 w-full rounded ${wrapperStyles} `}
         data-tip={dataTip}
       >
         <label

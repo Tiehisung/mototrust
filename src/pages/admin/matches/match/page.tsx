@@ -11,13 +11,16 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import PageLoader from "@/components/loaders/Page";
 import DataErrorAlert from "@/components/error/DataError";
 import { getErrorMessage } from "@/lib/error";
+import { formatDate } from "@/lib/timeAndDate";
 
 export default function MatchPage() {
   const slug = useParams().matchSlug;
 
-  const { data: matchData, isLoading: matchLoading,error } = useGetMatchQuery(
-    slug || "",
-  );
+  const {
+    data: matchData,
+    isLoading: matchLoading,
+    error,
+  } = useGetMatchQuery(slug || "");
 
   const { data: teamsData, isLoading: teamsLoading } = useGetTeamsQuery({});
   const match = matchData?.data;
@@ -44,16 +47,20 @@ export default function MatchPage() {
   if (!match) {
     return (
       <div className="container mx-auto p-4 _page">
-         <DataErrorAlert message={getErrorMessage(error)} />
+        <DataErrorAlert message={getErrorMessage(error)} />
       </div>
     );
   }
 
   return (
     <div className="container mx-auto p-4 _page">
-      <h1 className="text-2xl font-bold mb-4 text-primaryRed">
-        {match?.title} <Badge className="ml-auto">{match?.status}</Badge>
-      </h1>
+      <header className="mb-4">
+        <h1 className="text-2xl font-bold text-primaryRed">
+          {match?.title} <Badge className="ml-auto">{match?.status}</Badge>
+        </h1>
+        <p className="text-muted-foreground">{formatDate(match?.date)}</p>
+      </header>
+
       <MatchActions match={match} teams={teams?.data as ITeam[]} />
 
       <div className="my-6 flex items-center justify-between gap-6 border p-3 bg-secondary">

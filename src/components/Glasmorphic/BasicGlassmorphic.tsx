@@ -6,7 +6,6 @@ interface GlassmorphicProps {
   children: ReactNode;
   className?: string;
   blur?: "sm" | "md" | "lg" | "xl" | "none";
-  opacity?: number;
   rounded?: "none" | "sm" | "md" | "lg" | "xl" | "full";
   border?: boolean;
   shadow?: boolean;
@@ -38,12 +37,11 @@ export function Glassmorphic({
   children,
   className,
   blur = "md",
-  opacity = 0.7,
   rounded = "lg",
   border = true,
   shadow = true,
-  background = "bg-white/10 dark:bg-black/10",
-  borderColor = "border-white/20 dark:border-white/10",
+  background = "bg-accent/10 dark:bg-secondary/10",
+  borderColor = "border-accent/20 dark:border-accent/10",
   hoverEffect = false,
   interactive = false,
 }: GlassmorphicProps) {
@@ -60,12 +58,9 @@ export function Glassmorphic({
         // Hover effects
         hoverEffect && "hover:scale-105 hover:shadow-xl",
         interactive &&
-          "cursor-pointer hover:bg-white/20 dark:hover:bg-black/20",
+          "cursor-pointer hover:bg-accent/20 dark:hover:bg-secondary/20",
         className,
       )}
-      style={{
-        backgroundColor: `rgba(255, 255, 255, ${opacity})`,
-      }}
     >
       {children}
     </div>

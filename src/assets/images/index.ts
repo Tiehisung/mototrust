@@ -21,12 +21,13 @@ import blueCurvy from "./bg/blue-curvy-bg.png";
 import circleCheckMark from './circle-checkmark.png'
 import error from './error.png'
 import success from './success.png'
-import logoTrans from '../../logo-trans-bg.png'
-import logoWhite from '../../logo-white-bg.png'
+import { ENV } from "@/lib/env";
 
 export const logos = {
-  logoWhite,
-  logoTrans,
+  logoWhite:ENV.LOGO_URL,
+  logoTrans: ENV.LOGO_NO_BG_URL,
+  opponentLogoWhite:ENV.OPPONENT_LOGO_URL,
+  opponentLogoTrans: ENV.OPPONENT_LOGO_NO_BG_URL,
 }
 
 export const staticImages = {

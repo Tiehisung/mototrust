@@ -97,7 +97,7 @@ export function TABS({
 
   return (
     <Tabs defaultValue={defaultTab} className={className}>
-      <TabsList className={cn(`grid mb-8`, listClassName)}>
+      <TabsList className={cn(`flex px-3 mb-8 `, listClassName)}>
         {tabs?.map((tab) => (
           <TabsTrigger
             key={tab.value}
@@ -118,7 +118,7 @@ export function TABS({
         <TabsContent
           key={i}
           value={tabs?.[i]?.value}
-          className={contentClassName}
+          className={cn('p-4', contentClassName)}
         >
           {cont}
         </TabsContent>

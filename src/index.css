@@ -111,7 +111,7 @@ body {
 
   /* Borders */
   --border: #c9d3dc; /* Softer, modern border */
-  --input: #e2e8ee;
+  --input: #eaebec;
   --ring: #c6a763;
 
   /* Sidebar */
@@ -160,7 +160,7 @@ body {
   /* Borders / Inputs */
   --border: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.14);
-  --ring: #0078d4;
+  --ring: #f9844b;
 
   /* Sidebar */
   --sidebar: #162a36;

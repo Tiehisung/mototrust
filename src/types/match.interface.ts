@@ -39,6 +39,12 @@ export interface IMatch {
     result: 'win' | 'draw' | 'loss'
   }
 }
+
+export enum EMatchResult {
+  WIN = "win",
+  DRAW = "draw",
+  LOSS = "loss",
+}
 export interface IMatchMetrics {
   goals: {
     home: number;
@@ -69,7 +75,7 @@ export interface ITeam {
   contact: string;
   contactName: string;
   logo: string;
-  currentPlayers: IPlayerMini[];
+  currentPlayers?: IPlayerMini[];
   createdAt: string;
   updatedAt: string;
 }

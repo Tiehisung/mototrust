@@ -1,21 +1,22 @@
 import { formatDate } from "@/lib/timeAndDate";
 import { IQueryResponse } from "@/types";
 import { PrimaryDropdown } from "@/components/Dropdown";
-import { DIALOG } from "@/components/Dialog";
 import { LVOutPutTable } from "@/components/tables/VerticalTable";
 import { Edit, Plus, Trash } from "lucide-react";
 import { ConfirmDialog } from "@/components/Confirm-dialog";
 import { StackModal } from "@/components/modals/StackModal";
- 
-import { toast } from "sonner";
+
 import { useDeleteTeamMutation } from "@/services/team.endpoints";
 import { ITeam } from "@/types/match.interface";
 import { TeamForm } from "./TeamForm";
 import { Pagination } from "@/components/pagination/Pagination";
-import { staticImages } from "@/assets/images";
+import { Button } from "@/components/buttons/Button";
+import { useNavigate } from "react-router-dom";
+import { smartToast } from "@/utils/toast";
+import { getErrorMessage } from "@/lib/error";
 
 const DisplayTeams = ({ teams }: { teams?: IQueryResponse<ITeam[]> }) => {
- 
+  const navigate = useNavigate();
   const [deleteTeam] = useDeleteTeamMutation();
 
   if (!teams) return <div className="_label p-6">No teams available</div>;
@@ -23,12 +24,10 @@ const DisplayTeams = ({ teams }: { teams?: IQueryResponse<ITeam[]> }) => {
   const handleDelete = async (teamId: string) => {
     try {
       const result = await deleteTeam(teamId).unwrap();
-      if (result.success) {
-        toast.success(result.message);
-      }
-      
+
+      smartToast(result);
     } catch (error) {
-      toast.error("Failed to delete team");
+      smartToast({ error: getErrorMessage(error, "Failed to delete team") });
     }
   };
 
@@ -58,9 +57,9 @@ const DisplayTeams = ({ teams }: { teams?: IQueryResponse<ITeam[]> }) => {
             <p className="_heading">{team?.name}</p>
             <div className="flex flex-wrap gap-3.5">
               <img
-                src={team?.logo ?? staticImages.ball}
+                src={team?.logo }
                 alt={team?.name ?? "logo"}
-                className="object-cover bg-accent h-60 w-60 aspect-4/3 rounded-xl"
+                className="object-cover h-60 w-60 aspect-4/3 rounded-xl"
               />
 
               <div className="grow">
@@ -82,19 +81,18 @@ const DisplayTeams = ({ teams }: { teams?: IQueryResponse<ITeam[]> }) => {
                 />
               </div>
             </div>
-            <PrimaryDropdown triggerStyles="absolute right-4 top-1 bg-accent/40 rounded-full p-1 h-10 w-10 _hover flex items-center justify-center">
-              <DIALOG
-                trigger={
-                  <>
-                    <Edit />
-                    Edit
-                  </>
-                }
-                triggerStyles="w-full justify-start"
-                variant="ghost"
+            <PrimaryDropdown
+              triggerStyles="absolute right-4 top-1 bg-accent/40 rounded-full h-10 w-10 _hover flex items-center justify-center"
+              className="py-4 px-2"
+            >
+              <Button
+                variant={"ghost"}
+                className="w-full flex justify-start"
+                onClick={() => navigate(`/admin/teams/${team._id}`)}
               >
-                <TeamForm team={team} />
-              </DIALOG>
+                <Edit />
+                Go to team
+              </Button>
               <ConfirmDialog
                 onConfirm={() => handleDelete(team._id)}
                 trigger={
@@ -104,12 +102,10 @@ const DisplayTeams = ({ teams }: { teams?: IQueryResponse<ITeam[]> }) => {
                   </>
                 }
                 triggerStyles="text-sm p-1.5 px-2 grow w-full justify-start"
-                variant="destructive"
+                variant="ghost"
                 title={`Delete '${team?.name}'`}
                 description={`Are you sure you want to delete "${team?.name}"?`}
               />
-
-              
             </PrimaryDropdown>
           </li>
         ))}

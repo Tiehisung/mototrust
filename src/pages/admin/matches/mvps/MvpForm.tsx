@@ -1,10 +1,9 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Card } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/buttons/Button";
 import { AVATAR } from "@/components/ui/avatar";
-import SELECT, { PrimarySelect } from "@/components/select/Select";
+import SELECT from "@/components/select/Select";
 import { TextArea } from "@/components/input/Inputs";
 import { EPlayerPosition, IPlayer } from "@/types/player.interface";
 import { EMatchStatus, IMatch } from "@/types/match.interface";
@@ -20,6 +19,7 @@ import {
 import { useGetPlayersQuery } from "@/services/player.endpoints";
 import { IQueryResponse } from "@/types";
 import { smartToast } from "@/utils/toast";
+import { Glassmorphic } from "@/components/Glasmorphic/BasicGlassmorphic";
 
 const mvpSchema = z.object({
   player: z.string().min(1, "Player is required"),
@@ -135,108 +135,103 @@ export function MVPForm({
   };
 
   return (
-    <Card className="p-6 rounded-none  bg-transparent">
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Glassmorphic className="space-y-4 p-3">
         <h2 className="mb-6 text-2xl font-bold flex items-center justify-between">
           {defaultMVP ? `Edit - ${defaultMVP?.player?.name}` : "Add MoTM"}:
-          <AVATAR
-             
-            src={selectedPlayer?.avatar as string}
-            alt="IP"
-          />
+          <AVATAR src={selectedPlayer?.avatar as string} alt="IP" />
         </h2>
 
-        <div className="space-y-4">
-          {/* Player */}
-          {!(defaultPlayer || defaultMVP) && (
-            <Controller
-              control={control}
-              name="player"
-              render={({ field, fieldState }) => (
-                <SELECT
-                  {...field}
-                  options={
-                    players?.map((p) => ({
-                      label: `${p.number} - ${p.lastName} ${p.firstName}`,
-                      value: p._id,
-                    })) ?? []
-                  }
-                  label="Player"
-                  placeholder="Select"
-                  selectStyles="w-full    "
-                  error={fieldState?.error?.message}
-                  className="grid"
-                  loading={isLoadingPlayers}
-                />
-              )}
-            />
-          )}
-
-          {!(defaultMatch || defaultMVP) && (
-            <Controller
-              control={control}
-              name="match"
-              render={({ field, fieldState }) => (
-                <SELECT
-                  {...field}
-                  options={
-                    matches?.map((m) => ({
-                      label: m.title,
-                      value: m._id,
-                    })) ?? []
-                  }
-                  label="Match"
-                  placeholder="Select"
-                  selectStyles="w-full"
-                  error={fieldState?.error?.message}
-                  className="grid"
-                  loading={isLoadingMatches}
-                />
-              )}
-            />
-          )}
-
-          {/* Position Played */}
+        {/* Player */}
+        {!(defaultPlayer || defaultMVP) && (
           <Controller
             control={control}
-            name="positionPlayed"
+            name="player"
             render={({ field, fieldState }) => (
-              <PrimarySelect
+              <SELECT
                 {...field}
-                options={enumToOptions(EPlayerPosition)}
-                label="Position Played"
+                options={
+                  players?.map((p) => ({
+                    label: `${p.number} - ${p.lastName} ${p.firstName}`,
+                    value: p._id,
+                  })) ?? []
+                }
+                label="Player"
                 placeholder="Select"
-                triggerStyles="w-full"
+                selectStyles="w-full    "
                 error={fieldState?.error?.message}
+                className="grid"
+                loading={isLoadingPlayers}
               />
             )}
           />
+        )}
 
-          {/* Description */}
+        {!(defaultMatch || defaultMVP) && (
           <Controller
             control={control}
-            name="description"
+            name="match"
             render={({ field, fieldState }) => (
-              <TextArea
+              <SELECT
                 {...field}
-                label="Description"
-                placeholder="e.g., Wrong celebration, fight..."
+                options={
+                  matches?.map((m) => ({
+                    label: m.title,
+                    value: m._id,
+                  })) ?? []
+                }
+                label="Match"
+                placeholder="Select"
+                selectStyles="w-full"
                 error={fieldState?.error?.message}
+                className="grid"
+                loading={isLoadingMatches}
               />
             )}
           />
+        )}
 
-          <Button
-            type="submit"
-            waiting={isSubmitting || isCreating || isUpdating}
-            className="w-full "
-            primaryText={defaultMVP ? "Edit MoTM" : "Add MoTM"}
-            waitingText={defaultMVP ? "Editing MoTM..." : "Adding MoTM..."}
-          >
-            <Plus className="mr-2 h-4 w-4" />
-          </Button>
-        </div>
-      </form>
-    </Card>
+        {/* Position Played */}
+        <Controller
+          control={control}
+          name="positionPlayed"
+          render={({ field, fieldState }) => (
+            <SELECT
+              {...field}
+              options={enumToOptions(EPlayerPosition)}
+              label="Position Played"
+              placeholder="Select"
+              selectStyles="w-full"
+              error={fieldState?.error?.message}
+              className="grid"
+            />
+          )}
+        />
+
+        {/* Description */}
+        <Controller
+          control={control}
+          name="description"
+          render={({ field, fieldState }) => (
+            <TextArea
+              {...field}
+              label="Description"
+              placeholder="e.g., Wrong celebration, fight..."
+              error={fieldState?.error?.message}
+            />
+          )}
+        />
+
+        <Button
+          type="submit"
+          waiting={isSubmitting || isCreating || isUpdating}
+          className="w-full "
+          primaryText={defaultMVP ? "Edit MoTM" : "Add MoTM"}
+          waitingText={defaultMVP ? "Editing MoTM..." : "Adding MoTM..."}
+        >
+          <Plus className="mr-2 h-4 w-4" />
+        </Button>
+      </Glassmorphic>
+    </form>
   );
 }

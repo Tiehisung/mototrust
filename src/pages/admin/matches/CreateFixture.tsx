@@ -110,7 +110,7 @@ const CreateFixture = ({ teams }: { teams?: ITeam[] }) => {
               setSelectedValue={setMatchType}
               values={["home", "away"]}
               label="Match Type"
-              wrapperStyles="flex gap-3 items-center"
+              wrapperStyles="flex gap-3 items-center" 
             />
 
             <DateTimeInput

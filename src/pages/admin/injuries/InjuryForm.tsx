@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/buttons/Button";
 import { AVATAR } from "@/components/ui/avatar";
 import { enumToOptions } from "@/lib/select";
-import SELECT, { PrimarySelect } from "@/components/select/Select";
+import SELECT from "@/components/select/Select";
 import { Input, TextArea } from "@/components/input/Inputs";
 import { IPlayer } from "@/types/player.interface";
 import { IMatch } from "@/types/match.interface";
@@ -219,12 +219,12 @@ export function InjuryForm({
             control={control}
             name="severity"
             render={({ field, fieldState }) => (
-              <PrimarySelect
+              <SELECT
                 {...field}
                 options={enumToOptions(EInjurySeverity)}
                 label="Severity"
                 placeholder="Select"
-                triggerStyles="w-full"
+                className="grid"
                 error={fieldState?.error?.message}
               />
             )}
