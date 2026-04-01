@@ -11,6 +11,7 @@ import {
 } from "@/services/match.endpoints";
 import { smartToast } from "@/utils/toast";
 import { fireEscape } from "@/hooks/Esc";
+import "@/styles/win2k.css";
 
 interface Props {
   match: IMatch;
@@ -48,75 +49,81 @@ const MatchActions = ({ match, teams }: Props) => {
   };
 
   return (
-    <div>
-      <fieldset className="border p-3">
-        <legend>Match Actions</legend>
-        <div className="flex items-center gap-5 flex-wrap mb-4">
-          <UpdateFixtureMatch
-            teams={teams}
-            fixture={match}
-            variant={"outline"}
-          />
+    <div className="win2k-groupbox" role="group" aria-label="Match Actions">
+      <legend>Match Actions</legend>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          flexWrap: "wrap",
+          paddingTop: 4,
+        }}
+      >
+        <UpdateFixtureMatch
+          teams={teams}
+          fixture={match}
+          variant={"outline"}
+        />
 
-          {match?.squad ? (
-            <DIALOG
-              trigger="Squad"
-              title=""
-              className="min-w-[80vw]"
-              variant="outline"
-            >
-              <SquadCard match={match} />
-            </DIALOG>
-          ) : (
-            <DIALOG
-              trigger="Choose Squad"
-              variant="ghost"
-              size="sm"
-              title={`SQUAD for ${match?.title}`}
-              className="min-w-[80vw]"
-            >
-              <SquadForm defaultMatch={match} />
-            </DIALOG>
-          )}
+        {match?.squad ? (
+          <DIALOG
+            trigger="Squad"
+            title=""
+            className="min-w-[80vw]"
+            variant="outline"
+          >
+            <SquadCard match={match} />
+          </DIALOG>
+        ) : (
+          <DIALOG
+            trigger="Choose Squad"
+            variant="ghost"
+            size="sm"
+            title={`SQUAD for ${match?.title}`}
+            className="min-w-[80vw]"
+          >
+            <SquadForm defaultMatch={match} />
+          </DIALOG>
+        )}
 
-          {status === "UPCOMING" && (
-            <ConfirmDialog
-              description={`Are you sure you want this match to go live? \n <i>${
-                match?.title ?? ""
-              }</i>`}
-              onConfirm={() => handleStatusUpdate("LIVE")}
-              trigger="Go Live"
-              triggerStyles="text-sm p-1.5 px-2 justify-start"
-              variant="destructive"
-              title={`Start ${match?.title}`}
-            />
-          )}
-
-          {status === "LIVE" && (
-            <ConfirmDialog
-              description={`Do you want to finish this match? \n <i>${
-                match?.title ?? ""
-              }</i>`}
-              onConfirm={() => handleStatusUpdate("FT")}
-              trigger="End Live"
-              triggerStyles="text-sm p-1.5 px-2 justify-start"
-              variant="destructive"
-              title={`End | ${match?.title}`}
-            />
-          )}
-
+        {status === "UPCOMING" && (
           <ConfirmDialog
-            trigger="Delete"
-            onConfirm={handleDelete}
+            description={`Are you sure you want this match to go live? \n <i>${
+              match?.title ?? ""
+            }</i>`}
+            onConfirm={() => handleStatusUpdate("LIVE")}
+            trigger="▶ Go Live"
+            triggerStyles="win2k-btn win2k-btn-primary"
             variant="destructive"
-            title={shortText(match?.title ?? "Match")}
-            description={`Are you sure you want to delete "<b>${shortText(
-              match?.title ?? "Match",
-              40,
-            )}</b>"?`}
+            title={`Start ${match?.title}`}
           />
-        </div>{" "}
-      </fieldset>
+        )}
+
+        {status === "LIVE" && (
+          <ConfirmDialog
+            description={`Do you want to finish this match? \n <i>${
+              match?.title ?? ""
+            }</i>`}
+            onConfirm={() => handleStatusUpdate("FT")}
+            trigger="■ End Live"
+            triggerStyles="win2k-btn win2k-btn-danger"
+            variant="destructive"
+            title={`End | ${match?.title}`}
+          />
+        )}
+
+        <ConfirmDialog
+          trigger="✕ Delete"
+          onConfirm={handleDelete}
+          variant="destructive"
+          title={shortText(match?.title ?? "Match")}
+          description={`Are you sure you want to delete "<b>${shortText(
+            match?.title ?? "Match",
+            40,
+          )}</b>"?`}
+        />
+      </div>
     </div>
   );
 };

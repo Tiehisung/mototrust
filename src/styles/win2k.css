@@ -1,0 +1,428 @@
+/* =========================================================
+   Windows 2000 / Classic Shell Theme
+   ========================================================= */
+
+.win2k {
+  font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  background-color: #d4d0c8;
+}
+
+/* ── Window chrome ──────────────────────────────────────── */
+.win2k-window {
+  background: #d4d0c8;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  box-shadow: 1px 1px 0 #808080 inset, -1px -1px 0 #ffffff inset;
+}
+
+.win2k-titlebar {
+  background: linear-gradient(to right, #000080, #1084d0);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  user-select: none;
+}
+
+.win2k-titlebar-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.win2k-titlebar-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+}
+
+.win2k-titlebar-btn {
+  width: 16px;
+  height: 14px;
+  background: #d4d0c8;
+  color: #000;
+  font-size: 9px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+  line-height: 1;
+  font-family: "Marlett", "Tahoma", sans-serif;
+}
+
+.win2k-titlebar-btn:active {
+  border-top: 1px solid #404040;
+  border-left: 1px solid #404040;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+}
+
+/* ── Client area (content inside window) ────────────────── */
+.win2k-client {
+  background: #d4d0c8;
+  padding: 8px;
+}
+
+/* ── Sunken / raised panels ─────────────────────────────── */
+.win2k-sunken {
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  box-shadow: 1px 1px 0 #404040 inset;
+}
+
+.win2k-raised {
+  background: #d4d0c8;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+}
+
+/* ── Fieldset / group box ───────────────────────────────── */
+.win2k-groupbox {
+  background: #d4d0c8;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding: 16px 10px 10px;
+  margin: 0;
+  position: relative;
+}
+
+.win2k-groupbox legend {
+  font-size: 11px;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-weight: normal;
+  color: #000;
+  padding: 0 4px;
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  background: #d4d0c8;
+}
+
+/* ── Classic button ─────────────────────────────────────── */
+.win2k-btn {
+  background: #d4d0c8;
+  color: #000000;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  padding: 3px 14px 4px;
+  cursor: pointer;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  box-shadow: 1px 1px 0 #808080;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  min-width: 75px;
+  justify-content: center;
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+}
+
+.win2k-btn:hover {
+  background: #e0dcd4;
+}
+
+.win2k-btn:active,
+.win2k-btn-pressed {
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  box-shadow: none;
+  padding: 4px 13px 3px 15px;
+}
+
+.win2k-btn-default {
+  border: 2px solid #000080;
+}
+
+.win2k-btn-danger {
+  color: #800000;
+}
+
+.win2k-btn-primary {
+  font-weight: bold;
+}
+
+/* ── Tabs (classic style) ───────────────────────────────── */
+.win2k-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 1;
+}
+
+.win2k-tab {
+  background: #d4d0c8;
+  color: #000;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  padding: 3px 12px 4px;
+  cursor: pointer;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #808080;
+  border-bottom: none;
+  margin-right: 2px;
+  position: relative;
+  bottom: -1px;
+}
+
+.win2k-tab-active {
+  background: #d4d0c8;
+  font-weight: bold;
+  padding-top: 4px;
+  z-index: 2;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #d4d0c8;
+}
+
+.win2k-tab-panel {
+  background: #d4d0c8;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding: 10px;
+}
+
+/* ── Input / text field ─────────────────────────────────── */
+.win2k-input {
+  background: #ffffff;
+  color: #000;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  padding: 2px 4px;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.win2k-input:focus {
+  outline: 1px dotted #000;
+  outline-offset: -1px;
+}
+
+/* ── Select dropdown ────────────────────────────────────── */
+.win2k-select {
+  background: #ffffff;
+  color: #000;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  padding: 2px 4px;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  outline: none;
+  width: 100%;
+}
+
+/* ── Label ──────────────────────────────────────────────── */
+.win2k-label {
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  color: #000;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ── Status bar badge ───────────────────────────────────── */
+.win2k-badge-live {
+  background: #ff0000;
+  color: #ffffff;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 1px 6px;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #800000;
+  border-bottom: 1px solid #800000;
+}
+
+.win2k-badge-ft {
+  background: #008000;
+  color: #ffffff;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 1px 6px;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #004000;
+  border-bottom: 1px solid #004000;
+}
+
+.win2k-badge-upcoming {
+  background: #000080;
+  color: #ffffff;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 1px 6px;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #000040;
+  border-bottom: 1px solid #000040;
+}
+
+/* ── Scoreboard ─────────────────────────────────────────── */
+.win2k-scoreboard {
+  background: #000000;
+  color: #ffff00;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  padding: 6px 20px;
+  border-top: 1px solid #404040;
+  border-left: 1px solid #404040;
+  border-right: 1px solid #c0c0c0;
+  border-bottom: 1px solid #c0c0c0;
+  letter-spacing: 4px;
+  min-width: 90px;
+}
+
+/* ── Event log list item ────────────────────────────────── */
+.win2k-list-item {
+  background: #ffffff;
+  border-bottom: 1px solid #c0c0c0;
+  padding: 3px 6px;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.win2k-list-item:hover {
+  background: #000080;
+  color: #ffffff;
+}
+
+.win2k-list-item:nth-child(even) {
+  background: #f0f0f0;
+}
+
+.win2k-list-item:nth-child(even):hover {
+  background: #000080;
+  color: #ffffff;
+}
+
+/* ── Separator ──────────────────────────────────────────── */
+.win2k-separator {
+  height: 2px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 6px 0;
+}
+
+/* ── Menu bar ───────────────────────────────────────────── */
+.win2k-menubar {
+  background: #d4d0c8;
+  border-bottom: 1px solid #808080;
+  display: flex;
+  gap: 0;
+  padding: 2px 4px;
+}
+
+.win2k-menuitem {
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  padding: 2px 8px;
+  cursor: default;
+  color: #000;
+}
+
+.win2k-menuitem:hover {
+  background: #000080;
+  color: #ffffff;
+}
+
+/* ── Avatar frame ───────────────────────────────────────── */
+.win2k-avatar {
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+
+/* ── Team name display ──────────────────────────────────── */
+.win2k-team-name {
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* ── Section header ─────────────────────────────────────── */
+.win2k-section-header {
+  background: #000080;
+  color: #ffffff;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  margin: 0 0 4px 0;
+}
+
+/* ── Disabled state ─────────────────────────────────────── */
+.win2k-disabled {
+  color: #808080;
+  text-shadow: 1px 1px 0 #ffffff;
+  cursor: not-allowed;
+}
+
+/* ── Progress / status bar ──────────────────────────────── */
+.win2k-statusbar {
+  background: #d4d0c8;
+  border-top: 1px solid #808080;
+  border-bottom: none;
+  padding: 2px 4px;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 10px;
+  display: flex;
+  gap: 4px;
+}
+
+.win2k-statusbar-panel {
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding: 0 6px;
+  flex: 1;
+}

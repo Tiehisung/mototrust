@@ -1,8 +1,6 @@
 import { FormEvent, useState } from "react";
-import { Card } from "@/components/ui/card";
 import { Plus, X } from "lucide-react";
 import { Input } from "@/components/input/Inputs";
-import { Button } from "@/components/buttons/Button";
 
 import { EGoalType, IGoal, IMatch, ITeam } from "@/types/match.interface";
 import { PrimaryCollapsible } from "@/components/Collapsible";
@@ -17,6 +15,8 @@ import SELECT from "@/components/select/Select";
 import { TEAM } from "@/data/team";
 import RadioButtons from "@/components/input/Radio";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/buttons/Button";
+import "@/styles/win2k.css";
 
 interface ScoreEventsTabProps {
   opponent?: ITeam;
@@ -87,10 +87,7 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
         };
 
         if (form.assist) {
-          newGoal = {
-            ...newGoal,
-            assist,
-          };
+          newGoal = { ...newGoal, assist };
         }
       }
 
@@ -112,14 +109,17 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
   };
 
   return (
-    <div className="space-y-8">
-      <Card
-        className={`p-6 rounded-none ${isLoading ? "pointer-events-none" : ""}`}
-      >
-        <form onSubmit={handleAddGoal} className="space-y-4">
-          <h2 className="mb-6 text-2xl font-bold flex items-center gap-6 justify-between border-b">
-            Add Goal
-          </h2>
+    <div className={`win2k ${isLoading ? "pointer-events-none" : ""}`} style={{ padding: 4 }}>
+      <div className="win2k-groupbox" role="form" aria-label="Add Goal">
+        <legend>Add Goal</legend>
+
+        <form onSubmit={handleAddGoal} style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 6 }}>
+          <div style={{ borderBottom: "1px solid #808080", paddingBottom: 6, marginBottom: 4 }}>
+            <span style={{ fontFamily: "Tahoma, Arial, sans-serif", fontSize: 12, fontWeight: "bold" }}>
+              ⚽ Add Goal
+            </span>
+          </div>
+
           <SELECT
             label="Team"
             options={match.isHome ? teams : teams.reverse()}
@@ -157,13 +157,11 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
           />
 
           {form.teamId === TEAM._id && (
-            <div className="grid grid-cols-1 gap-4 ">
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               <SELECT
                 label="Scorer"
                 options={players?.map((p) => ({
-                  label: `${
-                    p.lastName
-                  } ${p?.firstName}(${p?.number ?? p?.number})`,
+                  label: `${p.lastName} ${p?.firstName}(${p?.number ?? p?.number})`,
                   value: p._id,
                 }))}
                 placeholder="Scored by"
@@ -175,9 +173,7 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
               <SELECT
                 label="Assist (Optional)"
                 options={players?.map((p) => ({
-                  label: `${
-                    p.lastName
-                  } ${p?.firstName}(${p?.number ?? p?.number})`,
+                  label: `${p.lastName} ${p?.firstName}(${p?.number ?? p?.number})`,
                   value: p._id,
                 }))}
                 placeholder="Assisted by"
@@ -191,8 +187,8 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
 
           <PrimaryCollapsible
             header={{
-              label: `Goal Type(${form.modeOfScore})`,
-              className: "_label",
+              label: `Goal Type (${form.modeOfScore})`,
+              className: "win2k-label",
             }}
           >
             <RadioButtons
@@ -209,39 +205,39 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
             />
           </PrimaryCollapsible>
 
-          <div className="gap-6 flex items-center mt-8">
-            <Button
-              className=" grow"
-              waiting={isLoading}
-              primaryText=" Add Goal"
-              waitingText="Adding Goal"
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: 6, marginTop: 4 }}>
+            <button
               type="submit"
+              className={`win2k-btn win2k-btn-primary win2k-btn-default ${isLoading ? "win2k-disabled" : ""}`}
+              disabled={isLoading}
             >
-              <Plus className="mr-2 h-4 w-4" />
-            </Button>
+              <Plus size={12} />
+              {isLoading ? "Adding Goal..." : "Add Goal"}
+            </button>
           </div>
         </form>
 
-        {/* Goals */}
+        {/* Goals list */}
+        <div className="win2k-separator" style={{ margin: "10px 0" }} />
         <PrimaryCollapsible
           header={{
             label: "All Goals",
-            className: "_label",
+            className: "win2k-label",
           }}
           defaultOpen
         >
           <div
-            className={
-              "flex items-center gap-5 flex-wrap " +
-              (isLoading ? "opacity-70 pointer-events-none cursor-wait" : "")
-            }
+            className={cn(
+              "flex items-center gap-2 flex-wrap pt-2",
+              isLoading ? "opacity-70 pointer-events-none cursor-wait" : "",
+            )}
           >
             {match?.goals?.map((goal) => (
               <Goal goal={goal} key={goal._id} />
             ))}
           </div>
         </PrimaryCollapsible>
-      </Card>
+      </div>
     </div>
   );
 }
@@ -249,11 +245,9 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
 function Goal({ goal }: { goal: IGoal }) {
   const [deleteGoal, { isLoading }] = useDeleteGoalMutation();
 
-  //Increment Opponent goals
   const handleRemoveGoal = async (goal: IGoal) => {
     try {
       const result = await deleteGoal(goal?._id as string).unwrap();
-
       smartToast(result);
     } catch (error) {
       smartToast({ error });
@@ -261,23 +255,38 @@ function Goal({ goal }: { goal: IGoal }) {
   };
 
   const isTeamGoal = goal.teamId === TEAM._id;
+
   return (
     <div
-      className={cn(
-        "flex items-center gap-2 bg-muted px-4 py-2 rounded-lg",
-        isTeamGoal ? "" : "text-destructive",
-      )}
+      className="win2k-raised"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
+        padding: "2px 6px",
+        fontFamily: "Tahoma, Arial, sans-serif",
+        fontSize: 11,
+        color: isTeamGoal ? "#000080" : "#800000",
+      }}
       key={goal._id}
     >
-      {`${goal.minute}' ${isTeamGoal ? goal.scorer?.name || `${TEAM.alias} Player` : "Opponent"}`}
+      <span style={{ fontFamily: "Courier New, monospace", fontWeight: "bold" }}>
+        {goal.minute}&apos;
+      </span>
+      <span>
+        {isTeamGoal
+          ? goal.scorer?.name || `${TEAM.alias} Player`
+          : "Opponent"}
+      </span>
       <Button
         onClick={() => handleRemoveGoal(goal)}
         size="sm"
         variant={"ghost"}
         waiting={isLoading}
-        waitingText={"Deleting..."}
+        waitingText={"..."}
+        style={{ padding: "1px 3px", minWidth: "auto" }}
       >
-        <X />
+        <X size={10} />
       </Button>
     </div>
   );
