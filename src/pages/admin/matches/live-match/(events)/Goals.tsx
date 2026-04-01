@@ -86,11 +86,11 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
           },
         };
 
-        if(form.assist){
-           newGoal = {
-          ...newGoal,
-          assist,
-        };
+        if (form.assist) {
+          newGoal = {
+            ...newGoal,
+            assist,
+          };
         }
       }
 
@@ -156,16 +156,6 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
             label="Comment"
           />
 
-          <RadioButtons
-            defaultValue={EGoalType.COUNTER_ATTACK}
-            setSelectedValue={(value) =>
-              setForm((prev) => ({ ...prev, modeOfScore: value as EGoalType }))
-            }
-            values={Object.values(EGoalType)}
-            label="Goal Type"
-            wrapperStyles="flex gap-3 items-center flex-wrap"
-          />
-
           {form.teamId === TEAM._id && (
             <div className="grid grid-cols-1 gap-4 ">
               <SELECT
@@ -198,6 +188,26 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
               />
             </div>
           )}
+
+          <PrimaryCollapsible
+            header={{
+              label: `Goal Type(${form.modeOfScore})`,
+              className: "_label",
+            }}
+          >
+            <RadioButtons
+              defaultValue={EGoalType.OPEN_PLAY}
+              setSelectedValue={(value) =>
+                setForm((prev) => ({
+                  ...prev,
+                  modeOfScore: value as EGoalType,
+                }))
+              }
+              values={Object.values(EGoalType)}
+              label=""
+              wrapperStyles="flex gap-3 items-center flex-wrap"
+            />
+          </PrimaryCollapsible>
 
           <div className="gap-6 flex items-center mt-8">
             <Button
@@ -253,7 +263,10 @@ function Goal({ goal }: { goal: IGoal }) {
   const isTeamGoal = goal.teamId === TEAM._id;
   return (
     <div
-      className={cn("flex items-center gap-2 bg-muted px-4 py-2 rounded-lg",isTeamGoal?'':'text-destructive')}
+      className={cn(
+        "flex items-center gap-2 bg-muted px-4 py-2 rounded-lg",
+        isTeamGoal ? "" : "text-destructive",
+      )}
       key={goal._id}
     >
       {`${goal.minute}' ${isTeamGoal ? goal.scorer?.name || `${TEAM.alias} Player` : "Opponent"}`}
