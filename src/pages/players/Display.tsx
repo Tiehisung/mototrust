@@ -31,14 +31,14 @@ export default function OurPlayers({ players }: IProps) {
               <strong>{player.height} FT</strong>
             </h1>
 
-            <div className="w-full min-w-60 min-h-80 h-auto aspect-5/3">
+            <div className="w-full min-w-60 h-80 aspect-5/3">
               <img
                 alt={player?.lastName as string}
                 src={
                   (player?.featureMedia?.[0]?.secure_url as string) ||
                   player?.avatar
                 }
-                className="w-full min-w-60 h-auto bg-cover object-cover aspect-5/3"
+                className="w-full min-w-60 h-full bg-cover object-cover"
               />
             </div>
             <div
