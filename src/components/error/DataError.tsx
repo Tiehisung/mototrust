@@ -25,7 +25,7 @@ const DataErrorAlert = ({
     }
   };
   return (
-    <div>
+    <div className="container mx-auto ">
       <Alert variant="destructive">
         <AlertTitle>{formatError(message)}</AlertTitle>
         <AlertDescription className="flex items-center justify-center">

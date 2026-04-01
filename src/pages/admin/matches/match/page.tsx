@@ -35,21 +35,11 @@ export default function MatchPage() {
   const teams = teamsData;
 
   if (isLoading) {
-    return (
-      <div className="container mx-auto p-4 _page">
-        <div className="flex justify-center items-center min-h-100">
-          <PageLoader />
-        </div>
-      </div>
-    );
+    return <PageLoader />;
   }
 
   if (!match) {
-    return (
-      <div className="container mx-auto p-4 _page">
-        <DataErrorAlert message={getErrorMessage(error)} />
-      </div>
-    );
+    return <DataErrorAlert message={getErrorMessage(error)} />;
   }
 
   return (

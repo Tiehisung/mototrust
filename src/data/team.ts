@@ -7,7 +7,7 @@ export const TEAM: ITeam & { url: string, officialSignature: string } = {
     name: ENV.TEAM_NAME,
     alias: ENV.TEAM_ALIAS,
     community: "Wa-Konjiehi",
-    logo: ENV.LOGO_URL,
+    logo: ENV.LOGO_NO_BG_URL,
     officialSignature: ENV.OFFICIAL_SIGNATURE_URL,
     currentPlayers: [],
     contact: ENV.CONTACT.PHONE,

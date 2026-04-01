@@ -46,6 +46,8 @@ export function ScoreEventsTab({ match }: ScoreEventsTabProps) {
     try {
       e.preventDefault();
 
+      console.log({ TEAM }, { form });
+
       if (!form.minute)
         return smartToast({
           message: "Please specify the time in minutes, and description",
