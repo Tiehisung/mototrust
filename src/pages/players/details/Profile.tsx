@@ -16,7 +16,10 @@ import { generatePlayerAbout } from "@/data/about";
 import GalleryGrid from "@/components/Gallery/GallaryGrid";
 import { IPlayerStats } from "@/types/stats";
 import { TEAM } from "@/data/team";
-import { SharePlayerButton } from "./Share";
+import { ShareButton } from "@/components/ShareButton";
+import { useSEO } from "@/hooks/useSEO";
+import { ENV } from "@/lib/env";
+import { playerOgImage, getPlayerShareUrl, getPlayerFrontendUrl } from "@/lib/seo";
 
 const statsData = [
   { stat: "PAS", value: 82 },
@@ -41,6 +44,20 @@ export default function PlayerProfile({
   const [searchParams] = useSearchParams();
   const playerId = searchParams.get("playerId");
   const player = players?.find((p) => p._id === playerId);
+
+  // SEO meta tags (for crawlers that do execute JS)
+  const ogImageUrl = playerOgImage(player?._id || "");
+  const shareUrl = getPlayerShareUrl(player?._id || "");
+  const frontendUrl = getPlayerFrontendUrl(player?._id || "");
+
+  useSEO({
+    title: player
+      ? `${player.firstName} ${player.lastName} | ${ENV.APP_NAME}`
+      : "Player Profile",
+    description: `Player profile for ${player?.firstName} ${player?.lastName}. ${player?.position} wearing jersey #${player?.number}.`,
+    ogImage: ogImageUrl,
+    ogUrl: frontendUrl,
+  });
 
   const { images } = usePlayerGalleryUtils(galleries);
   const slides = images?.slice(0, 10)?.map((file) => (
@@ -98,7 +115,11 @@ export default function PlayerProfile({
             </button>
           ))}
         </nav>
-        <SharePlayerButton player={player} />
+        <ShareButton
+          shareUrl={shareUrl}
+          title={`${player.firstName} ${player.lastName}`}
+          text={`Check out ${player.firstName} ${player.lastName} from Bunyeni FC!`}
+        />
       </div>
 
       <section className="flex flex-col lg:flex-row gap-10 w-full max-w-6xl">

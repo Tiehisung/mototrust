@@ -1,19 +1,22 @@
-//hooks/useSeo.ts
+// client/hooks/useSEO.ts
 import { useEffect } from "react";
 
-interface SeoProps {
+interface SEOProps {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogUrl?: string;
 }
 
-export function useSeo({ title, description, ogImage }: SeoProps) {
+export function useSEO({ title, description, ogImage, ogUrl }: SEOProps) {
   useEffect(() => {
-    if (title) document.title = title;
+    // Update document title
+    if (title) {
+      document.title = title;
+    }
 
-
-console.log("Setting SEO:", { title, description, ogImage });
-    const setMeta = (property: string, content: string) => {
+    // Helper to update or create meta tags
+    const updateMeta = (property: string, content: string) => {
       let el = document.querySelector(`meta[property="${property}"]`);
       if (!el) {
         el = document.createElement("meta");
@@ -23,8 +26,43 @@ console.log("Setting SEO:", { title, description, ogImage });
       el.setAttribute("content", content);
     };
 
-    if (description) setMeta("og:description", description);
-    if (ogImage) setMeta("og:image", ogImage);
-    if (title) setMeta("og:title", title);
-  }, [title, description, ogImage]);
+    const updateName = (name: string, content: string) => {
+      let el = document.querySelector(`meta[name="${name}"]`);
+      if (!el) {
+        el = document.createElement("meta");
+        el.setAttribute("name", name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute("content", content);
+    };
+
+    // Set meta tags
+    if (description) {
+      updateName("description", description);
+      updateMeta("og:description", description);
+    }
+
+    if (ogImage) {
+      updateMeta("og:image", ogImage);
+      updateMeta("og:image:width", "1200");
+      updateMeta("og:image:height", "630");
+    }
+
+    if (title) {
+      updateMeta("og:title", title);
+    }
+
+    if (ogUrl) {
+      updateMeta("og:url", ogUrl);
+    }
+
+    // Canonical URL
+    let canonical = document.querySelector("link[rel='canonical']");
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", ogUrl || window.location.href);
+  }, [title, description, ogImage, ogUrl]);
 }
