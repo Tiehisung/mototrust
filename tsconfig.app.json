@@ -23,10 +23,12 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "../smockly/src/components/Divider.tsx"]
+  "include": ["src", "env.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }

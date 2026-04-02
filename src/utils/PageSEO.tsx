@@ -70,6 +70,7 @@ export const PageSEO = ({
   const title = customTitle || config.title;
   const description = customDescription || config.description;
   const fullTitle = `${title} | ${TEAM.name}`;
+  const ogImage = image || TEAM.logo;
 
   return (
     <Helmet>
@@ -79,14 +80,14 @@ export const PageSEO = ({
 
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image || TEAM.logo} />
+      <meta property="og:image" content={ogImage} />
       <meta property="og:site_name" content={TEAM.name} />
       <meta property="og:url" content={url} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image || TEAM.logo} />
+      <meta name="twitter:image" content={ogImage} />
 
       <link
         rel="canonical"
