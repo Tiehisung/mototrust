@@ -16,6 +16,7 @@ import { generatePlayerAbout } from "@/data/about";
 import GalleryGrid from "@/components/Gallery/GallaryGrid";
 import { IPlayerStats } from "@/types/stats";
 import { TEAM } from "@/data/team";
+import { SharePlayerButton } from "./Share";
 
 const statsData = [
   { stat: "PAS", value: 82 },
@@ -97,6 +98,7 @@ export default function PlayerProfile({
             </button>
           ))}
         </nav>
+        <SharePlayerButton player={player} />
       </div>
 
       <section className="flex flex-col lg:flex-row gap-10 w-full max-w-6xl">
@@ -256,7 +258,6 @@ export default function PlayerProfile({
       <section>
         <div className="my-6 _title p-4 flex items-center gap-6 justify-between">
           <span>GALLERIES</span>
-           
         </div>
         <GalleryGrid galleries={galleries as IGallery[]} />
       </section>

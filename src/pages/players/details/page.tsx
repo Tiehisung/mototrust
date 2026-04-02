@@ -13,6 +13,7 @@ import { getErrorMessage } from "@/lib/error";
 import { useSeo } from "@/hooks/useSEO";
 import { playerOgImage } from "@/lib/seo";
 import { ENV } from "@/lib/env";
+import { PageSEO } from "@/utils/PageSEO";
 
 export default function PlayerProfilePage() {
   const [searchParams] = useSearchParams();
@@ -43,7 +44,7 @@ export default function PlayerProfilePage() {
   useSeo({
     title: title,
     description: description,
-    ogImage: playerOgImage(player?._id as string),
+    ogImage: playerOgImage(playerId as string),
   });
 
   if (isLoading) {
@@ -57,9 +58,10 @@ export default function PlayerProfilePage() {
 
   return (
     <>
-      {/* <PageSEO page="players" title={title} description={description} /> */}
+      <PageSEO page="players" title={title} description={description} />
 
       <main className="pl-2">
+        
         <PlayerProfile
           players={players?.data as IPlayer[]}
           galleries={galleries?.data}

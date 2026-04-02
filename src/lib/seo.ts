@@ -23,3 +23,9 @@ export function buildSeoMeta(options: SeoOptions) {
 // helpers per entity
 export const playerOgImage = (id: string) => `${ENV.API_URL}/og/player/${id}`;
 export const matchOgImage = (id: string) => `${ENV.API_URL}/og/match/${id}`;
+
+export const getPlayerShareUrl = (playerId: string) =>
+    `${ENV.API_URL}/seo/player/${playerId}`;
+
+export const getMatchShareUrl = (matchId: string) =>
+    `${ENV.API_URL}/seo/match/${matchId}`;
