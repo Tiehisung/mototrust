@@ -3,15 +3,7 @@ import { TEAM } from "@/data/team";
 import { Helmet } from "react-helmet";
 
 interface IPageSEOProps {
-  page?:
-    | "home"
-    | "players"
-    | "matches"
-    | "news"
-    | "gallery"
-    | "sponsors"
-    | "contact"
-    | "admin";
+  page?: keyof typeof pageConfig;
   title?: string;
   description?: string;
   image?: string;
@@ -38,6 +30,17 @@ const pageConfig = {
     title: "News",
     description: `Latest news, updates, and announcements from ${TEAM.name}.`,
     keywords: ["football news", "club updates", "transfer news"],
+  },
+  squad: {
+    title: "Squad",
+    description: `Meet the players and coaching staff of ${TEAM.name}. Explore profiles, stats, and roles of every member of the squad.`,
+    keywords: [
+      "squad",
+      "players",
+      "coaching staff",
+      "team roster",
+      `${TEAM.name} players`,
+    ],
   },
   gallery: {
     title: "Gallery",

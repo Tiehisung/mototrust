@@ -1,21 +1,19 @@
-import Loader from "@/components/loaders/Loader";
+ 
+import PageLoader from "@/components/loaders/Page";
 import { getInitials } from "@/lib";
 import { useGetSquadsQuery } from "@/services/squad.endpoints";
-
- 
+import { PageSEO } from "@/utils/PageSEO";
 
 export default function LatestMatchSquadPage() {
- const { data: squadsData, isLoading } = useGetSquadsQuery("");
+  const { data: squadsData, isLoading } = useGetSquadsQuery("");
   const squad = squadsData?.data ? squadsData.data[0] : null;
   if (isLoading) {
-    return (
-      <div className="py-12 px-4 space-y-8 _page flex justify-center items-center min-h-100">
-        <Loader message="Loading squad..." />
-      </div>
-    );
+    return <PageLoader />;
   }
   return (
     <section id="squad" className="py-24 ">
+      
+      <PageSEO page="squad"/>
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <span className="text-primary font-semibold tracking-wide uppercase text-sm">
@@ -47,9 +45,7 @@ export default function LatestMatchSquadPage() {
                 </div>
               </div>
               <div className="p-4 text-center">
-                <h3 className="font-bold text-xl ">
-                  {player.name}
-                </h3>
+                <h3 className="font-bold text-xl ">{player.name}</h3>
                 <p className="text-primary text-sm mb-1 font-semibold capitalize">
                   {player.position}
                 </p>
@@ -65,4 +61,4 @@ export default function LatestMatchSquadPage() {
       </div>
     </section>
   );
-};
+}
