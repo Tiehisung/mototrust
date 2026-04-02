@@ -10,10 +10,10 @@ import {
 import PageLoader from "@/components/loaders/Page";
 import DataErrorAlert from "@/components/error/DataError";
 import { getErrorMessage } from "@/lib/error";
-import { useSeo } from "@/hooks/useSEO";
 import { playerOgImage } from "@/lib/seo";
 import { ENV } from "@/lib/env";
 import { PageSEO } from "@/utils/PageSEO";
+import { useSEO } from "@/hooks/useSEO";
 
 export default function PlayerProfilePage() {
   const [searchParams] = useSearchParams();
@@ -41,7 +41,7 @@ export default function PlayerProfilePage() {
   const description = `Player profile for ${name}. ${player?.position} wearing jersey #${player?.number}. Stats, appearances, goals, and career highlights.`;
  
   
-  useSeo({
+  useSEO({
     title: title,
     description: description,
     ogImage: playerOgImage(playerId as string),
@@ -61,7 +61,7 @@ export default function PlayerProfilePage() {
       <PageSEO page="players" title={title} description={description} />
 
       <main className="pl-2">
-        
+
         <PlayerProfile
           players={players?.data as IPlayer[]}
           galleries={galleries?.data}

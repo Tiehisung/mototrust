@@ -1,31 +1,21 @@
+// client/lib/seo.ts
 import { ENV } from "./env";
 
- 
-
-interface SeoOptions {
-    title?: string;
-    description?: string;
-    ogImage?: string;     // pass the full og image URL
-    type?: "website" | "profile" | "article";
-}
-
-export function buildSeoMeta(options: SeoOptions) {
-    const {
-        title = ENV.APP_NAME,
-        description = ENV.TAGLINE,
-        ogImage = `${ENV.API_URL}/og/default`,
-        type = "website",
-    } = options;
-
-    return { title, description, ogImage, type };
-}
-
-// helpers per entity
+// OG Image URLs (for meta tags)
 export const playerOgImage = (id: string) => `${ENV.API_URL}/og/player/${id}`;
 export const matchOgImage = (id: string) => `${ENV.API_URL}/og/match/${id}`;
+export const defaultOgImage = () => `${ENV.API_URL}/og/default`;
 
-export const getPlayerShareUrl = (playerId: string) =>
-    `${ENV.API_URL}/seo/player/${playerId}`;
+// SHARE URLs (what you share on social media)
+export const getPlayerShareUrl = (id: string) =>
+    `${ENV.API_URL.replace("/api", "")}/seo/player/${id}`;
 
-export const getMatchShareUrl = (matchId: string) =>
-    `${ENV.API_URL}/seo/match/${matchId}`;
+export const getMatchShareUrl = (id: string) =>
+    `${ENV.API_URL.replace("/api", "")}/seo/match/${id}`;
+
+// Frontend URLs (internal navigation)
+export const getPlayerFrontendUrl = (id: string) =>
+    `${ENV.APP_URL}/players/details?playerId=${id}`;
+
+export const getMatchFrontendUrl = (id: string) =>
+    `${ENV.APP_URL}/matches/${id}`;
