@@ -1,5 +1,3 @@
- 
-
 import type { FC, ReactNode } from "react";
 import { Button, TButtonSize, TButtonVariant } from "./ui/button";
 import {
@@ -48,6 +46,7 @@ export const DIALOG: FC<IDialog> = ({
   escapeOnClose = true,
   disabled,
 }) => {
+  if (!trigger) return null;
   return (
     <Dialog
       modal={modal}
@@ -55,7 +54,6 @@ export const DIALOG: FC<IDialog> = ({
         onOpen?.(s);
         if (escapeOnClose && !s) fireDoubleEscape(); //May be useful in closing parent modal/popovers
       }}
-      
     >
       <DialogTrigger asChild className={!trigger ? "sr-only" : ""} id={id}>
         <Button
@@ -69,7 +67,7 @@ export const DIALOG: FC<IDialog> = ({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className={cn(`p-2 `,className)}>
+      <DialogContent className={cn(`p-2 `, className)}>
         <DialogHeader>
           <DialogTitle className="text-center">{title}</DialogTitle>
           <DialogDescription hidden={!description}>

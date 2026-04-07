@@ -6,20 +6,19 @@ import {
   formatTimeToAmPm,
   getTimeLeftOrAgo,
 } from "@/lib/timeAndDate";
-import { ToggleMatchStatus } from "./DisplayFixtures";
 import { DIALOG } from "@/components/Dialog";
 import SquadCard from "../squad/SquadCard";
-import { UpdateFixtureMatch } from "./CreateFixture";
 import SquadForm from "../squad/SquadForm";
-import { IMatch, ITeam } from "@/types/match.interface";
+import { IMatch } from "@/types/match.interface";
 import { ResizableContent } from "@/components/resizables/ResizableContent";
 import { Link } from "react-router-dom";
+import { MatchForm } from "./FixtureForm";
+import { StackModal } from "@/components/modals/StackModal";
 
 interface Props {
   match?: IMatch;
-  teams?: ITeam[];
 }
-export function AdminMatchCard({ match, teams }: Props) {
+export function AdminMatchCard({ match }: Props) {
   const { away, home } = checkTeams(match);
   const scores = checkMatchMetrics(match);
   const status = match?.status;
@@ -81,13 +80,13 @@ export function AdminMatchCard({ match, teams }: Props) {
       <hr />
 
       <ResizableContent className="max-w-full text-sm">
-        <UpdateFixtureMatch teams={teams} fixture={match} />
-
-        <ToggleMatchStatus
-          fixtureId={match?._id as string}
-          matchDate={match?.date as string}
-          status={match?.status as IMatch["status"]}
-        />
+        <StackModal
+          trigger={"Edit"}
+          id={`edit-m-${match?._id}`}
+          variant={"ghost"}
+        >
+          <MatchForm fixture={match} />
+        </StackModal>
 
         {match?.squad ? (
           <DIALOG

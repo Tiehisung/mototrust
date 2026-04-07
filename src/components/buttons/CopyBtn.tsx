@@ -1,9 +1,9 @@
  
 
 import { useState } from "react";
-import { BiCopy } from "react-icons/bi";
 import { Button } from "./Button";
 import { TButtonSize, TButtonVariant } from "../ui/button";
+import { Copy } from "lucide-react";
 
 interface CopyButtonProps {
   buttonText?: string;
@@ -36,12 +36,11 @@ export const CopyButton = ({
       onClick={handleClick}
       type={type}
       disabled={disabled}
-      
       className={`${className} `}
       variant={variant}
       size={size}
     >
-      <BiCopy size={20}/>
+      <Copy className="w-4 h-4 mr-1" />
       {copyButtonText}
     </Button>
   );

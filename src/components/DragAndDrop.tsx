@@ -1,18 +1,20 @@
 import { useState, ReactNode, useEffect } from "react";
 import { toast } from "sonner";
- 
-import { apiConfig } from "@/lib/configs";
-import { useNavigate } from "react-router-dom";
-import { IQueryResponse } from "@/types";
 import { fireDoubleEscape } from "@/hooks/Esc";
-import { getFilePath, validateFile } from "@/lib/file";
+import { validateFile } from "@/lib/file";
 import { ICloudinaryFile } from "@/types/file.interface";
 import { getErrorMessage } from "@/lib/error";
+import {
+  useUploadDocumentMutation,
+  useUploadImageMutation,
+  useUploadVideoMutation,
+} from "@/services/upload.endpoints";
+import { smartToast } from "@/utils/toast";
 
 export const DragAndDropUpload = ({
   onChange,
   className,
-  fileType = "pdf",
+  fileType = "all",
   children,
   folder = "files",
   escapeOnEnd,
@@ -30,9 +32,13 @@ export const DragAndDropUpload = ({
   exportRaw?: (file: File) => void;
 }) => {
   const [file, setFile] = useState<File | null | undefined>(null);
-  const navigate = useNavigate();
+
   const [isUploading, setIsUploading] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
+
+  const [uploadImage] = useUploadImageMutation();
+  const [uploadVideo] = useUploadVideoMutation();
+  const [uploadPDF] = useUploadDocumentMutation();
 
   const handleUpload = async () => {
     try {
@@ -46,34 +52,31 @@ export const DragAndDropUpload = ({
         toast.error(message);
         return;
       }
+      let result: any;
+      const formData = new FormData();
 
-      setIsUploading(true);
+      formData.append("folder", folder);
 
-      const response = await fetch(apiConfig.fileUpload, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: file?.name,
-          path: await getFilePath(file as File),
-          preset: "konjiehifc",
-          folder,
-          presetType: "authenticated",
-        }),
-      });
-
-      const result: IQueryResponse<ICloudinaryFile> =
-        await response.json();
-
-      if (result.success) {
-        setFile(null);
-        toast.success(result.message);
-        // Use navigate(0) as a soft refresh instead of router.refresh()
-        navigate(0);
-        onChange(result?.data as ICloudinaryFile);
-        if (escapeOnEnd) fireDoubleEscape(500);
-      } else {
-        toast.error(result.message);
+      if (file?.type.includes("image")) {
+        formData.append("image", file);
+        result = await uploadImage(formData);
       }
+
+      if (file?.type.includes("video")) {
+        formData.append("video", file);
+        result = await uploadVideo(formData);
+      }
+      
+      if (file?.type.includes("pdf")) {
+        formData.append("document", file);
+        result = await uploadPDF(formData);
+      }
+
+      if (result.success) onChange(result?.data as ICloudinaryFile);
+
+      if (escapeOnEnd) fireDoubleEscape(500);
+      smartToast(result);
+      setFile(null);
     } catch (error) {
       toast.error(getErrorMessage(error));
     } finally {

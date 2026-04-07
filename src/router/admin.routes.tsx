@@ -21,7 +21,7 @@ import SquadPage from "@/pages/admin/squad/page";
 import FinancePage from "@/pages/admin/finance/page";
 import DocsPage from "@/pages/admin/docs/page";
 import AllDocsPage from "@/pages/admin/docs/files/page";
-import FolderPage from "@/pages/admin/docs/[folder]/page";
+import FolderPage from "@/pages/admin/docs/folder/page";
 import CardsPage from "@/pages/admin/cards/page";
 import TeamsPage from "@/pages/admin/teams/page";
 import TrainingSettingsAdm from "@/pages/admin/training/page";
@@ -109,7 +109,7 @@ export const adminRoutes: RouteObject[] = [
     children: [
       { index: true, element: <DocsPage /> },
       { path: "files", element: <AllDocsPage /> },
-      { path: ":folderSlug", element: <FolderPage /> },
+      { path: "folders/:folderId", element: <FolderPage /> },
     ],
   },
   {

@@ -1,191 +1,59 @@
-import { PrimaryCollapsible } from "@/components/Collapsible";
-import { DIALOG } from "@/components/Dialog";
-import { apiConfig } from "@/lib/configs";
-import { Upload } from "lucide-react";
-import { ReactNode, useState, FormEvent } from "react";
-import { FaFilePdf } from "react-icons/fa";
+import { FileUp } from "lucide-react";
+ 
 
-import MultiSelectionInput from "@/components/select/MultiSelect";
-import { IQueryResponse, ISelectOptionLV } from "@/types";
-import { FancyMotion } from "@/components/Animate/MotionWrapper";
-import { COMBOBOX } from "@/components/ComboBox";
-import { PiFolderPlusLight } from "react-icons/pi";
-import { toast } from "sonner";
-
-import { Button } from "@/components/buttons/Button";
-import { fireDoubleEscape } from "@/hooks/Esc";
-import { useFetch } from "@/hooks/fetch";
-import { Separator } from "@/components/ui/separator";
-import { IFolderMetrics } from "@/types/doc";
-import { ICloudinaryFile } from "@/types/file.interface";
-import { getErrorMessage } from "@/lib/error";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CloudinaryWidget } from "@/components/cloudinary/Cloudinary";
+import { useCreateDocumentsMutation } from "@/services/docs.endpoints";
+import { smartToast } from "@/utils/toast";
+import { ICloudinaryFile } from "@/types/file.interface";
+import { IDocFile } from "@/types/doc";
+import { TButtonVariant } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface IProps {
-  defaultFolder?: string;
-  tagsData?: {
-    name: string;
-    options: ISelectOptionLV[];
-  }[];
-  trigger?: ReactNode;
+  defaultFolderId?: string;
   className?: string;
-  folders?: { name: string; _id: string }[];
+  variant?: TButtonVariant;
 }
 
 export function DocumentUploader({
-  defaultFolder = "",
-  tagsData = [],
+  defaultFolderId = "",
+  variant,
+  className,
 }: IProps) {
-  const navigate = useNavigate(); // Changed from useRouter
-  const [waiting, setWaiting] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<ICloudinaryFile | null>(
-    null,
-  );
+  const folderId = useParams().folderId || defaultFolderId || undefined;
 
-  const [tags, setTags] = useState<Record<string, string[]> | object>({});
+  const [uploadeDoc, {}] = useCreateDocumentsMutation();
 
-  const [selectedFolder, setSelectedFolder] = useState(defaultFolder);
-
-  const { loading: fetchingFolders, results: folderMetrics } = useFetch<{
-    folders: IFolderMetrics[];
-  }>({
-    uri: `${apiConfig.docs}/metrics`,
-  });
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleUpload = async (docs: ICloudinaryFile[]) => {
     try {
-      e.preventDefault();
-      setWaiting(true);
-      const response = await fetch(apiConfig.docs, {
-        method: "POST",
-        body: JSON.stringify({
-          file: uploadedFile,
-          tags: Object.values(tags).flat(1).filter(Boolean),
-          format: "pdf",
-          folder: selectedFolder,
-        }),
-        headers: { "content-type": "application/json" },
-      });
+      if (docs.length == 0) return;
 
-      const result: IQueryResponse = await response.json();
-      if (result.success) {
-        setUploadedFile(null);
-        toast.success(result.message);
-        navigate(0); // Changed from router.refresh() to soft refresh
-        fireDoubleEscape();
-      } else {
-        toast.error(result.message);
-      }
+      const result = await uploadeDoc({
+        folderId: folderId as string,
+        files: docs as IDocFile[],
+      }).unwrap();
+      smartToast(result);
     } catch (error) {
-      toast.error(getErrorMessage(error));
-    } finally {
-      setWaiting(false);
+      smartToast({ error });
     }
   };
 
   return (
-    <DIALOG
+    <CloudinaryWidget
+      hidePreview
       trigger={
         <>
-          <Upload size={24} /> Upload Document
+          <FileUp /> File Upload
         </>
       }
-      triggerStyles="justify-start"
-      className="min-w-57.5"
-      title="Upload Document"
-      variant={"outline"}
-    >
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 items-center justify-center _card rounded-xl mx-auto"
-      >
-        <div className="flex flex-col gap-4 items-center justify-center grow w-full pb-3">
-          {/* Not for doc upload */}
-          <CloudinaryWidget
-            hidePreview
-            trigger={
-              <div className="_secondaryBtn grow w-full">Choose Document</div>
-            }
-            onUploadSuccess={(files) => {
-              setUploadedFile(files?.[0]);
-            }}
-            maxFileSize={"10_000_000"}
-            resourceType="auto"
-          />
-
-          {uploadedFile && (
-            <div className="flex flex-col justify-center items-center">
-              <FaFilePdf className="text-Red" size={40} />
-              <p className="line-clamp-2 wrap-break-word">
-                {uploadedFile?.original_filename}
-              </p>
-            </div>
-          )}
-        </div>
-
-        <Separator />
-
-        {tagsData?.map((tagGroup, tIndex) => {
-          return (
-            <PrimaryCollapsible
-              header={{
-                label: tagGroup?.name,
-                className: "_label",
-              }}
-              key={tIndex}
-            >
-              <MultiSelectionInput
-                onChange={(ts) => {
-                  setTags((prev) => ({
-                    ...prev,
-                    [tagGroup.name]: ts.map((t) => t.value),
-                  }));
-                }}
-                options={tagGroup?.options}
-                className="text-sm"
-                label={tagGroup?.name}
-                name={tagGroup?.name}
-              />
-            </PrimaryCollapsible>
-          );
-        })}
-
-        {!defaultFolder && (
-          <div className="flex items-center gap-2">
-            <PiFolderPlusLight
-              className="text-primary dark:text-Orange"
-              size={30}
-            />
-            <COMBOBOX
-              options={
-                folderMetrics?.data?.folders?.map((f) => ({
-                  label: f?.name,
-                  value: f?.name,
-                })) ?? []
-              }
-              onChange={(op) => setSelectedFolder(op.value)}
-              placeholder="Select Folder"
-              className="capitalize"
-              defaultOptionValue={defaultFolder}
-              isLoading={fetchingFolders}
-            />
-          </div>
-        )}
-        <br />
-        <FancyMotion direction="left" preset="fade" className="w-full">
-          <Button
-            type="submit"
-            primaryText="Save Form"
-            waitingText="Saving..."
-            className="w-full justify-center max-w-md mx-auto py-3"
-            disabled={!uploadedFile || !selectedFolder}
-            waiting={waiting}
-          />
-        </FancyMotion>
-      </form>
-    </DIALOG>
+      className={cn("justify-start w-full", className)}
+      onUploadSuccess={handleUpload}
+      maxFileSize={"10_000_000"}
+      resourceType="auto"
+      maxFiles={5}
+      multiple
+      variant={variant}
+    />
   );
 }
-
-// The tagsData comment remains the same

@@ -1,4 +1,5 @@
 import { generateNumbers } from "@/lib";
+import { cn } from "@/lib/utils";
 
  
 
@@ -16,14 +17,14 @@ const TableLoader = ({
   const rowsCount = generateNumbers(1, rows);
   const colsCount = generateNumbers(1, cols);
   return (
-    <div className={"flex justify-center items-center grow w-full" + wrapperClassName}>
+    <div className={cn(`flex justify-center items-center grow w-full `,wrapperClassName)}>
       <table className={`mx-auto w-full `}>
         <tbody>
           <tr>
             {colsCount.map((_, cIndex) => (
               <th key={cIndex}>
                 <div
-                  className={`my-2 mx-auto w-[80%] h-4 bg-muted rounded animate-pulse border ${className}`}
+                  className={cn(`my-2 mx-auto w-[80%] h-4 bg-muted rounded animate-pulse border `,className)}
                 />
               </th>
             ))}
@@ -34,7 +35,7 @@ const TableLoader = ({
               {colsCount.map((_, cIndex) => (
                 <td key={cIndex}>
                   <div
-                    className={`my-2 mx-auto w-[80%] h-4 bg-muted/90 rounded animate-pulse border ${className}`}
+                    className={cn(`my-2 mx-auto w-[80%] h-4 bg-muted/90 rounded animate-pulse border `,className)}
                   />
                 </td>
               ))}

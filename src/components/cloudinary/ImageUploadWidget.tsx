@@ -24,6 +24,7 @@ interface AvatarUploadWidgetProps {
   showUploadButton?: boolean;
   uploadButtonText?: string;
   previewFileStyles?: string;
+  triggerId?: string;
 }
 
 export const ImageUploadWidget = ({
@@ -37,7 +38,7 @@ export const ImageUploadWidget = ({
   shape = "circle",
   showUploadButton = true,
   uploadButtonText = "Upload Photo",
-  previewFileStyles,
+  previewFileStyles,triggerId
 }: AvatarUploadWidgetProps) => {
   const [loaded, setLoaded] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | undefined>(
@@ -156,7 +157,8 @@ export const ImageUploadWidget = ({
           )}
 
           {/* Hover overlay */}
-          <button
+          <button id={triggerId}
+            type="button"
             onClick={handleUpload}
             disabled={isUploading || !loaded}
             className={cn(
@@ -179,6 +181,7 @@ export const ImageUploadWidget = ({
             onClick={handleRemove}
             className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition hover:bg-red-600 shadow-lg z-10"
             title="Remove image"
+            type="button"
           >
             <X size={14} />
           </button>
@@ -188,6 +191,8 @@ export const ImageUploadWidget = ({
       {/* Upload Button */}
       {showUploadButton && (
         <button
+          id={triggerId}
+          type="button"
           onClick={handleUpload}
           disabled={isUploading || !loaded}
           className={cn(

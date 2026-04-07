@@ -1,8 +1,8 @@
 import { IFileProps } from "@/types/file.interface";
 
 export interface IDocFile extends IFileProps {
-    format: "pdf" | "image";
-    folder: string;
+    format: "pdf" | "image"|'video';
+    folder: IFolder;
 }
 export interface IFolder {
     _id: string;
@@ -10,13 +10,11 @@ export interface IFolder {
     description?: string
     documents?: IDocFile[]
     isDefault?: boolean
+    docsCount: number;
     createdAt?: string
     updatedAt?: string
 }
 
-export interface IFolderMetrics extends Omit<IFolder, 'documents'> {
-    docsCount: number;
-    documents: string[]
-}
+ 
 
  

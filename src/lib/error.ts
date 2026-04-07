@@ -88,7 +88,7 @@ export const formatError = (
         }
 
         // HTTP status handling
-        if (typeof error.status === "number") {
+        if (typeof error?.status === "number") {
             if (error.status >= 500) {
                 return "Something went wrong. Try again later.";
             }

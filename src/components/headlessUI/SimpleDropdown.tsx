@@ -3,7 +3,6 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
 
-
 interface Option {
   value: string;
   label: string;
@@ -20,10 +19,10 @@ interface SimpleDropdownProps {
 export function SimpleDropdown({
   value,
   onChange,
-  options,
+  options = Array.from({ length: 5 }).map((op) => ({ label: `label ${op}` ,value:`${op}`})),
   label,
 }: SimpleDropdownProps) {
-  const selectedOption = options.find((opt) => opt.value === value);
+  const selectedOption = options?.find((opt) => opt.value === value);
 
   return (
     <Menu as="div" className="relative inline-block text-left">

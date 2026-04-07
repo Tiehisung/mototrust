@@ -14,9 +14,9 @@ import { COMBOBOX } from "../ComboBox";
 import { DIALOG } from "../Dialog";
 import { MdOutlineDownload, MdOutlinePreview } from "react-icons/md";
 import { VscLoading } from "react-icons/vsc";
-import { FaWpforms } from "react-icons/fa";
-import { TITLE } from "../Element";;
+import { H,   } from "../Element";
 import { TEAM } from "@/data/team";
+import { Button } from "../buttons/Button";
 
 // Styles
 const styles = StyleSheet.create({
@@ -206,9 +206,9 @@ export function ConsentForm({ players }: { players?: IPlayer[] }) {
   }
   return (
     <section className="_card gap-4 pb-20">
-      <TITLE icon={<FaWpforms />} text={"Player/Guardian Consent Form"} />
+     
+      <H>Player/Guardian Consent Form</H>
       <br />
-      <p className="_p my-3"> Download Form Here</p>
       <div>
         <COMBOBOX
           options={
@@ -225,18 +225,15 @@ export function ConsentForm({ players }: { players?: IPlayer[] }) {
             )
           }
           placeholder="Search Player"
-          className="w-full min-w-72 text-center"
+          className="w-full min-w-44 text-center"
         />
 
         <section className="flex items-center gap-6 mt-4">
           <DIALOG
             trigger={
-              <div
-                title="Preview Form"
-                className="_hover p-1.5 rounded _shrink _secondaryBtn"
-              >
+              <>
                 <MdOutlinePreview size={24} /> Preview
-              </div>
+              </>
             }
             className="min-w-[80vw]"
           >
@@ -259,10 +256,10 @@ export function ConsentForm({ players }: { players?: IPlayer[] }) {
               return loading ? (
                 <VscLoading className="animate-spin" />
               ) : (
-                <div className="p-1.5 rounded _shrink _primaryBtn">
+                <Button className="p-1.5 rounded _shrink flex items-center gap-1 ">
                   <MdOutlineDownload size={24} />
                   Download
-                </div>
+                </Button>
               );
             }}
           </PDFDownloadLink>

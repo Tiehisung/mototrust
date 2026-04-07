@@ -1,5 +1,5 @@
 import AdminFooter from "./Footer";
-import { LeftPaneDesktop, LeftPaneMobile } from "./AdminSidebar";
+import { LeftPaneDesktop,  LeftPaneMobileHeadless } from "./AdminSidebar";
 import { staticImages } from "@/assets/images";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import BackBtn from "@/components/buttons/BackBtn";
@@ -14,7 +14,7 @@ export default function AdminLayout() {
       <LeftPaneDesktop />
       <section className="flex-1 md:h-screen md:overflow-y-auto">
         <Header />
-        <div className="pt-4 md:pt-2 bg-background">
+        <div className="pt-4 md:pt-2 bg-background _page">
           <Outlet />
         </div>
         <AdminFooter />
@@ -32,7 +32,7 @@ const Header = () => {
   if (isLoading) {
     return (
       <header className="flex justify-between px-6 p-1 sticky top-0.5 bg-accent z-20 items-center border-b border-border backdrop-blur-sm">
-        <LeftPaneMobile />
+        <LeftPaneMobileHeadless />
         <div className="hidden sm:flex items-center gap-4 flex-wrap">
           <BackBtn />
           <Breadcrumbs />
@@ -50,7 +50,7 @@ const Header = () => {
 
   return (
     <header className="flex justify-between px-6 p-1 sticky top-0.5 bg-accent z-20 items-center border-b border-border">
-      <LeftPaneMobile />
+      <LeftPaneMobileHeadless />
       <div className="hidden sm:flex items-center gap-4 flex-wrap">
         <BackBtn />
         <Breadcrumbs />

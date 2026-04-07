@@ -73,7 +73,7 @@ export function ThumbsGallery({
                 <img
                   src={image?.secure_url}
                   alt={
-                    image?.name ??
+                  
                     image?.original_filename ??
                     "gallery" + (i + 1)
                   }
@@ -96,7 +96,7 @@ export function ThumbsGallery({
         }
       >
         <h3 className="text-xl font-semibold text-foreground mb-1">
-          {currentImage?.name}
+          {currentImage?.original_filename}
         </h3>
         <p className="text-muted-foreground">{currentImage?.description}</p>
       </div>
@@ -138,7 +138,7 @@ export function ThumbsGallery({
                 <img
                   src={image?.secure_url}
                   alt={
-                    image?.name ??
+                
                     image?.original_filename ??
                     "gallery" + (i + 1)
                   }

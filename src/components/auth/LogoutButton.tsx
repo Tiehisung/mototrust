@@ -17,7 +17,7 @@ interface IProps {
 export const LogoutBtn = ({
   className,
   size,
-  variant = "destructive",
+  variant = "outline",
   text = "",
   children,
 }: IProps) => {

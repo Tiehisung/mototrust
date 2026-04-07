@@ -4,7 +4,6 @@ import { ImageUploader } from "@/components/files/image-uploader";
 import GroupedAdminSidebar from "../admin/(sidebar)/GroupedSidebarLinks";
 import { CloudinaryWidget } from "@/components/cloudinary/Cloudinary";
 import GlassmorphicTest from "./Glassmorphic";
- 
 
 export default function TestPage() {
   return (
@@ -12,7 +11,7 @@ export default function TestPage() {
       <main className="block p-5">
         <GlassmorphicTest />
         <GroupedAdminSidebar />
-        <ImageUploader />
+        <ImageUploader onUpload={(url) => console.log(url)} />
 
         <br />
 

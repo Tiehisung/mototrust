@@ -5,8 +5,6 @@ import { Plus, Search, Download, RefreshCw } from "lucide-react";
 import { useGetStaffMembersQuery } from "@/services/staff.endpoints";
 import { Button } from "@/components/buttons/Button";
 import { Input } from "@/components/input/Inputs";
-
-import { DisplayType } from "@/components/DisplayStyle";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Loader from "@/components/loaders/Loader";
 import { Pagination } from "@/components/pagination/Pagination";
@@ -15,10 +13,12 @@ import { StaffStats } from "./StaffStats";
 import { StaffFilters } from "./StaffFilters";
 import { exportAsJson } from "@/lib/export/json";
 import AdminStaffCard from "./Card";
+import { useAppSelector } from "@/store/hooks/store";
+import DisplayType from "@/components/DisplayType";
 
 export default function AllStaffPage() {
   const navigate = useNavigate();
-
+  const { displayType } = useAppSelector((s) => s.settings);
   const [search, setSearch] = useState("");
 
   const [filters, setFilters] = useState({
@@ -29,12 +29,8 @@ export default function AllStaffPage() {
 
   const [sp] = useSearchParams();
 
-  const viewStyle = sp.get("display") as "grid" | "list";
-
   const { data, isLoading, isFetching, error, refetch } =
     useGetStaffMembersQuery(sp.toString());
-
-   
 
   const staff = data?.data || [];
   const pagination = data?.pagination;
@@ -115,10 +111,7 @@ export default function AllStaffPage() {
         </div>
 
         <div className="flex items-center gap-4">
-          <DisplayType
-            defaultDisplay={viewStyle}
-            // onDisplayChange={setViewStyle}
-          />
+          <DisplayType />
 
           <Button
             variant="ghost"
@@ -165,7 +158,7 @@ export default function AllStaffPage() {
             )}
           </div>
         </div>
-      ) : viewStyle === "list" ? (
+      ) : displayType === "list" ? (
         <StaffTable data={staff} />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

@@ -62,7 +62,7 @@ const PlayersPage = () => {
         <meta property="og:site_name" content={TEAM.name} />
       </Helmet>
 
-      <div className="">
+      <div className="_page px-[]">
         <HEADER title="Players" subtitle="Meet Our Gallant Players" />
         <OurPlayers players={players} />
       </div>

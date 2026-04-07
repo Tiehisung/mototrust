@@ -5,11 +5,11 @@ import { getTimeAgo } from "@/lib/timeAndDate";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import FileViewer from "@/components/FilePreviewModal";
-import { DocumentActions } from "./[folder]/Actions";
+import { DocumentActions } from "./folder/DocActions";
 import { shortText } from "@/lib";
 import { useGetDocumentsQuery } from "@/services/docs.endpoints";
-import { formatError } from "@/lib/error";
 import Divider from "@/components/Divider";
+import DataErrorAlert from "@/components/error/DataError";
 
 export function RecentDocs() {
   // Use the query hook instead of server-side fetch
@@ -18,6 +18,7 @@ export function RecentDocs() {
     isLoading,
     error,
   } = useGetDocumentsQuery("?limit=5");
+  console.log(recentDocs,error)
 
   if (isLoading) {
     return (
@@ -33,21 +34,7 @@ export function RecentDocs() {
     );
   }
 
-  if (error) {
-    return (
-      <div>
-        <header className="items-center justify-between mb-4">
-          <Divider
-            content="RECENT DOCUMENTS"
-            className="text-xs font-light grow"
-          />
-        </header>
-        <p className="text-red-500 text-center py-4">
-          Error loading documents: {formatError(error)}
-        </p>
-      </div>
-    );
-  }
+  if (error && !isLoading&&!recentDocs?.data) return <DataErrorAlert message={error} />;
 
   return (
     <div>
@@ -78,9 +65,7 @@ export function RecentDocs() {
                         <p className="flex items-center gap-2.5 line-clamp-1 grow _wordBreak">
                           <FaFilePdf color={Color.red} />
                           <span>
-                            {shortText(
-                              doc?.name ?? (doc?.original_filename as string),
-                            )}
+                            {shortText(doc?.original_filename as string)}
                           </span>
                         </p>
                         <p className="font-light text-sm text-left ml-3">

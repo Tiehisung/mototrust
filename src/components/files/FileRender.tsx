@@ -1,5 +1,6 @@
  
-import { fileIcons, getFileTypeName } from "@/data/file";
+import { getFileIconByExtension } from "@/data/file";
+import { cn } from "@/lib/utils";
 import { IFileProps } from "@/types/file.interface";
  
 
@@ -14,7 +15,7 @@ const FileRenderer: React.FC<FileRendererProps> = ({
   className,
   controls, 
 }) => {
-  const fileUrl = file?.secure_url as string;
+  const fileUrl = file?.thumbnail_url as string;
   const fileType = file?.resource_type as string;
   const fileName = file?.original_filename;
 
@@ -27,7 +28,7 @@ const FileRenderer: React.FC<FileRendererProps> = ({
           width={500}
           height={500}
        
-          className={`max-w-full h-auto ${className}`}
+          className={cn(`max-w-full h-auto`,className)}
      
         />
       );
@@ -45,16 +46,16 @@ const FileRenderer: React.FC<FileRendererProps> = ({
         <video
           src={fileUrl}
           controls={controls}
-          className={`max-w-full h-auto ${className}`}
+          className={cn(`max-w-full h-auto`,className)}
         />
       );
     case "pdf":
-    case "auto":
+    case "raw":
       return (
         <iframe
           src={fileUrl}
           title={fileName}
-          className={`w-full h-64 ${className}`}
+          className={cn(`w-full h-64`,className)}
           frameBorder="0"
         />
       );
@@ -65,9 +66,7 @@ const FileRenderer: React.FC<FileRendererProps> = ({
           className="text-sm text-Red tooltip flex gap-5 max-sm:flex-col justify-center items-center "
           data-tip={`Unsupported file type: ${fileName}`}
         >
-          <span className="text-3xl">
-            {fileIcons.find((fi) => fi.type == "unknown")?.icon}
-          </span>{" "}
+          <span className="text-3xl">{getFileIconByExtension(fileUrl)}</span>
           Unsupported file type: {fileName}
         </div>
       );
@@ -76,10 +75,7 @@ const FileRenderer: React.FC<FileRendererProps> = ({
         <div
           className={`text-3xl form-control justify-center items-center h-full ${className}`}
         >
-          {
-            fileIcons.find((item) => item.type == getFileTypeName(fileType))
-              ?.icon
-          }
+          {getFileIconByExtension(fileUrl)}
         </div>
       );
   }

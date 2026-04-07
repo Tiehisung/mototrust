@@ -1,15 +1,14 @@
-import { icons } from "@/assets/icons/icons";
+ 
 import { Button } from "@/components/buttons/Button";
 import { ConfirmActionButton } from "@/components/buttons/ConfirmAction";
 import { POPOVER } from "@/components/ui/popover";
 import LightboxViewer from "@/components/viewer/LightBox";
 import { downloadFile } from "@/lib/file";
-import { getVideoThumbnail } from "@/lib/file";
 import { IQueryResponse } from "@/types";
 import { IMatchHighlight } from "@/types/match.interface";
-import { Download, Play } from "lucide-react";
+import { Download, Play, Trash } from "lucide-react";
 import { useState } from "react";
- 
+
 import {
   useGetHighlightsQuery,
   useDeleteHighlightMutation,
@@ -63,10 +62,7 @@ export const MatchHighlights = ({
             className="group relative cursor-pointer rounded-xl overflow-hidden bg-modalOverlay shadow-lg transition"
           >
             <img
-              src={
-                getVideoThumbnail(video?.public_id, { second: 4 }) ||
-                (video?.thumbnail_url as string)
-              }
+              src={video?.thumbnail_url as string}
               alt={video?.title}
               className="w-full h-60 object-cover opacity-80 group-hover:scale-[1.01] group-hover:opacity-60 transition"
             />
@@ -104,7 +100,7 @@ export const MatchHighlights = ({
             src: v.secure_url,
             width: v.width,
             height: v.height,
-            alt: v.name ?? v.original_filename,
+            alt:  v.original_filename,
           }))}
           index={0}
         />
@@ -138,7 +134,7 @@ export const HighlightMediaActions = ({
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition"
+      className="absolute top-2 right-2 md:opacity-0 group-hover:opacity-100 transition"
     >
       <POPOVER
         variant="secondary"
@@ -165,13 +161,13 @@ export const HighlightMediaActions = ({
           confirmText="Do you want to delete this highlight?"
           onConfirm={handleDelete}
           className="h-fit w-full"
-          variant="destructive"
+          variant="ghost"
           confirmVariant="delete"
           loadingText="Deleting..."
           isLoading={isLoading}
           trigger={
             <>
-              <icons.trash /> Delete
+              <Trash /> Delete
             </>
           }
           triggerStyles="px-6 w-full justify-start"

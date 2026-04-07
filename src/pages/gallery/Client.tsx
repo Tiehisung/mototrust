@@ -68,7 +68,7 @@ export function GalleryThumbnail({ gallery, className = "" }: GalleryProps) {
           width: file.width ?? 1600,
           height: file.height ?? 900,
           title: shortText(
-            file?.original_filename ?? file?.name ?? "Image",
+            file?.original_filename   ?? "Image",
             20,
           ),
           description: file.description,

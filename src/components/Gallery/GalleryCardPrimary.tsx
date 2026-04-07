@@ -53,7 +53,7 @@ export function PrimaryGalleryCard({ gallery }: GalleryCardProps) {
 
         {/* Admin dropdown menu */}
         {isAdmin && (
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute top-2 right-2 md:opacity-0 group-hover:opacity-100 transition-opacity">
             <PrimaryDropdown>
               <DropdownMenuItem onClick={() => setIsOpen(true)}>
                 <View className="w-4 h-4 mr-2" /> View
@@ -78,6 +78,7 @@ export function PrimaryGalleryCard({ gallery }: GalleryCardProps) {
                     <Trash className="w-4 h-4 mr-2" /> Delete
                   </DropdownMenuItem>
                 }
+                variant={"ghost"}
                 triggerStyles="w-full justify-start p-0 "
                 title="Delete Gallery"
                 confirmText="Are you sure you want to delete this gallery?"

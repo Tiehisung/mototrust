@@ -3,7 +3,8 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../buttons/Button";
 import { cn } from "@/lib/utils";
-import { formatError } from "@/lib/error";
+import { getErrorMessage } from "@/lib/error";
+import { Glassmorphic } from "../Glasmorphic/BasicGlassmorphic";
 
 interface Props {
   message: any;
@@ -22,13 +23,13 @@ const DataErrorAlert = ({
   const handleReloading = () => {
     if (onRefetch) {
       onRefetch();
-    }
+    } else navigate(0);
   };
   return (
-    <div className="container mx-auto ">
+    <Glassmorphic className="container mx-auto my-5" shadow={false}>
       <Alert variant="destructive">
-        <AlertTitle>{formatError(message)}</AlertTitle>
-        <AlertDescription className="flex items-center justify-center">
+        <AlertTitle>{getErrorMessage(message)}</AlertTitle>
+        <AlertDescription className="flex items-center justify-start">
           {allowBack && (
             <Button onClick={() => navigate(-1)} variant={"ghost"}>
               <ArrowLeft className="  h-4 w-4" />
@@ -46,7 +47,7 @@ const DataErrorAlert = ({
           </Button>
         </AlertDescription>
       </Alert>
-    </div>
+    </Glassmorphic>
   );
 };
 

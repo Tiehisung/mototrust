@@ -29,6 +29,14 @@ export default function NewsItemPage() {
 
   const news = newsData;
 
+  if (isLoading) {
+    return (
+      <div className="flex max-lg:flex-wrap items-start gap-6 relative pt-6 md:pl-10">
+        <PageLoader />
+      </div>
+    );
+  }
+
   const title = `${TEAM.name} - ${newsItem?.headline?.text}`;
   const description =
     newsItem?.details?.find((d) => d.text)?.text ||

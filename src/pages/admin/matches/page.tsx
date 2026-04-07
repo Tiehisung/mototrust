@@ -2,55 +2,29 @@ import { DisplayFixtures } from "./DisplayFixtures";
 import Header from "../../../components/Element";
 import { QuickLinks } from "@/components/QuickLinks/LinkOrSectionId";
 import { Separator } from "@/components/ui/separator";
-import Loader from "@/components/loaders/Loader";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useGetMatchesQuery } from "@/services/match.endpoints";
-import { useGetTeamsQuery } from "@/services/team.endpoints";
 import { IQueryResponse } from "@/types";
 import { IMatch } from "@/types/match.interface";
+import DataErrorAlert from "@/components/error/DataError";
+import TableLoader from "@/components/loaders/Table";
+import { useGetMatchesQuery } from "@/services/match.endpoints";
 
 export default function AdminFixtures() {
-  // const [searchParams] = useSearchParams();
-  // const paramsString = searchParams.toString();
-
- 
-  const {
-    data: fixtures,
-    isLoading: fixturesLoading,
-    error: fixturesError,
-  } = useGetMatchesQuery({});
-
-  const { data: teams, isLoading: teamsLoading } = useGetTeamsQuery({});
-
-
-  const isLoading = fixturesLoading || teamsLoading 
+  const { data: fixtures, isLoading, error } = useGetMatchesQuery({});
 
   if (isLoading) {
     return (
       <section className="">
         <Header title="FIXTURES & SCORES" subtitle="Manage Fixtures" />
-        <div className="_page pb-6 pt-10 flex justify-center items-center min-h-100">
-          <Loader message="Loading fixtures..." />
-        </div>
+        <TableLoader cols={2} rows={2} className="h-44"/>
       </section>
     );
   }
 
-  if (fixturesError) {
+  if (error) {
     return (
       <section className="">
         <Header title="FIXTURES & SCORES" subtitle="Manage Fixtures" />
-        <div className="_page pb-6 pt-10">
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>
-              Failed to load fixtures:{" "}
-              {(fixturesError as any)?.message || "Unknown error"}
-            </AlertDescription>
-          </Alert>
-        </div>
+        <DataErrorAlert message={error} />
       </section>
     );
   }
@@ -59,11 +33,7 @@ export default function AdminFixtures() {
     <section className="">
       <Header title="FIXTURES & SCORES" subtitle="Manage Fixtures" />
       <main className="_page pb-6 pt-10">
-        <DisplayFixtures
-          fixtures={fixtures as IQueryResponse<IMatch[]>}
-          teams={teams?.data}
-     
-        />
+        <DisplayFixtures fixtures={fixtures as IQueryResponse<IMatch[]>} />
 
         <Separator />
 

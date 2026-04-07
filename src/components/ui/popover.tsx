@@ -68,7 +68,7 @@ export function POPOVER({
   align,
   variant = "ghost",
   size = "icon",
-  id,
+  id='popover',
 }: IProps) {
   return (
     <Popover>

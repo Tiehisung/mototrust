@@ -1,5 +1,4 @@
 import { LogoutBtn } from "@/components/auth/LogoutButton";
-import { NavigationPopover } from "@/components/NavigationPopover";
 import { ThemeModeToggle } from "@/components/ThemeToggle";
 import { Link } from "react-router-dom";
 import {
@@ -9,12 +8,19 @@ import {
 } from "./(sidebar)/PrimarySidebarAdmin";
 import { AVATAR } from "@/components/ui/avatar";
 import { ENV } from "@/lib/env";
+import { GlassmorphicGradient } from "@/components/Glasmorphic/Gradient";
+import { POPOVER } from "@/components/ui/popover";
+import { Menu } from "lucide-react";
 
 export function LeftPaneDesktop() {
   return (
     <div className="max-md:hidden bg-accent max-h-screen overflow-y-auto py-6">
       <div className="p-6 flex items-center gap-6 justify-between">
-        <Link to="/" className="text-2xl font-semibold grow flex gap-2 items-center" title="Home">
+        <Link
+          to="/"
+          className="text-2xl font-semibold grow flex gap-2 items-center"
+          title="Home"
+        >
           <AVATAR src={ENV.LOGO_NO_BG_URL} /> {ENV.TEAM_ALIAS}
         </Link>
         <ThemeModeToggle />
@@ -29,25 +35,26 @@ export function LeftPaneDesktop() {
   );
 }
 
-export function LeftPaneMobile() {
+ 
+export function LeftPaneMobileHeadless() {
   return (
-    <NavigationPopover
+    <POPOVER
       align="start"
-      triggerStyles="md:hidden"
-      className="backdrop-blur-sm text-white w-fit relative"
+      trigger={<Menu />}
+      triggerClassNames="md:hidden"
+      className="w-fit relative p-0"
     >
-      <ul className="w-full relative">
-        <li>
+      <GlassmorphicGradient className="w-full relative p-2">
+        <div className=" mt-2 px-2 py-1 flex gap-6 items-center  rounded-full ">
+          <ThemeModeToggle className="w-full" />
+          <LogoutBtn />
+        </div>
+        <div>
           {sidebarLinks.map((link, i) => (
             <SidebarLink key={i} item={link} />
           ))}
-        </li>
-      </ul>
-      <li className=" mt-12 px-2 py-1 flex gap-6 items-center border rounded-full ">
-        {/* <UserLogButtons /> */}
-        <ThemeModeToggle className="w-full" />
-        <LogoutBtn/>
-      </li>
-    </NavigationPopover>
+        </div>
+      </GlassmorphicGradient>
+    </POPOVER>
   );
 }
