@@ -53,7 +53,7 @@ export const StackModal = ({
 
   return (
     <>
-      {trigger && (
+      {trigger ? (
         <Button
           variant={variant}
           size={size}
@@ -63,7 +63,7 @@ export const StackModal = ({
             setLoading(true);
             setTimeout(() => {
               setLoading(false);
-            }, 4000);
+            }, 2000);
           }}
           waiting={!modalId && loading}
           waitingText="Please wait..."
@@ -71,6 +71,23 @@ export const StackModal = ({
         >
           {trigger}
         </Button>
+      ) : (
+        <input
+          type="checkbox"
+          name=""
+          id={id}
+          checked={isOpen}
+          hidden
+          onChange={(c) => {
+            if (c.target.checked) {
+              setParam("stackModal", id);
+              setLoading(true);
+              setTimeout(() => {
+                setLoading(false);
+              }, 50);
+            }
+          }}
+        />
       )}
       {isOpen && (
         <div
@@ -102,7 +119,7 @@ export const StackModal = ({
 
             <main
               className={cn(
-                `max-h-[85vh] overflow-y-auto pb-14 min-w-[60vw]`,
+                `max-h-[85vh] overflow-y-auto px-2 md:px-[2vw] pb-14 min-w-[60vw]`,
                 className,
               )}
             >

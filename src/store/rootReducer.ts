@@ -6,6 +6,7 @@ import playerReducer from './slices/player.slice'
 import { api } from "../services/api";
 import tempDataReducer from './slices/index'
 import newsReducer from './slices/news.slice'
+import settingsSlice from './slices/settings.slice'
 import recentSearchesReducer from './slices/recentSearch.slice'
 
 const rootReducer = combineReducers({
@@ -14,13 +15,14 @@ const rootReducer = combineReducers({
     player: playerReducer,
     news: newsReducer,
     recentSearches: recentSearchesReducer,
-    tempData: tempDataReducer
+    tempData: tempDataReducer,
+    settings: settingsSlice
 });
 
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ['auth', 'api', 'player', 'news', 'tempData', "recentSearches"], // ⭐  Only persist API cache
+    whitelist: ['auth', 'api', 'player', 'news', 'tempData', "recentSearches", 'settings'], // ⭐  Only persist API cache
     blacklist: ['someTempReducer'], // Don't persist temporary data
 };
 

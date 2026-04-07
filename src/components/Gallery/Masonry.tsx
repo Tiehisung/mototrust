@@ -1,12 +1,10 @@
-
-
 import { IFileProps } from "@/types/file.interface";
 import { ReactNode, useState } from "react";
 import LightboxViewer from "../viewer/LightBox";
-import { getVideoThumbnail } from "@/lib/file";
 import IMAGE from "../Image";
 import { cn } from "@/lib/utils";
 import { POPOVER } from "../ui/popover";
+import { getThumbnail } from "@/lib/file";
 
 interface MasonryGalleryProps {
   files: Array<IFileProps>;
@@ -55,20 +53,16 @@ export default function MasonryGallery({
       <div
         className={cn(
           "columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4",
-          wrapperStyles
+          wrapperStyles,
         )}
       >
         {files?.map((file, i) => {
-          const thumbnail =
-            file?.resource_type !== "image"
-              ? getVideoThumbnail(file.public_id)
-              : file.secure_url;
           return (
             <div
               key={file?.public_id + i}
               className={cn(
                 "mb-6 break-inside-avoid overflow-hidden rounded-lg",
-                className
+                className,
               )}
               onMouseEnter={() => setHoveredId(file?.public_id)}
               onMouseLeave={() => setHoveredId(undefined)}
@@ -80,13 +74,13 @@ export default function MasonryGallery({
               <div
                 className={cn(
                   `group relative ${getAspectRatio(
-                    file?.bytes as number
-                  )} w-full overflow-hidden bg-muted`
+                    file?.bytes as number,
+                  )} w-full overflow-hidden bg-muted`,
                 )}
               >
                 <IMAGE
                   fallbackSrc={file.thumbnail_url ?? file.secure_url}
-                  src={thumbnail}
+                  src={getThumbnail(file) as string}
                   alt={file?.original_filename ?? "img"}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -139,7 +133,7 @@ export default function MasonryGallery({
           key={file?.public_id + i}
           className={cn(
             "mb-6 break-inside-avoid overflow-hidden rounded-lg",
-            className
+            className,
           )}
           onClick={() => {
             setPhotoIndex(i);
@@ -148,9 +142,8 @@ export default function MasonryGallery({
         >
           <div className="group relative aspect-3/4 w-full overflow-hidden bg-muted">
             <img
-              src={file?.secure_url}
+              src={getThumbnail(file) as string}
               alt={file?.original_filename ?? (file?.public_id as string)}
-            
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
             />

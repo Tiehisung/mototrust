@@ -1,5 +1,3 @@
- 
-
 import {
   ChangeEvent,
   HTMLInputTypeAttribute,
@@ -134,7 +132,7 @@ export function Input({
   error,
 }: IInputProps) {
   return (
-    <div className={`grid relative ${wrapperStyles} `} data-tip={dataTip}>
+    <div className={cn(`grid relative `,wrapperStyles)} data-tip={dataTip}>
       <Label
         hidden={!label}
         htmlFor={name}
@@ -177,6 +175,7 @@ interface IDateInputProps {
   type: "time" | "datetime-local" | "date";
   label?: ReactNode;
   error?: string;
+  disabled?: boolean;
 }
 export function DateTimeInput({
   className = "",
@@ -190,6 +189,7 @@ export function DateTimeInput({
   type,
   label,
   error,
+  disabled,
 }: IDateInputProps) {
   const handleOpenPicker = () => {
     const dateInput = document.getElementById(name) as HTMLInputElement; //avoid id starting with number
@@ -215,6 +215,7 @@ export function DateTimeInput({
         onChange={(e) => {
           onChange(e);
         }}
+        disabled={disabled}
         className={`bg-accent/40 grow w-full min-w-full border px-2 py-2 uppercase rounded focus:border-border ${className}`}
         {...others}
         required={required}

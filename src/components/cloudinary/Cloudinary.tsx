@@ -1,4 +1,4 @@
-// components/CloudinaryWidget.tsx
+// components/cloudinary/CloudinaryWidget.tsx
 import { useEffect, useRef, useCallback, useState, ReactNode } from "react";
 import { Button } from "@/components/buttons/Button";
 import { Upload, X } from "lucide-react";
@@ -15,6 +15,7 @@ declare global {
 
 interface CloudinaryWidgetProps {
   onUploadSuccess?: (files: ICloudinaryFile[]) => void;
+  onClose?: (files: ICloudinaryFile[]) => void;
   onUploadFailure?: (error: any) => void;
 
   initialFiles?: ICloudinaryFile[];
@@ -49,6 +50,7 @@ interface CloudinaryWidgetProps {
 export function CloudinaryWidget({
   onUploadSuccess,
   onUploadFailure,
+  onClose,
 
   trigger = "Upload Image",
   variant = "outline",
@@ -71,14 +73,21 @@ export function CloudinaryWidget({
   uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
 }: CloudinaryWidgetProps) {
   const widgetRef = useRef<any>(null);
+  const [uploadedFiles, setUploadedFiles] =
+    useState<ICloudinaryFile[]>(initialFiles);
 
-  // UI state (important for preview)
-  const [files, setFiles] = useState<ICloudinaryFile[]>(initialFiles);
+  // Use ref to always have the latest files without stale closures
+  const uploadedFilesRef = useRef<ICloudinaryFile[]>(initialFiles);
 
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [scriptError, setScriptError] = useState(false);
 
   const [deleteFile] = useDeleteFileMutation();
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    uploadedFilesRef.current = uploadedFiles;
+  }, [uploadedFiles]);
 
   // Load Cloudinary script
   useEffect(() => {
@@ -129,16 +138,30 @@ export function CloudinaryWidget({
 
           if (result?.event === "success") {
             const file = result.info as ICloudinaryFile;
+            console.log("uploaded", file.original_filename);
 
-            setFiles((prev) => {
-              const updated = file?.secure_url ? [file, ...prev] : prev;
-              onUploadSuccess?.(updated);
-              return updated;
+            // Update both state and ref
+            setUploadedFiles((prev) => {
+              const newFiles = [...prev, file];
+              uploadedFilesRef.current = newFiles;
+              return newFiles;
             });
           }
 
           if (result?.event === "close") {
-            console.log({ files: "closed" });
+            // Use ref to get the latest files
+            const currentFiles = uploadedFilesRef.current;
+            console.log("close", `${currentFiles.length} uploaded`);
+
+            // Widget closed - trigger callback with all uploaded files
+            if (currentFiles.length > 0) {
+              onUploadSuccess?.(currentFiles);
+            }
+            onClose?.(currentFiles);
+
+            // Clear the state after callback
+            setUploadedFiles([]);
+            uploadedFilesRef.current = [];
           }
         },
       );
@@ -148,31 +171,37 @@ export function CloudinaryWidget({
     }
   }, [isScriptLoaded]);
 
-  const openWidget = useCallback(() => {
-    widgetRef.current?.open();
-  }, []);
-
-  // Remove file
+  // Remove file from list (also delete from Cloudinary)
   const handleRemove = async (file: ICloudinaryFile) => {
     try {
-      const updated = files.filter((f) => f.public_id !== file.public_id);
+      const updated = uploadedFiles.filter(
+        (f) => f.public_id !== file.public_id,
+      );
+      setUploadedFiles(updated);
+      uploadedFilesRef.current = updated;
 
-      setFiles(updated);
-
-      await deleteFile({
+      // Delete from Cloudinary
+      const deleted = await deleteFile({
         public_id: file.public_id,
         resource_type: file.resource_type as ICloudinaryFile["resource_type"],
-      });
+      }).unwrap();
+
+      smartToast(deleted);
     } catch (error) {
       smartToast({ error });
     }
   };
 
-  useEffect(() => {
-    if (files) {
-      onUploadSuccess?.(files);
-    }
-  }, [files]);
+  // Clear all files manually
+  // const clearAllFiles = useCallback(() => {
+  //   setUploadedFiles([]);
+  //   uploadedFilesRef.current = [];
+  // }, []);
+
+  // Open widget
+  const openWidget = useCallback(() => {
+    widgetRef.current?.open();
+  }, []);
 
   // Error UI
   if (scriptError) {
@@ -195,11 +224,11 @@ export function CloudinaryWidget({
 
   return (
     <div className="space-y-5">
-      {!hidePreview && files.length > 0 && (
+      {!hidePreview && uploadedFiles.length > 0 && (
         <div
           className={`flex flex-wrap justify-center gap-3 mt-4 ${mediaDisplayStyles}`}
         >
-          {files.map((f) => (
+          {uploadedFiles.map((f) => (
             <div
               key={f.public_id}
               className="relative rounded-lg overflow-hidden group max-h-80"
@@ -208,13 +237,13 @@ export function CloudinaryWidget({
                 <video
                   src={f.secure_url}
                   controls
-                  className="rounded-lg object-cover"
+                  className="rounded-lg object-cover max-h-40"
                 />
               ) : (
                 <img
                   src={f.secure_url}
                   alt=""
-                  className="rounded-lg object-cover"
+                  className="rounded-lg object-cover w-24 h-24"
                 />
               )}
 
@@ -222,15 +251,16 @@ export function CloudinaryWidget({
                 <button
                   type="button"
                   onClick={() => handleRemove(f)}
-                  className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white p-1 rounded-full transition"
+                  className="absolute top-1 right-1 bg-black/60 hover:bg-black/80 text-white p-0.5 rounded-full transition"
                 >
-                  <X size={16} />
+                  <X size={14} />
                 </button>
               )}
             </div>
           ))}
         </div>
       )}
+
       <Button
         type="button"
         onClick={openWidget}

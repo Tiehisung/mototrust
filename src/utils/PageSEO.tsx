@@ -20,6 +20,16 @@ const pageConfig = {
     title: "Players",
     description: `Meet the ${TEAM.name} squad. View player profiles, stats, and career highlights.`,
     keywords: ["players", "squad", "football team", "player stats"],
+    images: [
+      "https://res.cloudinary.com/djzfztrig/image/upload/v1775161029/assets-storage/pbbsnmw7uvsnmghwbyxc.jpg",
+      ,
+      "https://res.cloudinary.com/dcjeydowa/image/upload/v1775161100/bunyeni-fc/1775161100374-whatsapp-image-2026-03-25-at-8.jpg",
+      "https://res.cloudinary.com/djzfztrig/image/upload/v1775161162/assets-storage/itq3jr34qunwhikn0qv7.jpg",
+      "https://res.cloudinary.com/djzfztrig/image/upload/v1775161206/assets-storage/bwxruwca8hykphpfcilp.jpg",
+      "https://res.cloudinary.com/djzfztrig/image/upload/v1775161231/assets-storage/xzus5d9jlevisbzzcpvh.jpg",
+      "https://res.cloudinary.com/djzfztrig/image/upload/v1775161235/assets-storage/f13shjf1liemtjcjemz7.jpg",
+      "https://res.cloudinary.com/djzfztrig/image/upload/v1775161236/assets-storage/oe40jjszc0gobq5ufgk5.jpg",
+    ],
   },
   matches: {
     title: "Matches & Fixtures",

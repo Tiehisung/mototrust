@@ -11,10 +11,12 @@ export default function HomeLayout() {
   return (
     <main className="relative">
       <ScrollToTop />
- 
+
       <MainNavbar />
-      <div className={`min-h-screen overflow-x-hidden px-4 pb-6`}>
-        <Outlet />
+      <div className={`min-h-screen overflow-x-hidden pb-6 `}>
+        <div className="_page">
+          <Outlet />
+        </div>
         <Swinger className="fixed bottom-6 right-6 z-30">
           <BackToTopButton />
         </Swinger>

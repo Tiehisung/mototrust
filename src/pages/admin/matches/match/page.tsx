@@ -5,24 +5,19 @@ import MatchActions from "./Actions";
 import { Badge } from "@/components/ui/badge";
 import { useParams } from "react-router-dom";
 import { useGetMatchQuery } from "@/services/match.endpoints";
-import { useGetTeamsQuery } from "@/services/team.endpoints";
 import { AVATAR } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import PageLoader from "@/components/loaders/Page";
 import DataErrorAlert from "@/components/error/DataError";
 import { getErrorMessage } from "@/lib/error";
 import { formatDate } from "@/lib/timeAndDate";
+import MatchFliers from "./Fliers";
 
 export default function MatchPage() {
   const slug = useParams().matchSlug;
 
-  const {
-    data: matchData,
-    isLoading: matchLoading,
-    error,
-  } = useGetMatchQuery(slug || "");
+  const { data: matchData, isLoading, error } = useGetMatchQuery(slug || "");
 
-  const { data: teamsData, isLoading: teamsLoading } = useGetTeamsQuery({});
   const match = matchData?.data;
 
   const { home, away } = checkTeams(match);
@@ -30,15 +25,11 @@ export default function MatchPage() {
   const matchMetrics = checkMatchMetrics(match);
   const isMobile = useIsMobile();
 
-  const isLoading = matchLoading || teamsLoading;
-
-  const teams = teamsData;
-
   if (isLoading) {
     return <PageLoader />;
   }
 
-  if (!match) {
+  if (error) {
     return <DataErrorAlert message={getErrorMessage(error)} />;
   }
 
@@ -51,8 +42,8 @@ export default function MatchPage() {
         <p className="text-muted-foreground">{formatDate(match?.date)}</p>
       </header>
 
-      <MatchActions match={match} teams={teams?.data as ITeam[]} />
-
+      <MatchActions match={match} />
+      <MatchFliers match={match} />
       <div className="my-6 flex items-center justify-between gap-6 border p-3 bg-secondary">
         <section className="flex flex-col justify-center items-center gap-2.5 pointer-events-none">
           <AVATAR

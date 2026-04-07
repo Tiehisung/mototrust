@@ -69,39 +69,7 @@ export const validateFile = (
 
     return { status: true, message: '' };
 };
-
  
-
-export const getVideoThumbnail = (
-    publicId: string,
-    options?: {
-        width?: number
-        height?: number
-        second?: number
-        crop?: "fill" | "fit" | "limit"
-    }
-) => {
-    const {
-        width = 1200,
-        height = 680,
-        second = 4,
-        crop = "fill",
-    } = options || {}
-
-    const transformations = [
-        `so_${second}`,            // seek to timestamp
-        "f_auto",                  // WebP/AVIF
-        "q_auto:good",             // quality
-        "fl_progressive",          // faster load
-        `c_${crop}`,
-        `w_${width}`,
-        `h_${height}`,
-    ].join(",")
-
-    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-
-    return `https://res.cloudinary.com/${cloudName}/video/upload/${transformations}/${publicId}.jpg`
-}
 
 export const getThumbnail = (
     file?: Partial<IFileProps>,
@@ -112,18 +80,22 @@ export const getThumbnail = (
         crop?: "fill" | "fit" | "limit",
     }
 ) => {
-    if (!file) return ''
-
-    if (file?.resource_type === 'image') return file.secure_url
-
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
     const {
-        width = 1200,
-        height = 680,
+        width = 400,
+        height = 320,
         second = 4,
         crop = "fill",
     } = options || {}
 
     const transformations = [
+        "f_jpg",                  // WebP/AVIF
+        "q_auto:good",             // quality
+        `c_${crop}`,
+        `w_${width}`,
+        `h_${height}`,
+    ].join(",")
+    const vid_transformations = [
         `so_${second}`,            // seek to timestamp
         "f_auto",                  // WebP/AVIF
         "q_auto:good",             // quality
@@ -133,10 +105,16 @@ export const getThumbnail = (
         `h_${height}`,
     ].join(",")
 
-    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+    if (!file) return ''
 
-    return `https://res.cloudinary.com/${cloudName}/video/upload/${transformations}/${file?.public_id}.jpg`
+    if (file?.resource_type === 'image') return `https://res.cloudinary.com/${cloudName}/image/upload/w_${transformations},f_jpg/${file?.public_id}`
+
+
+
+    return `https://res.cloudinary.com/${cloudName}/video/upload/${vid_transformations}/${file?.public_id}.jpg`
 }
+
+
 export const downloadFile = (url: string | URL | Request, filename: string) => {
     fetch(url)
         .then((response) => response.blob())
@@ -148,10 +126,19 @@ export const downloadFile = (url: string | URL | Request, filename: string) => {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-
         })
         .catch((error) => {
             console.error("Error downloading file:", error);
             toast.error('Error downloading file')
         });
 };
+
+
+ 
+export function formatBytes(bytes: number): string {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}

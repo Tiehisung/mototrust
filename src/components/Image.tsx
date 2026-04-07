@@ -43,7 +43,6 @@ export function SlideImage({ file, className = "", caption = "" }: IProps) {
       <img
         src={(file?.secure_url as string) ?? staticImages.ball}
         alt={
-          file?.name ||
           file?.original_filename ||
           `slide image - ${file?.width}"X"${file?.height}`
         }

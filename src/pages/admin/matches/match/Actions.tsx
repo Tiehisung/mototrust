@@ -1,7 +1,7 @@
 import { ConfirmDialog } from "@/components/Confirm-dialog";
 import { shortText } from "@/lib";
-import { EMatchStatus, IMatch, ITeam } from "@/types/match.interface";
-import { UpdateFixtureMatch } from "../CreateFixture";
+import { EMatchStatus, IMatch } from "@/types/match.interface";
+
 import { DIALOG } from "@/components/Dialog";
 import SquadCard from "../../squad/SquadCard";
 import SquadForm from "../../squad/SquadForm";
@@ -11,13 +11,14 @@ import {
 } from "@/services/match.endpoints";
 import { smartToast } from "@/utils/toast";
 import { fireEscape } from "@/hooks/Esc";
+import { StackModal } from "@/components/modals/StackModal";
+import { MatchForm } from "../FixtureForm";
 
 interface Props {
-  match: IMatch;
-  teams: ITeam[];
+  match?: IMatch;
 }
 
-const MatchActions = ({ match, teams }: Props) => {
+const MatchActions = ({ match }: Props) => {
   const status = match?.status;
   const [updateMatch] = useUpdateMatchMutation();
   const [deleteMatch] = useDeleteMatchMutation();
@@ -25,7 +26,7 @@ const MatchActions = ({ match, teams }: Props) => {
   const handleStatusUpdate = async (newStatus: "LIVE" | "FT") => {
     try {
       const result = await updateMatch({
-        _id: match._id,
+        _id: match?._id,
         status: newStatus as EMatchStatus,
       }).unwrap();
 
@@ -38,7 +39,7 @@ const MatchActions = ({ match, teams }: Props) => {
 
   const handleDelete = async () => {
     try {
-      const result = await deleteMatch(match._id).unwrap();
+      const result = await deleteMatch(match?._id as string).unwrap();
       if (result.success) window.location.href = "/admin/matches";
       smartToast(result);
       fireEscape();
@@ -52,11 +53,13 @@ const MatchActions = ({ match, teams }: Props) => {
       <fieldset className="border p-3">
         <legend>Match Actions</legend>
         <div className="flex items-center gap-5 flex-wrap mb-4">
-          <UpdateFixtureMatch
-            teams={teams}
-            fixture={match}
-            variant={"outline"}
-          />
+          <StackModal
+            trigger={"Edit"}
+            id={`edit-m-${match?._id}`}
+            variant={"ghost"}
+          >
+            <MatchForm fixture={match} />
+          </StackModal>
 
           {match?.squad ? (
             <DIALOG

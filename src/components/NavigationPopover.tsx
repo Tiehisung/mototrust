@@ -1,5 +1,4 @@
-"use client";
-
+ 
 import { ReactNode, useEffect } from "react";
 import { Menu } from "lucide-react";
  

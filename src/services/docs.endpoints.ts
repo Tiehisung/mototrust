@@ -1,28 +1,28 @@
-// docs.endpoints.ts
+// documents.endpoints.ts
 import type { IQueryResponse } from "@/types";
 import { api } from "./api";
-import type { IDocFile, IFolder, IFolderMetrics } from "@/types/doc";
+import type { IDocFile, IFolder, } from "@/types/doc";
 import { formatError } from "@/lib/error";
 
-const docsApi = api.injectEndpoints({
+const documentsApi = api.injectEndpoints({
     endpoints: (builder) => ({
 
         // Document endpoints
         getDocuments: builder.query<IQueryResponse<IDocFile[]>, string | void>({
-            query: (queryString = "") => `/docs${queryString}`,
-            providesTags: ["Documents"],
+            query: (queryString = "") => `/documents${queryString}`,
+            providesTags: ["Folders", 'Documents'],
             transformErrorResponse: (response) => formatError(response),
         }),
 
         getDocumentById: builder.query<IQueryResponse<IDocFile>, string>({
-            query: (documentId) => `/docs/${documentId}`,
-            providesTags: ["Documents"],
+            query: (documentId) => `/documents/${documentId}`,
+            providesTags: ["Folders", 'Documents'],
             transformErrorResponse: (response) => formatError(response),
         }),
 
-        createDocument: builder.mutation<IQueryResponse<IDocFile>, Partial<IDocFile>>({
+        createDocuments: builder.mutation<IQueryResponse<IDocFile>, { folderId: string, files: IDocFile[] }>({
             query: (body) => ({
-                url: "/docs",
+                url: "/documents",
                 method: "POST",
                 body,
             }),
@@ -32,17 +32,17 @@ const docsApi = api.injectEndpoints({
 
         updateDocument: builder.mutation<IQueryResponse<IDocFile>, Partial<IDocFile>>({
             query: (body) => ({
-                url: `/docs/${body._id}`,
+                url: `/documents/${body._id}`,
                 method: "PUT",
                 body,
             }),
-            invalidatesTags: ["Documents"],
+            invalidatesTags: ["Documents", "Folders",],
             transformErrorResponse: (response) => formatError(response),
         }),
 
         deleteDocuments: builder.mutation<IQueryResponse<null>, string[]>({
             query: (documentIds) => ({
-                url: "/docs/batch",
+                url: "/documents/batch",
                 method: "DELETE",
                 body: { documentIds },
             }),
@@ -52,19 +52,19 @@ const docsApi = api.injectEndpoints({
 
         deleteDocument: builder.mutation<IQueryResponse<null>, string>({
             query: (documentId) => ({
-                url: `/docs/${documentId}`,
+                url: `/documents/${documentId}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Documents", "Folders",],
             transformErrorResponse: (response) => formatError(response),
         }),
 
-        moveCopyDocuments: builder.mutation<
+        moveDocuments: builder.mutation<
             IQueryResponse<null>,
-            { files: IDocFile[]; actionType: 'Move' | 'Copy'; destinationFolder: string }
+            { fileIds: string[]; destinationFolderId: string }
         >({
             query: (body) => ({
-                url: "/docs/move-copy",
+                url: "/documents/move",
                 method: "PUT",
                 body,
             }),
@@ -73,14 +73,15 @@ const docsApi = api.injectEndpoints({
         }),
 
         // Folder endpoints
-        getFolders: builder.query<IQueryResponse<IFolder[]>, string | void>({
-            query: (queryString = "") => `/docs/folders${queryString}`,
-            providesTags: ["Folders"],
+        getFolders: builder.query<IQueryResponse<IFolder[]>, void>({
+            query: () => `/documents/folders`,
+            providesTags: ["Folders", 'Documents'],
             transformErrorResponse: (response) => formatError(response),
+
         }),
 
-        getFolderByName: builder.query<IQueryResponse<IFolder>, string>({
-            query: (folderName) => `/docs/folders/name/${encodeURIComponent(folderName)}`,
+        getFolderById: builder.query<IQueryResponse<IFolder>, string>({
+            query: (folderId) => `/documents/folders/${(folderId)}`,
             providesTags: ["Folders"],
             transformErrorResponse: (response) => formatError(response),
         }),
@@ -89,15 +90,15 @@ const docsApi = api.injectEndpoints({
             IQueryResponse<IDocFile[]>,
             { folderId: string; queryString?: string }
         >({
-            query: ({ folderId, queryString = "" }) =>
-                `/docs/folders/${folderId}/documents${queryString}`,
+            query: ({ folderId, }) =>
+                `/documents/folders/${folderId}/documents`,
             providesTags: ["Documents"],
             transformErrorResponse: (response) => formatError(response),
         }),
 
         createFolder: builder.mutation<IQueryResponse<IFolder>, Partial<IFolder>>({
             query: (body) => ({
-                url: "/docs/folders",
+                url: "/documents/folders",
                 method: "POST",
                 body,
             }),
@@ -107,7 +108,7 @@ const docsApi = api.injectEndpoints({
 
         updateFolder: builder.mutation<IQueryResponse<IFolder>, Partial<IFolder>>({
             query: (body) => ({
-                url: `/docs/folders/${body._id}`,
+                url: `/documents/folders/${body._id}`,
                 method: "PUT",
                 body,
             }),
@@ -117,7 +118,7 @@ const docsApi = api.injectEndpoints({
 
         deleteFolder: builder.mutation<IQueryResponse<null>, string>({
             query: (folderId) => ({
-                url: `/docs/folders/${folderId}`,
+                url: `/documents/folders/${folderId}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Folders", "Documents",],
@@ -125,22 +126,13 @@ const docsApi = api.injectEndpoints({
         }),
 
         // Folder metrics
-        getFolderMetrics: builder.query<IQueryResponse<IFolderMetrics[]>, void>({
-            query: () => "/docs/metrics",
+        getFolderMetrics: builder.query<IQueryResponse<IFolder[]>, void>({
+            query: () => "/documents/metrics",
             providesTags: ["Folders", "Documents"],
             transformErrorResponse: (response) => formatError(response),
         }),
 
-        // Alternative: get documents by folder name (if needed)
-        getDocumentsByFolderName: builder.query<
-            IQueryResponse<IDocFile[]>,
-            { folderName: string; queryString?: string }
-        >({
-            query: ({ folderName, queryString = "" }) =>
-                `/docs/folders/name/${encodeURIComponent(folderName)}/documents${queryString}`,
-            providesTags: ["Documents"],
-            transformErrorResponse: (response) => formatError(response),
-        }),
+
     }),
 });
 
@@ -148,15 +140,15 @@ export const {
     // Document hooks
     useGetDocumentsQuery,
     useGetDocumentByIdQuery,
-    useCreateDocumentMutation,
+    useCreateDocumentsMutation,
     useUpdateDocumentMutation,
     useDeleteDocumentsMutation,
     useDeleteDocumentMutation,
-    useMoveCopyDocumentsMutation,
+    useMoveDocumentsMutation,
 
     // Folder hooks
     useGetFoldersQuery,
-    useGetFolderByNameQuery,
+    useGetFolderByIdQuery,
     useGetFolderDocumentsQuery,
     useCreateFolderMutation,
     useUpdateFolderMutation,
@@ -165,6 +157,5 @@ export const {
     // Metrics hooks
     useGetFolderMetricsQuery,
 
-    // Alternative
-    useGetDocumentsByFolderNameQuery,
-} = docsApi;
+
+} = documentsApi;

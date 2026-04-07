@@ -9,7 +9,7 @@ interface IProps {
 
 export default function OurPlayers({ players }: IProps) {
   return (
-    <div className="px-5 py-6">
+    <div className=" py-6">
       <ul className="space-y-5">
         {players?.data?.map((player) => (
           <li key={player._id} className="border-b border-primary pb-6">

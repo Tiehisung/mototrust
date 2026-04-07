@@ -17,7 +17,7 @@ const RadioButtons: FC<RadioButtonsProps> = ({
   wrapperStyles,
   className,
   setSelectedValue,
-  label,
+  label, 
 }) => {
   const [option, setOption] = useState(defaultValue ?? "");
   useEffect(() => {

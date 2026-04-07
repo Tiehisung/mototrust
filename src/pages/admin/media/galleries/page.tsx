@@ -4,10 +4,10 @@ import { SearchGallery } from "./Search";
 import InfiniteLimitScroller from "@/components/InfiniteScroll";
 import { useSearchParams } from "react-router-dom";
 import Loader from "@/components/loaders/Loader";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useGetGalleriesQuery } from "@/services/gallery.endpoints";
 import { useGetPlayersQuery } from "@/services/player.endpoints";
+import DataErrorAlert from "@/components/error/DataError";
+import TableLoader from "@/components/loaders/Table";
 
 export default function GalleriesAdmin() {
   const [searchParams] = useSearchParams();
@@ -27,30 +27,15 @@ export default function GalleriesAdmin() {
   const { data: players, isLoading: playersLoading } = useGetPlayersQuery("");
 
   const isLoading = galleriesLoading || playersLoading;
-  const hasError = galleriesError;
+ 
 
   if (isLoading) {
-    return (
-      <div className="pt-16 _page flex justify-center items-center min-h-100">
-        <Loader message="Loading galleries..." />
-      </div>
-    );
+    return <TableLoader className="h-32" rows={2} cols={2} />;
   }
 
-  if (hasError) {
-    return (
-      <div className="pt-16 _page">
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>
-            Failed to load galleries:{" "}
-            {(galleriesError as any)?.message || "Unknown error"}
-          </AlertDescription>
-        </Alert>
-      </div>
-    );
-  }
+  if (galleriesError)  
+    return  <DataErrorAlert message={galleriesError}/>
+  
 
   return (
     <div className="pt-16 _page">

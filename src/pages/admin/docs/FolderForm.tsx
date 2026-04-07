@@ -1,15 +1,19 @@
 import { Button } from "@/components/buttons/Button";
 import { IconInputWithLabel } from "@/components/input/Inputs";
-import { SWITCH } from "@/components/ui/switch";
-import { useAction } from "@/hooks/action";
-import { apiConfig } from "@/lib/configs";
-import { IFolderMetrics } from "@/types/doc";
+import { IFolder } from "@/types/doc";
 import { EUserRole } from "@/types/user";
 import { useState } from "react";
 import { useAppSelector } from "@/store/hooks/store";
+import { useCreateFolderMutation } from "@/services/docs.endpoints";
+import { smartToast } from "@/utils/toast";
+import { fireEscape } from "@/hooks/Esc";
+import { getErrorMessage } from "@/lib/error";
+import { CHECKBOX } from "@/components/input/Checkbox";
 
-export function FolderForm({ folder }: { folder?: IFolderMetrics }) {
+export function FolderForm({ folder }: { folder?: IFolder }) {
   const [nameError, setNameError] = useState("");
+  const [createFolder, { isLoading: creatingFolder, error }] =
+    useCreateFolderMutation();
 
   const [formdata, setFormdata] = useState({
     name: folder?.name || "",
@@ -17,10 +21,18 @@ export function FolderForm({ folder }: { folder?: IFolderMetrics }) {
     isDefault: folder?.isDefault || false,
   });
 
-  const { handleAction, isLoading, error: respError } = useAction();
+  const handleCreate = async () => {
+    try {
+      const result = await createFolder({ ...formdata }).unwrap();
+      smartToast(result);
+      fireEscape();
+    } catch (error) {
+      smartToast({ error });
+    }
+  };
 
   // Using dummy user instead of session
- const { user } = useAppSelector((s) => s.auth);
+  const { user } = useAppSelector((s) => s.auth);
   const isSuperAdmin = user?.role === EUserRole.SUPER_ADMIN;
 
   return (
@@ -44,36 +56,25 @@ export function FolderForm({ folder }: { folder?: IFolderMetrics }) {
         value={formdata.description}
       />
 
-      <SWITCH
-        onCheckedChange={(b) => setFormdata((p) => ({ ...p, isDefault: b }))}
+    
+      <CHECKBOX
+        onChange={(ev) =>
+          setFormdata((p) => ({ ...p, isDefault: ev.target.checked }))
+        }
         disabled={!isSuperAdmin}
         checked={formdata.isDefault}
-        label="System default"
+        label="Set as system default"
       />
 
       <Button
-        onClick={() => {
-          if (!formdata.name?.trim()) {
-            setNameError("Folder name is required");
-            return;
-          }
-          handleAction({
-            method: folder ? "PUT" : "POST",
-            uri: `${apiConfig.docs}/folders${folder ? `/folder?folderId=${folder._id}` : ""}`,
-            body: formdata,
-          }).then(() => {
-            if (!folder) {
-              setFormdata({ name: "", description: "", isDefault: false });
-            }
-          });
-        }}
+        onClick={handleCreate}
         primaryText={folder ? "Update Folder" : "Create Folder"}
-        waiting={isLoading}
+        waiting={creatingFolder}
         waitingText={folder ? "Updating..." : "Creating..."}
         className="w-full"
       />
 
-      {respError && <p className="text-red-500 mt-2">{respError}</p>}
+      {error && <p className="text-red-500 mt-2">{getErrorMessage(error)}</p>}
     </div>
   );
 }

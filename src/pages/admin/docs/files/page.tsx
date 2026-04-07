@@ -4,7 +4,7 @@ import { FaFilePdf } from "react-icons/fa6";
 import { Color } from "@/styles";
 import { getTimeAgo } from "@/lib/timeAndDate";
 import { PrimarySearch } from "@/components/Search";
-import { DocumentActions } from "../[folder]/Actions";
+import { DocumentActions } from "../folder/DocActions";
 import FileViewer from "@/components/FilePreviewModal";
 import { useSearchParams } from "react-router-dom";
 import { useGetDocumentsQuery } from "@/services/docs.endpoints";
@@ -16,7 +16,11 @@ const AllDocsPage = () => {
   const [searchParams] = useSearchParams();
   const paramsString = searchParams.toString();
 
-  const { data: docsData, isLoading, error } = useGetDocumentsQuery(paramsString);
+  const {
+    data: docsData,
+    isLoading,
+    error,
+  } = useGetDocumentsQuery(paramsString);
   const docs = docsData;
 
   if (isLoading) {
@@ -72,9 +76,7 @@ const AllDocsPage = () => {
                         <p className="flex items-center gap-2.5 line-clamp-1 grow _wordBreak">
                           <FaFilePdf color={Color.red} />
                           <span>
-                            {shortText(
-                              doc?.name ?? (doc?.original_filename as string),
-                            )}
+                            {shortText(doc?.original_filename as string)}
                           </span>
                         </p>
                         <p className="font-light text-sm text-left ml-3">

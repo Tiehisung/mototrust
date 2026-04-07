@@ -4,22 +4,21 @@ import { Badge } from "@/components/ui/badge";
 import { Pagination } from "@/components/pagination/Pagination";
 import { IQueryResponse } from "@/types";
 import { AdminMatchCard } from "./MatchCard";
-import { IMatch, ITeam } from "@/types/match.interface";
+import { IMatch } from "@/types/match.interface";
 import { useUpdateMatchStatusMutation } from "@/services/match.endpoints";
 import { showToast } from "@/utils/toast";
 
 interface DisplayFixturesProps {
   fixtures: IQueryResponse<IMatch[]>;
-  teams?: ITeam[];
 }
 // Fixture is  match that is not yet played successfully
 
-export function DisplayFixtures({ fixtures, teams }: DisplayFixturesProps) {
+export function DisplayFixtures({ fixtures }: DisplayFixturesProps) {
   return (
     <div>
       <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5">
         {fixtures?.data?.map((fx) => (
-          <AdminMatchCard key={fx?._id} match={fx} teams={teams} />
+          <AdminMatchCard key={fx?._id} match={fx} />
         ))}
       </div>
 

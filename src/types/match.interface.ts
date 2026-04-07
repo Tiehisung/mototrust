@@ -23,6 +23,8 @@ export interface IMatch {
   status: EMatchStatus;
   isHome: boolean;
   venue?: { name: string; files: IFileProps[] };
+  fixtureFlier?:string
+  resultFlier?:string
   goals: Array<IGoal>
   events: Array<IMatchEvent>;
   cards: Array<ICard>;

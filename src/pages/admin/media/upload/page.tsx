@@ -22,12 +22,8 @@ const UploadPage = () => {
       <div className="flex flex-wrap gap-4 _card">
         <CloudinaryWidget
           onUploadSuccess={(fs) => setFiles(fs)}
-        
           folder="/assets-storage"
-       
-    
           maxFiles={10}
-        
         />
         <Button
           className="_deleteBtn"
@@ -66,7 +62,7 @@ const UploadPage = () => {
       <main className="block p-5 space-y-12">
         <div className="border-b pb-4">
           <p>Image Upload</p>
-          <ImageUploader />
+          <ImageUploader onUpload={(f) => console.log(f)} />
         </div>
 
         <div className="border-b pb-4">

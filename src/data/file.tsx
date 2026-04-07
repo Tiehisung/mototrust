@@ -1,41 +1,86 @@
-import { ReactNode } from "react";
-import { BsFillFileTextFill } from "react-icons/bs";
-import {
-  FaFilePowerpoint,
-  FaFilePdf,
-  FaImage,
-  FaFileExcel,
-} from "react-icons/fa6";
-import { GoVideo } from "react-icons/go";
-import { MdAudiotrack } from "react-icons/md";
+import { FaFilePdf, FaFileExcel, FaRegFilePowerpoint } from "react-icons/fa6";
 import { PiMicrosoftWordLogoFill } from "react-icons/pi";
 import { TbFileUnknown } from "react-icons/tb";
-import {
-  ImageMimeTypes,
-  VideoMimeTypes,
-  AudioMimeTypes,
-  DocMimeTypes,
-} from "@/types/enumerators";
 import { Color } from "@/styles";
+import { FileText, Image, Music, Video } from "lucide-react";
 
+const extensionMap: Record<string, TFileTypeName> = {
+  doc: "word",
+  docx: "word",
+  ppt: "powerpoint",
+  pptx: "powerpoint",
+  txt: "textfile",
+  md: "textfile",
+  mp3: "audio",
+  wav: "audio",
+  ogg: "audio",
+  mp4: "video",
+  avi: "video",
+  mov: "video",
+  mkv: "video",
+  webm: "video",
+  pdf: "pdf",
+  jpg: "image",
+  jpeg: "image",
+  png: "image",
+  gif: "image",
+  webp: "image",
+  svg: "image",
+  xls: "excel",
+  xlsx: "excel",
+  csv: "excel",
+};
+
+// Icon components mapping
+export const FileIcon: Record<TFileTypeName, any> = {
+  word: PiMicrosoftWordLogoFill,
+  powerpoint: FaRegFilePowerpoint,
+  textfile: FileText,
+  audio: Music,
+  video: Video,
+  pdf: FaFilePdf,
+  image: Image,
+  unknown: TbFileUnknown,
+  excel: FaFileExcel,
+};
+
+// Color mapping
+const fileColor: Record<TFileTypeName, string> = {
+  word: Color.blue,
+  powerpoint: Color.red,
+  textfile: Color.grey,
+  audio: Color.grey,
+  video: Color.red,
+  pdf: Color.red,
+  image: Color.blue,
+  unknown: Color.grey,
+  excel: Color.green,
+};
+
+// Helper function to get icon by file extension
 /**
- * Icons predefined for file types
+ *
+ * @param fileFormatOrNameOrUrl format or url or original_filename as returned from cloudinary.
+ * @param className custom tw classes
+ * @param size number size such as 32, 20 etc
+ * @returns ReactNode
  */
-export const fileIcons: Array<{
-  type: TFileTypeName;
-  url?: ReactNode;
-  icon?: ReactNode;
-}> = [
-  { type: "word", icon: <PiMicrosoftWordLogoFill color={Color.blue} /> },
-  { type: "powerpoint", icon: <FaFilePowerpoint color={Color.red} /> },
-  { type: "textfile", icon: <BsFillFileTextFill color={Color.grey} /> },
-  { type: "audio", icon: <MdAudiotrack color={Color.grey} /> },
-  { type: "video", icon: <GoVideo color={Color.red} /> },
-  { type: "pdf", icon: <FaFilePdf color={Color.red} /> },
-  { type: "image", icon: <FaImage color={Color.grey} /> },
-  { type: "unknown", icon: <TbFileUnknown color={Color.red} /> },
-  { type: "excel", icon: <FaFileExcel color={Color.green} /> },
-];
+export const getFileIconByExtension = (
+  fileFormatOrNameOrUrl: string,
+  className?: string,
+  size: number = 24,
+) => {
+  const extension = fileFormatOrNameOrUrl?.split(".")?.pop()?.toLowerCase();
+
+  const type = extensionMap[extension as string] || "unknown";
+
+  const IconComponent = FileIcon[type];
+  
+  if (!IconComponent) return null;
+  return (
+    <IconComponent className={className} size={size} color={fileColor[type]} />
+  );
+};
 
 export type TFileTypeName =
   | "image"
@@ -47,23 +92,3 @@ export type TFileTypeName =
   | "audio"
   | "excel"
   | "unknown";
-
-/**
- * Returns file type e.g image for image/* mimes
- * @param mimeType Mime type of any file so handled or resource_type
- * @returns
- */
-export const getFileTypeName = (mimeType: string): TFileTypeName => {
-  if (Object.values(ImageMimeTypes).find(mt => mt.includes(mimeType as ImageMimeTypes))) return "image";
-  if (Object.values(VideoMimeTypes).find(mt => mt.includes(mimeType as VideoMimeTypes))) return "video";
-  if (Object.values(AudioMimeTypes).find(mt => mt.includes(mimeType as AudioMimeTypes))) return "audio";
-  if ((DocMimeTypes.DOC + DocMimeTypes.DOCX).includes(mimeType as DocMimeTypes)) return "word";
-  if (Object.values(DocMimeTypes).find(mt => mt.includes(mimeType as DocMimeTypes))) return "word";
-
-  if (mimeType === DocMimeTypes.DOC || mimeType === DocMimeTypes.DOCX) return "word";
-  if (mimeType === DocMimeTypes.PPT || mimeType === DocMimeTypes.PPTX) return "powerpoint";
-  if (mimeType === DocMimeTypes.PDF) return "pdf";
-  if (mimeType === DocMimeTypes.TXT || mimeType === DocMimeTypes.CSV) return "textfile";
-  if (mimeType === DocMimeTypes.XLS || mimeType === DocMimeTypes.XLSX) return "excel";
-  return "unknown";
-};

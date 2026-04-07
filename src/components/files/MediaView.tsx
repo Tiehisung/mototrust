@@ -16,7 +16,7 @@ export function MediaPreview({ file,className }: { file: IFileProps,className?:s
       ) : (
         <img
           src={file?.secure_url}
-          alt={file?.name || "gallery file"}
+          alt={file?.original_filename || "gallery file"}
           width={400}
           height={400}
           className="w-full h-full object-cover"

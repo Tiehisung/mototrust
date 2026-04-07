@@ -24,9 +24,7 @@ interface IProps {
   disabled?: boolean;
   onConfirm?: () => Promise<void> | void;
   isLoading?: boolean;
-  // uri?: string;
-  // method: "PUT" | "POST" | "DELETE" | "GET";
-  // body?: unknown;
+ 
 }
 
 export const ConfirmActionButton = ({

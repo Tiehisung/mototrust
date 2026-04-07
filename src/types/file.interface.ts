@@ -17,7 +17,6 @@ export interface ICloudinaryFile {
 
 export interface IFileProps extends ICloudinaryFile {
     _id?: string; //Trace any saved file data on db
-    name?: string;
     description?: string; //Optional field to save with file on db
     createdAt?: string;
     updatedAt?: string;

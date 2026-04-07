@@ -1,24 +1,19 @@
 import { markupToPlainText } from "@/lib/dom";
 import NewsCard from "./NewsCard";
 import { useGetNewsQuery } from "@/services/news.endpoints";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { H } from "@/components/Element";
 import PageLoader from "@/components/loaders/Page";
+import DataErrorAlert from "@/components/error/DataError";
 
 export function LatestNews() {
   const { data: newsData, isLoading, error } = useGetNewsQuery("");
   const news = newsData;
 
-  console.log(newsData)
-
   if (isLoading) {
     return (
       <div>
-        <H >LATEST NEWS</H>
-        <div className="flex justify-center items-center min-h-75">
-          <PageLoader />
-        </div>
+        <H>LATEST NEWS</H>
+        <PageLoader />
       </div>
     );
   }
@@ -26,14 +21,8 @@ export function LatestNews() {
   if (error || !news?.data?.length) {
     return (
       <div>
-        <H >LATEST NEWS</H>
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>No News Available</AlertTitle>
-          <AlertDescription>
-            There are no news articles at the moment.
-          </AlertDescription>
-        </Alert>
+        <H>LATEST NEWS</H>
+        <DataErrorAlert message={error} />
       </div>
     );
   }
@@ -41,7 +30,7 @@ export function LatestNews() {
   return (
     <div>
       <H>LATEST NEWS</H>
-      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6">
+      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 ">
         {news?.data?.slice(0, 5)?.map((item) => (
           <NewsCard
             key={item?._id}

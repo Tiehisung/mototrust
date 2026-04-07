@@ -120,7 +120,7 @@ export function HighlightUpload({
   };
 
   return (
-    <div className="w-full border border-border rounded-xl bg-card/30 shadow-sm space-y-8 p-4 mb-4">
+    <div className="w-full rounded-xl space-y-8 p-4 mb-4">
       <CloudinaryWidget
         onUploadSuccess={(f) => setFile(f?.[0])}
         maxFiles={1}

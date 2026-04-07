@@ -1,5 +1,5 @@
 import { CountupMetricCard } from "@/components/Metrics/Cards";
-import { useFetch } from "@/hooks/fetch";
+import { useGetInjuriesQuery } from "@/services/injuries.endpoints";
 import { IQueryResponse } from "@/types";
 import { EInjurySeverity, IInjury } from "@/types/injury.interface";
 import { AlertCircle, AlertTriangle, AlertOctagon } from "lucide-react";
@@ -10,11 +10,7 @@ interface IProps {
   loading?: boolean;
 }
 export function InjuryStats({ loading }: IProps) {
-  // Fetch all injuries
-  const { results: allInjuries } = useFetch<IInjury[]>({
-    uri: "/injuries",
-  });
-
+  const { data: allInjuries } = useGetInjuriesQuery('');
   // Get injury statistics
   const injuryStats = useMemo(() => {
     const stats = {

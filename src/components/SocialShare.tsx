@@ -146,7 +146,7 @@ export const SocialMediaHandles = ({
   url?: string;
   className?: string;
 }) => {
-  console.log(ENV.SOCIAL);
+ 
   const socialLinks = [
     {
       platform: "whatsapp",

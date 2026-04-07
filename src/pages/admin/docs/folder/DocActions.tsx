@@ -1,13 +1,13 @@
 import { Button } from "@/components/buttons/Button";
 import { PrimaryDropdown } from "@/components/Dropdown";
-import { DocMoveOrCopyTo } from "./MoveCopyTo";
+import { DocMoveTo } from "./MoveTo";
 import { ConfirmActionButton } from "@/components/buttons/ConfirmAction";
 import { icons } from "@/assets/icons/icons";
 import { downloadFile } from "@/lib/file";
 import { IDocFile } from "@/types/doc";
 import { useDeleteDocumentMutation } from "@/services/docs.endpoints";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { smartToast } from "@/utils/toast";
+import { fireEscape } from "@/hooks/Esc";
 
 export function DocumentActions({
   document,
@@ -16,22 +16,19 @@ export function DocumentActions({
   document?: IDocFile;
   className?: string;
 }) {
-  const navigate = useNavigate();
-  const [deleteDoc] = useDeleteDocumentMutation();
+  const [deleteDoc, { isLoading: deleting }] = useDeleteDocumentMutation();
 
-  const docName = document?.name ?? document?.original_filename;
+  const docName =   document?.original_filename;
 
   const handleDelete = async () => {
     if (!document?._id) return;
 
     try {
       const result = await deleteDoc(document._id).unwrap();
-      if (result.success) {
-        toast.success(result.message);
-        navigate(0);
-      }
+      smartToast(result);
+      fireEscape();
     } catch (error) {
-      toast.error("Failed to delete document");
+      smartToast({ error });
     }
   };
 
@@ -52,28 +49,18 @@ export function DocumentActions({
             <icons.download className="text-muted-foreground" /> Download
           </Button>
         </li>
+        
         <li>
-          <DocMoveOrCopyTo
-            trigger={
-              <>
-                <icons.copy className="text-muted-foreground" size={24} /> Copy
-                To
-              </>
-            }
-            actionType="Copy"
-            document={document}
-          />
-        </li>
-        <li>
-          <DocMoveOrCopyTo
+          <DocMoveTo
             trigger={
               <>
                 <icons.move className="text-muted-foreground" size={24} /> Move
                 To
               </>
             }
-            actionType="Move"
+         
             document={document}
+
           />
         </li>
         <li>
@@ -86,9 +73,11 @@ export function DocumentActions({
             }
             triggerStyles="justify-start w-full"
             onConfirm={handleDelete}
-            variant="destructive"
-            title="Delete Document"
+            variant="ghost"
+            confirmVariant={"delete"}
+            title={`Delete Document [${docName ?? ""}]`}
             confirmText={`Are you sure you want to delete <b>"${docName}"</b>?`}
+            isLoading={deleting}
           />
         </li>
       </ul>
