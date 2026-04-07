@@ -6,7 +6,7 @@ import {
   useGetNewsItemQuery,
   useGetNewsQuery,
 } from "@/services/news.endpoints";
- 
+
 import { TEAM } from "@/data/team";
 import { PageSEO } from "@/utils/PageSEO";
 import PageLoader from "@/components/loaders/Page";
@@ -21,7 +21,6 @@ export default function NewsItemPage() {
   );
 
   const newsItem = newsItemData?.data;
- 
 
   const { data: newsData, isLoading: newsLoading } =
     useGetNewsQuery(paramsString);
@@ -48,7 +47,10 @@ export default function NewsItemPage() {
     "/upload/",
     "/upload/c_fill,w_1200,h_630,f_auto,q_auto/",
   );
-
+ 
+  if (isLoading) {
+    return <PageLoader />;
+  }
   return (
     <>
       <PageSEO

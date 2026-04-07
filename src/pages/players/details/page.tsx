@@ -7,8 +7,6 @@ import {
   useGetPlayersQuery,
   useGetPlayerStatsQuery,
 } from "@/services/player.endpoints";
-import { PageSEO } from "@/utils/PageSEO";
-import { TEAM } from "@/data/team";
 import PageLoader from "@/components/loaders/Page";
 import DataErrorAlert from "@/components/error/DataError";
 
@@ -20,9 +18,11 @@ export default function PlayerProfilePage() {
     useGetPlayersQuery("");
   const { data: galleriesData, isLoading: galleriesLoading } =
     useGetGalleriesQuery(`tags=${playerId}`);
-  const { data: statsData, isLoading: statsLoading } = useGetPlayerStatsQuery(
-    playerId || "",
-  );
+  const {
+    data: statsData,
+    isLoading: statsLoading,
+    error,
+  } = useGetPlayerStatsQuery(playerId || "");
 
   const isLoading = playersLoading || galleriesLoading || statsLoading;
   const players = playersData;
@@ -30,6 +30,17 @@ export default function PlayerProfilePage() {
   const playerStats = statsData;
 
   const player = players?.data?.find((p) => p._id === playerId);
+
+  const name = `${player?.firstName} ${player?.lastName}`;
+  const title = `${player?.firstName} ${player?.lastName} • ${ENV.APP_NAME}`;
+  const description = `Player profile for ${name}. ${player?.position} wearing jersey #${player?.number}. Stats, appearances, goals, and career highlights.`;
+ 
+  
+  useSEO({
+    title: title,
+    description: description,
+    ogImage: playerOgImage(playerId as string),
+  });
 
   if (isLoading) {
     return <PageLoader />;
@@ -39,9 +50,6 @@ export default function PlayerProfilePage() {
     return <DataErrorAlert message={"Player Not Found"} />;
   }
 
-  const name = `${player?.firstName} ${player?.lastName}`;
-  const title = `${name} - ${player?.position} | ${TEAM.name}`;
-  const description = `Player profile for ${name}. ${player?.position} wearing jersey #${player?.number}. Stats, appearances, goals, and career highlights.`;
 
   return (
     <>

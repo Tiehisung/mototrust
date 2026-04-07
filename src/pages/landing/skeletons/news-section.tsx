@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 // Desktop Skeleton
 const DesktopSkeleton = () => {
   return (
-    <div className="w-full max-w-6xl mx-auto overflow-hidden">
+    <div className="w-full mx-auto overflow-hidden">
       {/* Trending Header Skeleton */}
       <div className="flex items-center gap-2 my-6">
         <Skeleton className="h-10 w-32" />
@@ -112,7 +112,7 @@ const MobileSkeleton = () => {
 // Main Responsive Skeleton
 export const NewsSectionSkeleton = () => {
   return (
-    <div className="py-12 px-4 space-y-8 _page">
+    <div className="py-12 space-y-8 ">
       <div className="hidden md:block">
         <DesktopSkeleton />
       </div>

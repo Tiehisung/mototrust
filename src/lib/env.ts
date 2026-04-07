@@ -3,6 +3,7 @@ const e = import.meta.env;
 
 export const ENV = {
     // App
+    APP_NAME: e.VITE_APP_NAME,
     APP_URL: e.VITE_APP_URL,
     API_URL: e.VITE_API_URL,
 
