@@ -82,7 +82,7 @@ export const NewUser = () => {
     email: "",
     password: "",
     role: "",
-    image: "",
+    avatar: "",
   });
 
   const handleChange = (
@@ -96,10 +96,11 @@ export const NewUser = () => {
       const response = await createUser({
         ...form,
         role: form.role as EUserRole,
+        avatar: ""
       }).unwrap();
 
       if (response.success) {
-        setForm({ name: "", email: "", password: "", role: "", image: "" });
+        setForm({ name: "", email: "", password: "", role: "", avatar: "" });
       }
       showToast({
         message: response.message as string,
@@ -137,7 +138,7 @@ export const NewUser = () => {
       </div>
       <div>
         <label htmlFor="pass">Password:</label>
-        <Input
+        <Input 
           type="text"
           id="pass"
           name="password"
@@ -169,7 +170,7 @@ export const NewUser = () => {
           type="text"
           id="image"
           name="image"
-          value={form.image}
+          value={form.avatar}
           onChange={handleChange}
         />
       </div>

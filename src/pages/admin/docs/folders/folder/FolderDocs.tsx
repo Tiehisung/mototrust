@@ -9,7 +9,7 @@ import { smartToast } from "@/utils/toast";
 import TableLoader from "@/components/loaders/Table";
 import DataErrorAlert from "@/components/error/DataError";
 import InfiniteLimitScroller from "@/components/InfiniteScroll";
-import { UploadedFilesDisplay } from "../../DocFilesDisplay";
+import { DocFilesDisplay } from "../../DocFilesDisplay";
 
 export default function FolderDocuments() {
   const { folderId } = useParams<{ folderId: string }>();
@@ -48,7 +48,7 @@ export default function FolderDocuments() {
           onChange={(fs) => handleUpload([fs as IDocFile])}
           fileType={"all"}
         >
-          <UploadedFilesDisplay
+          <DocFilesDisplay
             files={folderDocs?.data!}
             showMetadata={true}
             deletable={true}

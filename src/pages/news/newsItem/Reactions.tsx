@@ -203,7 +203,7 @@ const CommentRow = ({
   };
   return (
     <li className="flex items-start gap-5 pb-6  ">
-      <AVATAR src={com?.user?.image ?? staticImages.avatar} />
+      <AVATAR src={com?.user?.avatar ?? staticImages.avatar} alt={com?.user?.name}/>
       <section>
         <header className="flex items-start gap-6 ">
           <div className="flex items-baseline gap-0.5">

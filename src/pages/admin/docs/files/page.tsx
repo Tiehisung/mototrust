@@ -3,10 +3,11 @@ import { PrimarySearch } from "@/components/Search";
 import { useGetDocumentsQuery } from "@/services/docs.endpoints";
 import DataErrorAlert from "@/components/error/DataError";
 import TableLoader from "@/components/loaders/Table";
-import { DocumentFileCard } from "../DocFilesDisplay";
+import { DocFilesDisplay } from "../DocFilesDisplay";
 import { sParamsToObject } from "@/lib/searchParams";
 import { DocumentUploader } from "../DocUploader";
 import { H } from "@/components/Element";
+import DisplayType from "@/components/DisplayType";
 
 const AllDocsPage = () => {
   const {
@@ -27,9 +28,8 @@ const AllDocsPage = () => {
   return (
     <div>
       <H>All Documents</H>
-      
-      <header className="flex items-center gap-4 my-4 ">
-        <DocumentUploader className="w-fit " />
+
+      <header className="flex flex-wrap items-center gap-4 my-4 ">
         <PrimarySearch
           type="search"
           listId="docs-search"
@@ -37,19 +37,18 @@ const AllDocsPage = () => {
           placeholder="Search document"
           inputStyles="h-8 placeholder:capitalize"
           className=""
-        />
+        />{" "}
+
+        <DisplayType />
+        <DocumentUploader className="w-fit " />
+        
       </header>
-      <main>
-        {docs?.data?.length == 0 ? (
-          <p className="_label">No Documents available</p>
-        ) : (
-          <div className="mb-6 space-y-2">
-            {docs?.data?.map((doc) => (
-              <DocumentFileCard key={doc._id} file={doc} />
-            ))}
-          </div>
-        )}
-      </main>
+      
+      <DocFilesDisplay
+        files={docs?.data!}
+        showMetadata={true}
+        deletable={true}
+      />
       <InfiniteLimitScroller pagination={docs?.pagination} />
     </div>
   );

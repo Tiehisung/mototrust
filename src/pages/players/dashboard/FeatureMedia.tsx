@@ -1,7 +1,7 @@
 import MasonryGallery from "@/components/Gallery/Masonry";
 import { IPlayer } from "@/types/player.interface";
 import { useState } from "react";
-import { ICloudinaryFile } from "@/types/file.interface";
+import { ICloudinaryFile, IFileProps } from "@/types/file.interface";
 import { useUpdatePlayerMutation } from "@/services/player.endpoints";
 
 import { Button } from "@/components/buttons/Button";
@@ -97,7 +97,7 @@ export function PlayerFeatureMedia({ player }: { player?: IPlayer }) {
 
       {player?.featureMedia?.length ? (
         <MasonryGallery
-          files={player?.featureMedia ?? []}
+          files={player?.featureMedia as IFileProps[] ?? []}
           // useSize
           action={(f) => (
             <div className="space-y-1.5">

@@ -265,7 +265,7 @@ export default function UserTable({ users: propUsers }: UserTableProps) {
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3">
                         <AVATAR
-                          src={user?.image}
+                          src={user?.avatar}
                           alt={getInitials(user?.name?.split(" "), 2)}
                           className="uppercase"
                         />

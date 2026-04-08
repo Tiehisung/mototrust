@@ -1,6 +1,5 @@
 import AdminFooter from "./Footer";
-import { LeftPaneDesktop,  LeftPaneMobileHeadless } from "./AdminSidebar";
-import { staticImages } from "@/assets/images";
+import { LeftPaneDesktop, LeftPaneMobileHeadless } from "./AdminSidebar";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import BackBtn from "@/components/buttons/BackBtn";
 import Loader from "@/components/loaders/Loader";
@@ -8,7 +7,6 @@ import { Outlet } from "react-router-dom";
 import { useAppSelector } from "@/store/hooks/store";
 
 export default function AdminLayout() {
-  
   return (
     <main className="md:flex relative">
       <LeftPaneDesktop />
@@ -19,13 +17,12 @@ export default function AdminLayout() {
         </div>
         <AdminFooter />
       </section>
-      
     </main>
   );
 }
 
 const Header = () => {
-  const { user ,isLoading} = useAppSelector((s) => s.auth);
+  const { user, isLoading } = useAppSelector((s) => s.auth);
 
   const alias = user?.name?.split(" ")?.[0] ?? user?.email?.split("@")?.[0];
 
@@ -61,7 +58,7 @@ const Header = () => {
           <p>{alias}</p>
         </div>
         <img
-          src={user?.image ?? staticImages.avatar}
+          src={user?.avatar}
           alt="avatar"
           className="h-10 w-10 min-h-10 rounded-full object-cover"
         />

@@ -120,7 +120,7 @@ const TrainingSessionCard = ({ trainingSession }: Props) => {
         <div className="flex items-center gap-3 bg-muted/30 p-3 rounded-xl border border-border">
           <Avatar className="h-12 w-12">
             <AvatarImage
-              src={trainingSession?.recordedBy?.image}
+              src={trainingSession?.recordedBy?.avatar}
               alt={trainingSession?.recordedBy?.name}
             />
             <AvatarFallback>

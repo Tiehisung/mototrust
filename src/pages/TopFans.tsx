@@ -254,7 +254,7 @@ export default function TopFansPage() {
                     {/* Avatar & Info */}
                     <div className="shrink-0">
                       <Avatar className="h-14 w-14 border-2 border-primary/20">
-                        <AvatarImage src={fan.image} alt={fan.name} />
+                        <AvatarImage src={fan.avatar} alt={fan.name} />
                         <AvatarFallback>
                           {fan.name
                             .split(" ")

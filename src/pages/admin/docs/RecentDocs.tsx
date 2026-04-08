@@ -1,11 +1,11 @@
-import Loader from "@/components/loaders/Loader";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { useGetDocumentsQuery } from "@/services/docs.endpoints";
 import Divider from "@/components/Divider";
 import DataErrorAlert from "@/components/error/DataError";
-import { DocumentFileCard } from "./DocFilesDisplay";
+import { DocFilesDisplay } from "./DocFilesDisplay";
 import DisplayType from "@/components/DisplayType";
+import { LoadingSpinner } from "@/components/loaders/LoadingSpinner";
 
 export function RecentDocs() {
   // Use the query hook instead of server-side fetch
@@ -13,21 +13,9 @@ export function RecentDocs() {
     data: recentDocs,
     isLoading,
     error,
-  } = useGetDocumentsQuery({ limit: 5 });
+  } = useGetDocumentsQuery({ limit: 6 });
 
-  if (isLoading) {
-    return (
-      <div>
-        <header className="items-center justify-between mb-4">
-          <Divider
-            content="RECENT DOCUMENTS"
-            className="text-xs font-light grow"
-          />
-        </header>
-        <Loader />
-      </div>
-    );
-  }
+  if (isLoading) return <LoadingSpinner />;
 
   if (error && !isLoading && !recentDocs?.data)
     return <DataErrorAlert message={error} />;
@@ -45,13 +33,11 @@ export function RecentDocs() {
       </header>
       <main>
         <div className="mb-6 space-y-2 divide-y">
-          {!recentDocs?.data || (recentDocs?.data?.length ?? 0) === 0 ? (
-            <p className="_label">No documents available</p>
-          ) : (
-            recentDocs?.data?.map((doc) => (
-              <DocumentFileCard key={doc._id} file={doc} />
-            ))
-          )}
+          <DocFilesDisplay
+            files={recentDocs?.data!}
+            showMetadata={true}
+            deletable={true}
+          />
           <div className="py-6">
             <Link
               to="/admin/docs/files"

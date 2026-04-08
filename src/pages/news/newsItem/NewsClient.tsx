@@ -85,8 +85,7 @@ const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
               content={
                 <div className="flex flex-col justify-center items-center gap-3">
                   <AVATAR
-                    src={newsItem?.reporter?.image as string}
-                  
+                    src={newsItem?.reporter?.avatar as string}
                     alt="reporter"
                     className="h-16 w-16"
                     border

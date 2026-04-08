@@ -47,10 +47,7 @@ interface UploadedFilesDisplayProps {
   deletable?: boolean;
 }
 
-export function UploadedFilesDisplay({
-  files,
-  className = "",
-}: UploadedFilesDisplayProps) {
+export function DocFilesDisplay({ files, className = "" }: UploadedFilesDisplayProps) {
   const { displayType } = useAppSelector((state) => state.settings);
   const [activeFileId, setActiveFileId] = useState("");
   if (files.length === 0) {
@@ -64,17 +61,15 @@ export function UploadedFilesDisplay({
     );
   }
 
-  getThumbnail;
-
   return (
     <>
       <div className={`${className}`}>
         <section
           className={cn(
-            "py-5 grid ",
+            "py-5 ",
             displayType == "list"
               ? "divide-y"
-              : " gap-2 md:grid-cols-2 lg:grid-cols-3",
+              : " grid gap-2 md:grid-cols-2 lg:grid-cols-3",
           )}
         >
           {files?.map((fd) => (
@@ -235,7 +230,7 @@ export function DocumentFileCard({
           </span>
         </div>
         {file.createdBy && (
-          <div className="flex items-center gap-1 text-xs">
+          <div className="hidden md:flex items-center gap-1 text-xs">
             {" "}
             <AVATAR
               src={file.createdBy?.avatar as string}

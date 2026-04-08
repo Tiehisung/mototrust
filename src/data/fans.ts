@@ -4,7 +4,7 @@ export const mockFans: IFan[] = [
   {
     _id: "1",
     name: "John Doe",
-    image: "https://randomuser.me/api/portraits/men/1.jpg",
+    avatar: "https://randomuser.me/api/portraits/men/1.jpg",
     fanPoints: 12500,
     engagementScore: 98,
     fanBadges: ["Super Fan", "Match Day Regular", "Share Champion"],
@@ -22,7 +22,7 @@ export const mockFans: IFan[] = [
   {
     _id: "2",
     name: "Sarah Johnson",
-    image: "https://randomuser.me/api/portraits/women/2.jpg",
+    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
     fanPoints: 10800,
     engagementScore: 94,
     fanBadges: ["Top Commenter", "News Sharer"],
@@ -40,7 +40,7 @@ export const mockFans: IFan[] = [
   {
     _id: "3",
     name: "Michael Smith",
-    image: "https://randomuser.me/api/portraits/men/3.jpg",
+    avatar: "https://randomuser.me/api/portraits/men/3.jpg",
     fanPoints: 8900,
     engagementScore: 87,
     fanBadges: ["Early Bird", "Social Butterfly"],
@@ -58,7 +58,7 @@ export const mockFans: IFan[] = [
   {
     _id: "4",
     name: "Emily Davis",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+    avatar: "https://randomuser.me/api/portraits/women/4.jpg",
     fanPoints: 7200,
     engagementScore: 82,
     fanBadges: ["Gallery Contributor"],
@@ -76,7 +76,7 @@ export const mockFans: IFan[] = [
   {
     _id: "5",
     name: "David Wilson",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
+    avatar: "https://randomuser.me/api/portraits/men/5.jpg",
     fanPoints: 6500,
     engagementScore: 78,
     fanBadges: ["Match Day Regular"],

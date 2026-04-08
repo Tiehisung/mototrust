@@ -41,7 +41,7 @@ export interface INewsProps {
 }
 
 interface IInteraction {
-  user?: IUser;
+  user?: IMiniUser;
   date: string;
   device: string;
   _id: string

@@ -8,8 +8,8 @@ export interface ICloudinaryFile {
     thumbnail_url?: string;
     format?: string;
     bytes?: number;
-    type: string;
     original_filename?: string;
+    type: string;
     width?: number;
     height?: number;
     duration?: number;
@@ -18,7 +18,7 @@ export interface ICloudinaryFile {
 export interface IFileProps extends ICloudinaryFile {
     _id?: string; //Trace any saved file data on db
     description?: string; //Optional field to save with file on db
-    createdBy: IMiniUser
+    createdBy?: IMiniUser
     createdAt?: string;
     updatedAt?: string;
 }
