@@ -1,6 +1,6 @@
 import { POPOVER } from "@/components/ui/popover";
 import { FaPlus } from "react-icons/fa6";
-import { FolderForm } from "./FolderForm";
+import { FolderForm } from "./folders/FolderForm";
 import { DIALOG } from "@/components/Dialog";
 import { FolderPlus } from "lucide-react";
 import { DocumentUploader } from "./DocUploader";

@@ -1,5 +1,6 @@
 import type { ICloudinaryFile } from "./file.interface";
 import type { ISponsor } from "./sponsor.interface";
+import { IMiniUser } from "./user";
 
 
 
@@ -11,4 +12,5 @@ export interface IDonation {
     sponsor: ISponsor;
     createdAt?: string;
     updatedAt?: string;
+    createdBy?: IMiniUser
 }

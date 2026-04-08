@@ -2,6 +2,7 @@ import { IFileProps } from "@/types/file.interface";
 import { IPlayerMini } from "./player.interface";
 import { ICard } from "./card.interface";
 import { ISquad } from "./squad.interface";
+import { IMiniUser } from "./user";
 
 export enum EMatchStatus {
   FT = 'FT',
@@ -31,6 +32,7 @@ export interface IMatch {
   squad?: ISquad
   competition?: string
 
+  createdBy?: IMiniUser
 //Virtual field
   computed?: {
     teamGoals: IGoal[];
@@ -80,6 +82,7 @@ export interface ITeam {
   currentPlayers?: IPlayerMini[];
   createdAt: string;
   updatedAt: string;
+  createdBy?: IMiniUser
 }
 
 export interface IGoal {
@@ -93,6 +96,7 @@ export interface IGoal {
   match: string
   teamId: string
   videoUrl?: string;
+  createdBy?: IMiniUser
 }
 
 
@@ -100,6 +104,7 @@ export interface IMatchHighlight extends IFileProps {
   title: string
   match: IMatch
   tags?: string[]
+  
 }
 
 export enum EGoalType {

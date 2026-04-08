@@ -1,3 +1,5 @@
+import { IMiniUser } from "./user";
+
 export interface IStaff {
     email: string;
     dob: string;
@@ -10,6 +12,7 @@ export interface IStaff {
     startDate: string;
     endDate: string;
     isActive: boolean
+    createdBy?: IMiniUser
     createdAt: string; 
     updatedAt: string;
 }

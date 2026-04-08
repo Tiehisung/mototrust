@@ -11,6 +11,7 @@ import { formatBytes } from "@/lib/file";
 import { CopyButton } from "@/components/buttons/CopyBtn";
 import FileRenderer from "@/components/files/FileRender";
 import { getFileIconByExtension } from "@/data/file";
+import { AVATAR } from "@/components/ui/avatar";
 
 interface FileInfoPaneProps {
   file: IDocFile | null;
@@ -41,7 +42,7 @@ export function FileInfoPane({
       onDelete(file);
     }
   };
- 
+
   return (
     <div>
       <h1 className="flex items-center gap-2">
@@ -61,7 +62,7 @@ export function FileInfoPane({
         <div className="flex justify-between items-center">
           <span className="text-sm text-muted-foreground">Name:</span>
           <span className="text-sm font-medium text-right">
-            {  file.original_filename || "—"}
+            {file.original_filename || "—"}
           </span>
         </div>
 
@@ -81,7 +82,9 @@ export function FileInfoPane({
 
         <div className="flex justify-between items-center">
           <span className="text-sm text-muted-foreground">Folder:</span>
-          <span className="text-sm capitalize">{file?.folder?.name || "General"}</span>
+          <span className="text-sm capitalize">
+            {file?.folder?.name || "General"}
+          </span>
         </div>
 
         <div className="flex justify-between items-center">
@@ -127,6 +130,20 @@ export function FileInfoPane({
             {shortText(file.public_id, 30)}
           </span>
         </div>
+
+        {file.createdBy && (
+          <div className="flex justify-between items-start">
+            <span className="text-sm text-muted-foreground">Created By:</span>
+            <span className="text-sm text-right max-w-[60%]">
+              {shortText(file.createdBy.name)}
+              <AVATAR
+                src={file.createdBy.avatar}
+                alt={file?.createdBy.name}
+                size={"sm"}
+              />
+            </span>
+          </div>
+        )}
       </div>
 
       <Separator className="my-1.5 bg-border/40" />

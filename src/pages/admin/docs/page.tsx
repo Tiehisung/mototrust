@@ -1,5 +1,5 @@
 import HEADER, { H } from "@/components/Element";
-import DocumentFolders from "./Folders";
+import DocumentFolders from "./folders/Folders";
 import { DocumentUploader } from "./DocUploader";
 import { ConsentForm } from "@/components/pdf/ConsentForm";
 import { RecentDocs } from "./RecentDocs";
@@ -36,7 +36,7 @@ export default function DocsPage() {
 
         <DocumentUploader className="w-fit  my-6" />
 
-        <DocumentFolders defaultsOnly/>
+        <DocumentFolders defaultsOnly />
 
         <Divider
           content="GENERATE CONSENT FORMS"

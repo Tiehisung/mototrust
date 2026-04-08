@@ -1,6 +1,6 @@
 export interface IUser {
   _id?: string
-  image: string
+  avatar: string
   name: string;
   email: string;
   password?: string;
@@ -13,8 +13,17 @@ export interface IUser {
   resetPasswordExpires?: Date;
   isFan?: boolean;
 
+  createdBy?: IMiniUser
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface IMiniUser {
+  _id?: string
+  avatar: string
+  name: string;
+  email: string;
+  role?: EUserRole;
 }
 
 export enum EUserRole {

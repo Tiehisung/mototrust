@@ -29,6 +29,7 @@ import LandingPage from "@/pages/LandingPage";
 import LatestMatchSquadPage from "@/pages/squad/Squad";
 import NotFound from "@/pages/NotFound";
 import ContactPage from "@/pages/Contact/Page";
+import AuthLayout from "@/pages/auth/AuthLayout";
 
 // Wrapper component for AdminLayout with ScrollToTop
 const AdminLayoutWithScrollToTop = () => (
@@ -135,13 +136,20 @@ const applicationRouter = createBrowserRouter([
     children: adminRoutes,
   },
   {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "signin",
+        element: <LoginPage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
+      },
+    ],
   },
-  {
-    path: "/register",
-    element: <RegisterPage />,
-  },
+
   {
     path: "/fans",
     element: <TopFansPage />,

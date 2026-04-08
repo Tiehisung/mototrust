@@ -1,4 +1,5 @@
 import { IFileProps } from "@/types/file.interface";
+import { IMiniUser } from "./user";
 
 export interface IDocFile extends IFileProps {
     format: "pdf" | "image"|'video';
@@ -13,6 +14,7 @@ export interface IFolder {
     docsCount: number;
     createdAt?: string
     updatedAt?: string
+    createdBy?: IMiniUser
 }
 
  

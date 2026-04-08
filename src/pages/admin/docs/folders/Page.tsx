@@ -1,5 +1,5 @@
 import HEADER   from "@/components/Element";
-import DocumentFolders from "../Folders";
+import DocumentFolders from "./Folders";
 
 const FoldersPage = () => {
   return (

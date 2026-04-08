@@ -52,7 +52,7 @@ export function CredentialsLoginForm({
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-card rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+      <h2 className="text-2xl font-semibold mb-7 text-center ">Sign in</h2>
 
       {error && (
         <Alert variant="destructive" className="mb-6">
@@ -97,7 +97,7 @@ export function CredentialsLoginForm({
 
       <p className="mt-4 text-center text-sm">
         Don't have an account?{" "}
-        <Link to="/register" className="text-Orange hover:underline">
+        <Link to="/auth/register" className="text-Orange hover:underline">
           Register
         </Link>
       </p>

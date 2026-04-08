@@ -1,5 +1,6 @@
 import { IMatch, } from "./match.interface";
 import { IPlayerMini } from "./player.interface";
+import { IMiniUser } from "./user";
 
 export enum ECardType {
     YELLOW = 'yellow',
@@ -15,4 +16,5 @@ export interface ICard {
     description?: string
     createdAt?: string
     updatedAt?: string
+        createdBy?: IMiniUser
 } 

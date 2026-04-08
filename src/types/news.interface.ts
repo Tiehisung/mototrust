@@ -1,6 +1,6 @@
 import { LucideProps } from "lucide-react";
 import { IFileProps } from "./file.interface";
-import { IUser } from "./user";
+import { IMiniUser, IUser } from "./user";
 
 export interface INewsProps {
   _id: string;
@@ -35,6 +35,7 @@ export interface INewsProps {
   createdAt: string;
   updatedAt: string;
 
+  createdBy?: IMiniUser
   reporter?: IUser & { about?: string }
 
 }

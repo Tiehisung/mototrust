@@ -42,7 +42,7 @@ export default function RegistrationForm() {
       className="max-w-md space-y-8 py-5 mx-auto"
     >
       
-      <h2 className="text-2xl font-bold mb-6 text-center">Registration</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-center">Registration</h2>
       <Controller
         control={control}
         name="name"
@@ -102,8 +102,8 @@ export default function RegistrationForm() {
       />
       <p className="mt-4 text-center text-sm">
         Already have an account?{" "}
-        <Link to="/login" className="text-Orange hover:underline">
-          Login
+        <Link to="/auth/signin" className="text-Orange hover:underline">
+          Sign in
         </Link>
       </p>
     </form>

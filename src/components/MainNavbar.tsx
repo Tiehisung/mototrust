@@ -44,7 +44,7 @@ export default function MainNavbar() {
     <>
       <nav className="bg-accent backdrop-blur-xs sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start items-center h-16 text-">
+          <div  className="flex justify-start items-center h-16 text-">
             {/* Left Section - Menu Button (Mobile) */}
             <div className="flex items-center lg:hidden">
               <button

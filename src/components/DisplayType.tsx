@@ -20,7 +20,7 @@ const DisplayType = () => {
               data: "list",
             }),
           );
-        }}
+        }}size={'sm'}
       >
         {displayType == "list" && <Check />}
 
@@ -37,7 +37,7 @@ const DisplayType = () => {
               data: "grid",
             }),
           );
-        }}
+        }}size={'sm'}
       >
         {displayType !== "list" && <Check />}
         <Grid2X2 />

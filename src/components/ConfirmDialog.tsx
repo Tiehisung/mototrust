@@ -47,7 +47,7 @@ export function ConfirmDialog({
   const [internalLoading, setInternalLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
-  const isLoading = externalLoading ?? internalLoading;
+  const isLoading = externalLoading || internalLoading;
 
   const handleConfirm = async (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent default AlertDialogAction behavior
@@ -82,7 +82,7 @@ export function ConfirmDialog({
 
       <AlertDialogContent className={cn("sm:max-w-md", className)}>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogTitle >{title}</AlertDialogTitle>
           <AlertDialogDescription>
             {typeof description === "string" ? (
               <div dangerouslySetInnerHTML={{ __html: description }} />

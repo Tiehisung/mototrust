@@ -9,7 +9,7 @@ import { smartToast } from "@/utils/toast";
 import TableLoader from "@/components/loaders/Table";
 import DataErrorAlert from "@/components/error/DataError";
 import InfiniteLimitScroller from "@/components/InfiniteScroll";
-import { UploadedFilesDisplay } from "../../UploadedFilesDisplay";
+import { UploadedFilesDisplay } from "../../DocFilesDisplay";
 
 export default function FolderDocuments() {
   const { folderId } = useParams<{ folderId: string }>();

@@ -1,19 +1,19 @@
- 
 import { getFileIconByExtension } from "@/data/file";
 import { cn } from "@/lib/utils";
 import { IFileProps } from "@/types/file.interface";
- 
+import IMAGE from "../Image";
 
 interface FileRendererProps {
   file?: IFileProps;
   className?: string;
   controls?: boolean;
+  fallbackUrl?:string
 }
 
 const FileRenderer: React.FC<FileRendererProps> = ({
   file,
   className,
-  controls, 
+  controls,fallbackUrl
 }) => {
   const fileUrl = file?.thumbnail_url as string;
   const fileType = file?.resource_type as string;
@@ -22,14 +22,13 @@ const FileRenderer: React.FC<FileRendererProps> = ({
   switch (fileType) {
     case "image":
       return (
-        <img
+        <IMAGE
           src={fileUrl}
           alt={fileName!}
           width={500}
           height={500}
-       
-          className={cn(`max-w-full h-auto`,className)}
-     
+          className={cn(`max-w-full h-auto`, className)}
+          fallbackSrc={fallbackUrl}
         />
       );
 
@@ -46,7 +45,7 @@ const FileRenderer: React.FC<FileRendererProps> = ({
         <video
           src={fileUrl}
           controls={controls}
-          className={cn(`max-w-full h-auto`,className)}
+          className={cn(`max-w-full h-auto`, className)}
         />
       );
     case "pdf":
@@ -55,7 +54,7 @@ const FileRenderer: React.FC<FileRendererProps> = ({
         <iframe
           src={fileUrl}
           title={fileName}
-          className={cn(`w-full h-64`,className)}
+          className={cn(`w-full h-64`, className)}
           frameBorder="0"
         />
       );

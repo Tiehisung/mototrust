@@ -3,6 +3,7 @@ import { EColor } from "./color";
 import type { IGallery, ICloudinaryFile, } from "./file.interface";
 import type { IInjury } from "./injury.interface";
 import type { IGoal, IMatch } from "./match.interface";
+import { IMiniUser } from "./user";
 
 
 export interface IPlayerMini {
@@ -64,6 +65,7 @@ export interface IPlayer {
     ageStatus: EPlayerAgeStatus
 
     manager: IPlayerManager;
+    createdBy?: IMiniUser
 }
 export interface IPlayerManager {
     fullname: string;
@@ -183,4 +185,5 @@ export type ICaptain = {
     endDate: string;
     createdAt: string;
     updatedAt: string;
+    createdBy?: IMiniUser
 };

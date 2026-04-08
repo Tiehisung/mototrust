@@ -1,11 +1,12 @@
 import { staticImages } from "@/assets/images";
+import { ENV } from "@/lib/env";
 import { IFileProps } from "@/types/file.interface";
 
 import { useState } from "react";
 
 interface IFallbackImgProps {
   src: string;
-  fallbackSrc: string;
+  fallbackSrc?: string;
   alt: string;
   width?: number;
   height?: number;
@@ -18,7 +19,7 @@ interface IFallbackImgProps {
 export default function IMAGE({
   src,
   alt,
-  fallbackSrc,
+  fallbackSrc = ENV.LOGO_URL,
   ...props
 }: IFallbackImgProps) {
   const [imgSrc, setImgSrc] = useState(src);

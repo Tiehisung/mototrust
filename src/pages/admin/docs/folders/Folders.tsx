@@ -2,10 +2,10 @@ import { FolderActions } from "./FolderActions";
 import { PiFolderThin } from "react-icons/pi";
 import { Link, useNavigate } from "react-router-dom";
 import { useGetFoldersQuery } from "@/services/docs.endpoints";
-import Loader from "@/components/loaders/Loader";
 import { Button } from "@/components/buttons/Button";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import TableLoader from "@/components/loaders/Table";
 
 export default function DocumentFolders({
   defaultsOnly,
@@ -17,7 +17,7 @@ export default function DocumentFolders({
     isDefault: defaultsOnly ? "true" : "",
   });
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <TableLoader rows={3} cols={4} size="lg" />;
   return (
     <main className="flex items-start gap-4 ">
       <ul className="flex flex-wrap items-center justify-start border rounded-2xl w-full overflow-hidden ">

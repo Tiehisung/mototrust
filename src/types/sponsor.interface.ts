@@ -1,4 +1,5 @@
 import type { IDonation } from "./donation.interface";
+import { IMiniUser } from "./user";
 
 export interface ISponsor {
     _id: string;
@@ -9,6 +10,7 @@ export interface ISponsor {
     name: string;
     phone: string;
     donations?: IDonation[];
+    createdBy?: IMiniUser
     createdAt?: string;
     updatedAt?: string;
 }

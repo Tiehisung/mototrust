@@ -1,4 +1,4 @@
-import type { IUser } from "./user";
+import type { IMiniUser, IUser } from "./user";
 
 export interface ILog {
     _id: string;
@@ -12,6 +12,7 @@ export interface ILog {
     url?: string
     createdAt: Date;
     updatedAt?: Date;
+    createdBy?: IMiniUser
 }
 
 export enum ELogSeverity {

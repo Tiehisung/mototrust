@@ -90,7 +90,7 @@ export const getThumbnail = (
 
     const transformations = [
         "f_jpg",                  // WebP/AVIF
-        "q_auto:good",             // quality
+        // "q_auto:good",             // quality
         `c_${crop}`,
         `w_${width}`,
         `h_${height}`,
@@ -107,7 +107,7 @@ export const getThumbnail = (
 
     if (!file) return ''
 
-    if (file?.resource_type === 'image') return `https://res.cloudinary.com/${cloudName}/image/upload/w_${transformations},f_jpg/${file?.public_id}`
+    if (file?.resource_type === 'image') return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations},f_jpg/${file?.public_id}`
 
 
 

@@ -12,7 +12,7 @@ import { downloadFile, formatBytes, getThumbnail } from "@/lib/file";
 import { IDocFile } from "@/types/doc";
 import { POPOVER } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { FileInfoPane } from "./InfoModal";
+import { FileInfoPane } from "./DocInfoModal";
 import { DIALOG } from "@/components/Dialog";
 import FileRenderer from "@/components/files/FileRender";
 import { getFileIconByExtension } from "@/data/file";
@@ -23,7 +23,6 @@ import { useState } from "react";
 import SocialShare from "@/components/SocialShare";
 import { logos } from "@/assets/images";
 import { CopyButton } from "@/components/buttons/CopyBtn";
-import { ConfirmActionButton } from "@/components/buttons/ConfirmAction";
 import {
   useDeleteDocumentMutation,
   useUpdateDocumentMutation,
@@ -34,6 +33,9 @@ import { toggleClick } from "@/lib/dom";
 import { DocMoveTo } from "./files/MoveTo";
 import { Input } from "@/components/input/Inputs";
 import { useUpdateSearchParams } from "@/hooks/params";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { AVATAR } from "@/components/ui/avatar";
+import { shortText } from "@/lib";
 
 interface UploadedFilesDisplayProps {
   files: IDocFile[];
@@ -193,8 +195,7 @@ export function DocumentFileCard({
       />
       <Separator className="my-1.5 bg-border/45" />
 
-      <ConfirmActionButton
-        primaryText="Delete"
+      <ConfirmDialog
         trigger={
           <>
             <Trash size={24} /> Delete
@@ -203,11 +204,9 @@ export function DocumentFileCard({
         triggerStyles="justify-start w-full font-normal"
         onConfirm={handleDelete}
         variant="ghost"
-        confirmVariant={"delete"}
-        title={`Delete Document [${docName ?? ""}]`}
-        confirmText={`Are you sure you want to delete <b>"${docName}"</b>?`}
+        title={`Delete Document`}
+        description={`Are you sure you want to delete <b>"${docName}"</b>?`}
         isLoading={deleting}
-        escapeOnEnd
       />
     </POPOVER>
   );
@@ -235,7 +234,17 @@ export function DocumentFileCard({
             {formatBytes(file.bytes as number)}
           </span>
         </div>
-
+        {file.createdBy && (
+          <div className="flex items-center gap-1 text-xs">
+            {" "}
+            <AVATAR
+              src={file.createdBy?.avatar as string}
+              alt={file.createdBy?.name}
+              size={"sm"}
+            />
+            <span>{shortText(file.createdBy?.name?.split(" ")?.[0], 8)}</span>
+          </div>
+        )}
         <div onClick={(e) => e.stopPropagation()}>
           <Actions />
         </div>
@@ -286,6 +295,7 @@ export function DocumentFileCard({
         <div className="h-56 w-full md:h-60 lg:h-[40vh]">
           <FileRenderer
             file={{ ...file, thumbnail_url: getThumbnail(file) }}
+            fallbackUrl={file.thumbnail_url || file.secure_url}
             className="h-full w-full object-cover"
           />
         </div>
