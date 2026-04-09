@@ -86,7 +86,11 @@ export function NewsReactions({ newsItem }: { newsItem?: INewsProps }) {
             variant="ghost"
             waiting={isLiking}
           >
-            {localLiked ?  <BsFillHandThumbsUpFill size={24} />: <ThumbsDown size={24} />}
+            {localLiked ? (
+              <BsFillHandThumbsUpFill size={24} />
+            ) : (
+              <ThumbsDown size={24} />
+            )}
             <span
               className="font-light text-xs text-foreground"
               onClick={() => toggleClick("likes-trigger")}
@@ -107,7 +111,11 @@ export function NewsReactions({ newsItem }: { newsItem?: INewsProps }) {
             id="shares-trigger"
             size={"default"}
           >
-            <SocialShare onShare={handleShare} className="" />
+            <SocialShare
+              onShare={handleShare}
+              className=""
+              text={newsItem?.headline.text}
+            />
           </POPOVER>
         </li>
         <li>
@@ -160,7 +168,10 @@ export function NewsReactions({ newsItem }: { newsItem?: INewsProps }) {
 
       <div>
         <p className="text-primary text-sm">Share this article</p>
-        <SharePage className="rounded-full bg-primary/90" />
+        <SharePage
+          className="rounded-full bg-primary/90"
+          text={newsItem?.headline.text}
+        />
       </div>
 
       <br />
@@ -203,7 +214,10 @@ const CommentRow = ({
   };
   return (
     <li className="flex items-start gap-5 pb-6  ">
-      <AVATAR src={com?.user?.avatar ?? staticImages.avatar} alt={com?.user?.name}/>
+      <AVATAR
+        src={com?.user?.avatar ?? staticImages.avatar}
+        alt={com?.user?.name}
+      />
       <section>
         <header className="flex items-start gap-6 ">
           <div className="flex items-baseline gap-0.5">
