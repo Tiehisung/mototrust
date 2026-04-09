@@ -90,11 +90,12 @@ export const getThumbnail = (
 
     const transformations = [
         "f_jpg",                  // WebP/AVIF
-        // "q_auto:good",             // quality
+        "q_auto:good",             // quality
         `c_${crop}`,
         `w_${width}`,
         `h_${height}`,
     ].join(",")
+
     const vid_transformations = [
         `so_${second}`,            // seek to timestamp
         "f_auto",                  // WebP/AVIF
@@ -107,8 +108,9 @@ export const getThumbnail = (
 
     if (!file) return ''
 
-    if (file?.resource_type === 'image') return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations},f_jpg/${file?.public_id}`
+    if (file?.resource_type === 'image') return file.secure_url
 
+    if (file?.resource_type === 'raw') return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations}/${file?.public_id}`
 
 
     return `https://res.cloudinary.com/${cloudName}/video/upload/${vid_transformations}/${file?.public_id}.jpg`

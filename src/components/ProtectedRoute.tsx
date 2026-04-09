@@ -12,7 +12,7 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({
   allowedRoles = [],
-  redirectTo = "/login",
+  redirectTo = "/auth/signin",
   children,
 }: ProtectedRouteProps) {
   const location = useLocation();

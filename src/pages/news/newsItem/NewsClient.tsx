@@ -5,7 +5,6 @@ import { INewsProps } from "@/types/news.interface";
 import { NewsReactions } from "./Reactions";
 import MasonryGallery from "@/components/Gallery/Masonry";
 import LightboxViewer from "@/components/viewer/LightBox";
-import { getThumbnail } from "@/lib/file";
 import { AVATAR } from "@/components/ui/avatar";
 import Divider from "@/components/Divider";
 
@@ -51,7 +50,11 @@ const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
                         width={1000}
                         height={500}
                         alt={detail?.media?.[0]?.original_filename as string}
-                        src={getThumbnail(detail?.media?.[0]) as string}
+                        src={
+                          detail?.media?.[0].resource_type == "image"
+                            ? detail?.media?.[0].secure_url
+                            : (detail?.media?.[0].thumbnail_url as string)
+                        }
                         className={`w-full min-w-60 h-auto bg-cover object-cover aspect-5/3 `}
                         onClick={() => {
                           setOpen(true);
@@ -89,7 +92,6 @@ const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
                     alt="reporter"
                     className="h-16 w-16"
                     border
-                    
                   />
 
                   <div className="space-y-2.5">
@@ -98,9 +100,7 @@ const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
                   </div>
                 </div>
               }
-          
             />
-       
           </section>
         </main>
       </div>
