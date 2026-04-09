@@ -43,7 +43,7 @@ export function Glassmorphic({
   background = "bg-accent/10 dark:bg-secondary/10",
   borderColor = "border-accent/20 dark:border-accent/10",
   hoverEffect = false,
-  interactive = false,
+  interactive = false,onClick
 }: GlassmorphicProps) {
   return (
     <div
@@ -61,6 +61,8 @@ export function Glassmorphic({
           "cursor-pointer hover:bg-accent/20 dark:hover:bg-secondary/20",
         className,
       )}
+
+      onClick={onClick}
     >
       {children}
     </div>

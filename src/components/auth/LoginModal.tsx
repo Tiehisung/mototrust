@@ -28,7 +28,7 @@ const LoginController = ({
   return (
     <DIALOG
       trigger={trigger}
-      title={"Login to continue"}
+      title={"Sign in to continue"}
       id="login-controller"
       variant={variant}
     >
@@ -42,7 +42,7 @@ const LoginController = ({
         <FcGoogle size={24} />
       </LoginBtn> */}
 
-      <Divider content="🔐" />
+ 
       <CredentialsLoginForm
         redirectTo={redirectTo || (pathname !== "/" ? pathname : "")}
       />

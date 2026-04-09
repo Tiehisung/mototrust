@@ -3,8 +3,10 @@ import Loader from "../loaders/Loader";
 import CountUp from "react-countup";
 import { TColor } from "@/types/color";
 import { cn } from "@/lib/utils";
-import { MoreVertical } from "lucide-react";
+import { LucideProps, MoreVertical } from "lucide-react";
 import { Button } from "../ui/button";
+import { Glassmorphic } from "../Glasmorphic/BasicGlassmorphic";
+import { Skeleton } from "../ui/skeleton";
 
 interface IProps {
   title?: string;
@@ -123,5 +125,53 @@ export function CountupMetricCard({
         </Button>
       )}
     </div>
+  );
+}
+
+interface IMetricCardB {
+  icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
+  value: string | number;
+  description?: string;
+  isLoading?: boolean;
+  color?: TColor;
+  onClick?: () => void;
+}
+export function MetricCardB({
+  icon,
+  value,
+  description,
+  isLoading,
+  // color,
+
+  onClick,
+}: IMetricCardB) {
+  // const txtCl = `text-${color}-500`;
+  // const _color = `${txtCl} bg-${color}-50`;
+ 
+
+  const _icon = { icon };
+  return (
+    <Glassmorphic
+      onClick={onClick}
+      className="border border-primary dark:border-primary shadow-none overflow-hidden relative py-4 "
+    >
+      <div
+        className={` w-2 absolute left-0 top-3 bottom-3 bg-primary rounded-r-md`}
+      />
+
+      <div className="flex items-center justify-between p-2 pl-5">
+        <div>
+          <p className="text-muted-foreground text-sm font-medium">
+            {isLoading ? <Skeleton /> : description}
+          </p>
+          <p className="text-3xl font-black text-foreground mt-1">
+            {isLoading ? <Loader size="xs" /> : value}
+          </p>
+        </div>
+        <_icon.icon className="text-muted-foreground/30" size={40} />
+      </div>
+    </Glassmorphic>
   );
 }

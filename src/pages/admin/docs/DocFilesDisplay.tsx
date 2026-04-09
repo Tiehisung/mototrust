@@ -14,7 +14,6 @@ import { POPOVER } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { FileInfoPane } from "./DocInfoModal";
 import { DIALOG } from "@/components/Dialog";
-import FileRenderer from "@/components/files/FileRender";
 import { getFileIconByExtension } from "@/data/file";
 import { formatDate } from "@/lib/timeAndDate";
 import { useAppSelector } from "@/store/hooks/store";
@@ -36,6 +35,7 @@ import { useUpdateSearchParams } from "@/hooks/params";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { AVATAR } from "@/components/ui/avatar";
 import { shortText } from "@/lib";
+import DocFilePreview from "./DocFilePreview";
 
 interface UploadedFilesDisplayProps {
   files: IDocFile[];
@@ -288,7 +288,7 @@ export function DocumentFileCard({
       </header>
       <main>
         <div className="h-56 w-full md:h-60 lg:h-[40vh]">
-          <FileRenderer
+          <DocFilePreview
             file={{ ...file, thumbnail_url: getThumbnail(file) }}
             fallbackUrl={file.thumbnail_url || file.secure_url}
             className="h-full w-full object-cover"

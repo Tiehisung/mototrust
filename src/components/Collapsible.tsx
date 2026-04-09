@@ -52,7 +52,7 @@ export function PrimaryCollapsible({
         className={cn(
           `w-full flex items-center justify-between p-3 pr-0 rounded-lg _transition ${
             isActiveLink(header?.path || "")
-              ? "text-Orange"
+              ? "text-primary"
               : ""
           }  ${isOpen ? "rounded-b-none ring" : ""}`,
           header?.className
@@ -108,7 +108,7 @@ export function PrimaryCollapsible({
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className=" space-y-1 border-l border-border/50 pl-4 mb-3">
+            <div className=" space-y-1 border-l border-border/50 pl-4 pt-4 mb-3">
               {children}
             </div>
           </motion.div>

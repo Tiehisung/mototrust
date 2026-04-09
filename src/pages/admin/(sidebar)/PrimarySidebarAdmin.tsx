@@ -132,7 +132,7 @@ export const sidebarLinks: ILinkItem[] = [
     icon: <Newspaper className="w-4 h-4" />,
   },
   {
-    title: "Club Media",
+    title: "Media",
     path: "",
     icon: <Newspaper className="w-4 h-4" />,
 

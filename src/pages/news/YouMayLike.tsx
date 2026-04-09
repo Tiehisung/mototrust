@@ -3,43 +3,24 @@ import { RxVideo } from "react-icons/rx";
 import { AnimateOnView } from "@/components/Animate/AnimateOnView";
 import { useGetNewsQuery } from "@/services/news.endpoints";
 import Loader from "@/components/loaders/Loader";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { H } from "@/components/Element";
+import DataErrorAlert from "@/components/error/DataError";
 
 const YouMayLike = () => {
-  const { data: newsData, isLoading, error } = useGetNewsQuery('');
+  const { data: newsData, isLoading, error } = useGetNewsQuery("");
   const news = newsData;
 
   if (isLoading) {
-    return (
-      <div>
-        <H >YOU MAY LIKE</H>
-        <div className="flex justify-center items-center min-h-75">
-          <Loader message="Loading news..." />
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (error || !news?.data?.length) {
-    return (
-      <div>
-        <H >YOU MAY LIKE</H>
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>No News Available</AlertTitle>
-          <AlertDescription>
-            There are no related news articles at the moment.
-          </AlertDescription>
-        </Alert>
-      </div>
-    );
+    return <DataErrorAlert message={error} />;
   }
 
   return (
     <div>
-      <H >YOU MAY LIKE</H>
+      <H>YOU MAY LIKE</H>
       <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5 gap-y-10 mt-5">
         {news?.data?.slice(0, 6)?.map((item, index) => (
           <AnimateOnView key={item._id} index={index}>

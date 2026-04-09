@@ -39,9 +39,7 @@ const CommentForm = ({ newsId }: Props) => {
     <div className="border-t-2 pt-6 mt-6">
       <header className="flex justify-between items-center gap-3 mb-6">
         <span>Comment</span>
-        <span className="text-xs text-muted-foreground">
-          {`${markupToPlainText(comment)?.length}/${maxLength}`}
-        </span>
+        
       </header>
       <form onSubmit={handleComment} className="relative">
         <QuillEditor
@@ -52,6 +50,9 @@ const CommentForm = ({ newsId }: Props) => {
           className="w-full grow"
           placeholder="Type comment ..."
         />
+
+        <div className="flex items-center gap-5 justify-between">
+
         <Button
           type="submit"
           className="backdrop-blur-2xl w-fit mt-2 justify-center"
@@ -60,9 +61,12 @@ const CommentForm = ({ newsId }: Props) => {
           primaryText=""
           size="sm"
           disabled={!comment}
-        >
+          >
           Send <SendHorizontal size={20} />
-        </Button>
+        </Button><span className="text-xs text-muted-foreground">
+          {`${markupToPlainText(comment)?.length}/${maxLength}`}
+        </span>
+          </div>
       </form>
     </div>
   );

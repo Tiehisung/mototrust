@@ -61,9 +61,9 @@ export const MatchHighlights = ({
             onClick={() => setActiveVideo(video)}
             className="group relative cursor-pointer rounded-xl overflow-hidden bg-modalOverlay shadow-lg transition"
           >
-            <img
-              src={video?.thumbnail_url as string}
-              alt={video?.title}
+            <video
+              src={video?.secure_url as string}
+              controls={false}
               className="w-full h-60 object-cover opacity-80 group-hover:scale-[1.01] group-hover:opacity-60 transition"
             />
 

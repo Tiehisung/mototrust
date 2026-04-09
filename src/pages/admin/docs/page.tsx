@@ -1,6 +1,5 @@
 import HEADER, { H } from "@/components/Element";
 import DocumentFolders from "./folders/Folders";
-import { DocumentUploader } from "./DocUploader";
 import { ConsentForm } from "@/components/pdf/ConsentForm";
 import { RecentDocs } from "./RecentDocs";
 import { useGetPlayersQuery } from "@/services/player.endpoints";
@@ -33,8 +32,6 @@ export default function DocsPage() {
       <H>DOCUMENTATION</H>
       <main className="mt-6 pb-6">
         <RecentDocs />
-
-        <DocumentUploader className="w-fit  my-6" />
 
         <DocumentFolders defaultsOnly />
 
