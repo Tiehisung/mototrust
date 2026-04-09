@@ -53,7 +53,7 @@ const SquadCard = ({ match }: SquadDisplayProps) => {
   const squad = squadData?.data;
   const [deleteSquad, { isLoading: deletingSquad }] = useDeleteSquadMutation();
 
-  console.log(squad, match);
+  
 
   const handleDelete = async () => {
     try {

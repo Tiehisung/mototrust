@@ -58,7 +58,7 @@ const SquadForm = ({ defaultMatch ,onSuccess}: IProps) => {
     { skip: !defaultMatch },
   );
   const existingSquad = squadData?.data;
-  console.log({ existingSquad });
+
 
   const { data: playersData } = useGetPlayersQuery("");
   const players = playersData?.data || [];

@@ -1,14 +1,8 @@
 // dashboard.endpoint.ts
 import type { IQueryResponse } from "@/types";
 import { api } from "./api";
-import type {
-    IDashboardMetrics,
-    ISeasonMetrics,
-    IHeadToHeadMetrics,
-    IPlayerMetrics,
-    IOverviewMetrics,
-    ITrendMetrics
-} from "@/types/metrics.interface";
+import { IDashboardMetrics, ISeasonMetrics, IHeadToHeadMetrics, IPlayerMetrics, IPlayersOverviewMetrics, ITrendMetrics } from "@/types/metrics.interface";
+
 
 
 const dashboardApi = api.injectEndpoints({
@@ -20,7 +14,7 @@ const dashboardApi = api.injectEndpoints({
             tournament?: string;
         }>({
             query: (params) => ({
-                url: "/dashboard/metrics",
+                url: "/metrics/dashboard",
                 params,
             }),
             providesTags: ["Metrics"],
@@ -30,20 +24,13 @@ const dashboardApi = api.injectEndpoints({
         getSeasonMetrics: builder.query<IQueryResponse<ISeasonMetrics>, {
             seasonId: string;
         }>({
-            query: ({ seasonId }) => `/dashboard/season/${seasonId}`,
+            query: ({ seasonId }) => `/metrics/dashboard/season/${seasonId}`,
             providesTags: ["Metrics"],
         }),
 
         // GET head to head metrics
-        getHeadToHeadMetrics: builder.query<IQueryResponse<IHeadToHeadMetrics>, {
-            team1Id: string;
-            team2Id: string;
-            season?: string;
-        }>({
-            query: (params) => ({
-                url: "/dashboard/head-to-head",
-                params,
-            }),
+        getHeadToHeadMetrics: builder.query<IQueryResponse<IHeadToHeadMetrics>, string>({
+            query: (opponentId) => `/metrics/head-to-head/${opponentId}`,
             providesTags: ["Metrics"],
         }),
 
@@ -53,19 +40,19 @@ const dashboardApi = api.injectEndpoints({
             season?: string;
         }>({
             query: (params) => ({
-                url: `/dashboard/player/${params.playerId}`,
+                url: `/metrics/dashboard/player/${params.playerId}`,
                 params: { season: params.season },
             }),
             providesTags: ["Metrics"],
         }),
 
         // GET overview metrics
-        getOverviewMetrics: builder.query<IQueryResponse<IOverviewMetrics>, {
-            timeframe: 'day' | 'week' | 'month' | 'season' | 'year';
+        getPlayersOverviewMetrics: builder.query<IQueryResponse<IPlayersOverviewMetrics>, {
+            timeframe?: 'day' | 'week' | 'month' | 'season' | 'year';
             date?: string;
         }>({
             query: (params) => ({
-                url: "/dashboard/overview",
+                url: "/metrics/players/overview",
                 params,
             }),
             providesTags: ["Metrics"],
@@ -79,7 +66,7 @@ const dashboardApi = api.injectEndpoints({
             toDate: string;
         }>({
             query: (params) => ({
-                url: "/dashboard/trends",
+                url: "/metrics/dashboard/trends",
                 params,
             }),
             providesTags: ["Metrics"],
@@ -93,7 +80,7 @@ export const {
     useGetSeasonMetricsQuery,
     useGetHeadToHeadMetricsQuery,
     useGetPlayerMetricsQuery,
-    useGetOverviewMetricsQuery,
+    useGetPlayersOverviewMetricsQuery,
     useGetMetricTrendsQuery,
 
     // Lazy queries
@@ -101,7 +88,7 @@ export const {
     useLazyGetSeasonMetricsQuery,
     useLazyGetHeadToHeadMetricsQuery,
     useLazyGetPlayerMetricsQuery,
-    useLazyGetOverviewMetricsQuery,
+    useLazyGetPlayersOverviewMetricsQuery,
     useLazyGetMetricTrendsQuery,
 } = dashboardApi;
 

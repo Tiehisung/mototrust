@@ -35,7 +35,7 @@ export default function ChartsSection() {
       <PrimaryCollapsible
         header={{
           icon: <Clock />,
-          label: <div className="text-xl font-black">SEASON PERFORMANCE</div>,
+          label: <div className="text-xl font-semibold">SEASON PERFORMANCE</div>,
           className: "ring",
         }}
       >

@@ -123,7 +123,7 @@ export default function MainNavbar() {
       <Drawer
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
-        position="top"
+        position="bottom"
         size="sm"
         title={
           <div className=" flex items-center gap-4 font-bold">
@@ -137,7 +137,7 @@ export default function MainNavbar() {
         }
         className=" max-h-[75vh]"
       >
-        <nav className="flex flex-col p-4 gap-2 ">
+        <nav className="flex flex-col p-4 ">
           {navLinks.map((item) => {
             return (
               <Button
@@ -150,8 +150,8 @@ export default function MainNavbar() {
                   }
                   fireEscape();
                 }}
-                className="h-12 px-6 transition-colors font-medium justify-start py-3"
-                variant={"outline"}
+                className=" px-6 transition-colors font-medium justify-start py-3"
+                variant={"link"}
               >
                 {item.label}
               </Button>

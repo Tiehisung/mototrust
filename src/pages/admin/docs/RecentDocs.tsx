@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { useGetDocumentsQuery } from "@/services/docs.endpoints";
-import Divider from "@/components/Divider";
 import DataErrorAlert from "@/components/error/DataError";
 import { DocFilesDisplay } from "./DocFilesDisplay";
 import DisplayType from "@/components/DisplayType";
 import { LoadingSpinner } from "@/components/loaders/LoadingSpinner";
+import { DocumentUploader } from "./DocUploader";
 
 export function RecentDocs() {
-  // Use the query hook instead of server-side fetch
   const {
     data: recentDocs,
     isLoading,
@@ -23,12 +22,8 @@ export function RecentDocs() {
   return (
     <div>
       <header className="items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <Divider
-            content={"RECENT DOCUMENTS "}
-            className="text-xs font-light grow"
-          />
-          <DisplayType />
+        <div className="flex items-center gap-4">
+          <DocumentUploader className="w-fit" /> <DisplayType />
         </div>
       </header>
       <main>
