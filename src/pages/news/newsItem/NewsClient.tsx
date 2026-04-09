@@ -5,7 +5,6 @@ import { INewsProps } from "@/types/news.interface";
 import { NewsReactions } from "./Reactions";
 import MasonryGallery from "@/components/Gallery/Masonry";
 import LightboxViewer from "@/components/viewer/LightBox";
-import { getThumbnail } from "@/lib/file";
 import { AVATAR } from "@/components/ui/avatar";
 import Divider from "@/components/Divider";
 
