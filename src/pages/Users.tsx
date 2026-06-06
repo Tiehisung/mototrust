@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { showToast } from "@/utils/toast";
- 
+
 import {
   useGetUsersQuery,
   useDeleteUserMutation,
@@ -12,7 +12,7 @@ import { EUserRole, type IUser } from "@/types/user";
 import { useState } from "react";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/error";
-import { useLoginMutation } from "@/services/auth.endpoints";
+import { useLoginMutation } from "@/services/authApi";
 
 export default function UsersPage() {
   const { data, isLoading } = useGetUsersQuery();
@@ -41,7 +41,7 @@ export default function UsersPage() {
 
 const User = ({ user }: { user: IUser }) => {
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
-  
+
   async function handleDelete() {
     try {
       const response = await deleteUser(user._id as string).unwrap();
@@ -96,7 +96,7 @@ export const NewUser = () => {
       const response = await createUser({
         ...form,
         role: form.role as EUserRole,
-        avatar: ""
+        avatar: "",
       }).unwrap();
 
       if (response.success) {
@@ -138,7 +138,7 @@ export const NewUser = () => {
       </div>
       <div>
         <label htmlFor="pass">Password:</label>
-        <Input 
+        <Input
           type="text"
           id="pass"
           name="password"

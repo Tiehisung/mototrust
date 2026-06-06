@@ -4,16 +4,7 @@
 @import "shadcn/tailwind.css";
 
 @import "./styles.extended.css";
-
-/* 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-} */
-
+ 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -55,7 +46,9 @@ body {
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* custom */
+  /* ============================================ */
+  /* MOTOTRUST CUSTOM BRAND COLORS                */
+  /* ============================================ */
   --color-Red: var(--red);
   --color-Green: var(--green);
   --color-Blue: var(--blue);
@@ -63,133 +56,233 @@ body {
   --color-Orange: var(--orange);
   --color-Gold: var(--gold);
   --color-modalOverlay: var(--modal-overlay);
+  
+  /* Brand Accents */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-light: var(--brand-light);
+  
+  /* Surface tones */
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated);
+  
+  /* Status */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
 }
 
 :root {
-  /* Brand Colors */
-  --red: #ff0000;
-  --green: #096;
-  --blue: #1475e1;
-  --arsh: #ddd9d9;
-  --orange: #ff9800;
-  --gold: #c6a763;
-  --modal-overlay: #00000080;
+  /* ============================================ */
+  /* MOTOTRUST BRAND PALETTE                      */
+  /* Warm Orange - Ghana-inspired, trustworthy     */
+  /* ============================================ */
+  
+  /* Primary Brand - Warm Orange */
+  --brand: #F97316;
+  --brand-foreground: #FFFFFF;
+  --brand-muted: #FFF7ED;
+  --brand-light: #FED7AA;
+  
+  /* Legacy color mappings (keep existing) */
+  --red: #EF4444;
+  --green: #059669;
+  --blue: #2563EB;
+  --arsh: #DDD9D9;
+  --orange: #F97316;
+  --gold: #C6A763;
+  --modal-overlay: rgba(0, 0, 0, 0.5);
 
-  /* Base */
-  --background: #f6f6f6;
-  --foreground: #071d2a;
+  /* ============================================ */
+  /* BASE SURFACES                                */
+  /* ============================================ */
+  --background: #FAFAF9;
+  --foreground: #1C1917;
+  
+  /* Surface hierarchy */
+  --surface: #FAFAF9;
+  --surface-foreground: #1C1917;
+  --surface-muted: #F5F5F4;
+  --surface-elevated: #FFFFFF;
 
   /* Roundedness */
-  --radius: 0.625rem;
+  --radius: 0.75rem;
 
-  /* Surfaces */
-  --card: #ffffff;
-  --card-foreground: #071d2a;
+  /* Cards & Popovers */
+  --card: #FFFFFF;
+  --card-foreground: #1C1917;
+  --popover: #FFFFFF;
+  --popover-foreground: #1C1917;
 
-  --popover: #ffffff;
-  --popover-foreground: #071d2a;
+  /* ============================================ */
+  /* PRIMARY - Warm Orange Brand                  */
+  /* ============================================ */
+  --primary: #F97316;
+  --primary-foreground: #FFFFFF;
 
-  /* Primary Buttons / Highlights (Teal-ish Navy) */
-  --primary: #c6a763;
-  --primary-foreground: #f6f7f8;
+  /* Secondary - Warm Gray */
+  --secondary: #F5F5F4;
+  --secondary-foreground: #44403C;
 
-  /* Secondary Buttons */
-  --secondary: #e8eef2; /* Lighter, cleaner */
-  --secondary-foreground: #213743;
+  /* Muted Backgrounds */
+  --muted: #F5F5F4;
+  --muted-foreground: #78716C;
 
-  /* Background Muted */
-  --muted: #f4f6f7;
-  --muted-foreground: #5a6b7a;
-
-  /* Hovered elements */
-  --accent: #eef2f4;
-  --accent-foreground: #213743;
+  /* Hover/Accent */
+  --accent: #FFF7ED;
+  --accent-foreground: #C2410C;
 
   /* Destructive */
-  --destructive: #ff0000;
-  --destructive-foreground: white;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
 
-  /* Borders */
-  --border: #c9d3dc; /* Softer, modern border */
-  --input: #eaebec;
-  --ring: #c6a763;
+  /* Borders & Inputs */
+  --border: #E7E5E4;
+  --input: #F5F5F4;
+  --ring: #F97316;
 
-  /* Sidebar */
-  --sidebar: #f6f7f8;
-  --sidebar-foreground: #071d2a;
-  --sidebar-primary: #213743;
-  --sidebar-primary-foreground: #f6f7f8;
-  --sidebar-accent: #eef2f4;
-  --sidebar-accent-foreground: #213743;
-  --sidebar-border: #c9d3dc;
-  --sidebar-ring: #7b8fa3;
+  /* ============================================ */
+  /* STATUS COLORS                               */
+  /* ============================================ */
+  --success: #059669;
+  --success-foreground: #FFFFFF;
+  --warning: #D97706;
+  --warning-foreground: #FFFFFF;
+  --info: #2563EB;
+  --info-foreground: #FFFFFF;
+
+  /* ============================================ */
+  /* SIDEBAR                                     */
+  /* ============================================ */
+  --sidebar: #FAFAF9;
+  --sidebar-foreground: #1C1917;
+  --sidebar-primary: #F97316;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #FFF7ED;
+  --sidebar-accent-foreground: #C2410C;
+  --sidebar-border: #E7E5E4;
+  --sidebar-ring: #F97316;
 }
 
+/* ============================================ */
+/* DARK MODE - MOTOTRUST                        */
+/* ============================================ */
 .dark {
   /* Base */
-  --background: #3c3c3c;
-  --foreground: #f6f7f8;
+  --background: #1C1917;
+  --foreground: #FAFAF9;
+  
+  /* Surface hierarchy */
+  --surface: #1C1917;
+  --surface-foreground: #FAFAF9;
+  --surface-muted: #292524;
+  --surface-elevated: #292524;
 
-  /* Surfaces */
-  --card: #1f1f1f;
-  --card-foreground: #f6f7f8;
+  /* Cards */
+  --card: #292524;
+  --card-foreground: #FAFAF9;
+  --popover: #292524;
+  --popover-foreground: #FAFAF9;
 
-  --popover: #3c3c3c;
-  --popover-foreground: #f6f7f8;
-
-  /* Primary */
-  --primary: #f9844b;
-  --primary-foreground: #ffffff;
+  /* Primary - Softer orange in dark mode */
+  --primary: #FB923C;
+  --primary-foreground: #1C1917;
+  
+  /* Brand in dark */
+  --brand: #FB923C;
+  --brand-foreground: #1C1917;
+  --brand-muted: #431407;
+  --brand-light: #7C2D12;
 
   /* Secondary */
-  --secondary: #395565;
-  --secondary-foreground: #d7e0e7;
+  --secondary: #44403C;
+  --secondary-foreground: #E7E5E4;
 
   /* Muted */
-  --muted: #1a2a36;
-  --muted-foreground: #b7b7b7;
+  --muted: #292524;
+  --muted-foreground: #A8A29E;
 
   /* Accent */
-  --accent: #13232d61;
-  --accent-foreground: #f6f7f8;
+  --accent: #431407;
+  --accent-foreground: #FDBA74;
 
   /* Destructive */
-  --destructive: #ff0000;
-  --destructive-foreground: white;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
 
-  /* Borders / Inputs */
-  --border: rgba(255, 255, 255, 0.12);
-  --input: rgba(255, 255, 255, 0.14);
-  --ring: #f9844b;
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.10);
+  --ring: #FB923C;
+
+  /* Status */
+  --success: #10B981;
+  --success-foreground: #FFFFFF;
+  --warning: #F59E0B;
+  --warning-foreground: #1C1917;
+  --info: #3B82F6;
+  --info-foreground: #FFFFFF;
 
   /* Sidebar */
-  --sidebar: #162a36;
-  --sidebar-foreground: #f6f7f8;
-  --sidebar-primary: #1e3a4d;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1a2d3a;
-  --sidebar-accent-foreground: #f6f7f8;
-  --sidebar-border: rgba(255, 255, 255, 0.12);
-  --sidebar-ring: rgba(255, 255, 255, 0.28);
+  --sidebar: #1C1917;
+  --sidebar-foreground: #FAFAF9;
+  --sidebar-primary: #FB923C;
+  --sidebar-primary-foreground: #1C1917;
+  --sidebar-accent: #431407;
+  --sidebar-accent-foreground: #FDBA74;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #FB923C;
+  
+  /* Legacy dark overrides */
+  --red: #F87171;
+  --green: #34D399;
+  --blue: #60A5FA;
+  --arsh: #44403C;
+  --orange: #FB923C;
+  --gold: #D4B87A;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
 }
 
+/* ============================================ */
+/* BASE LAYER                                   */
+/* ============================================ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground p-0 m-0;
-    font-family:
-      Segoe UI,
-      SegoeUI,
-      "Helvetica Neue",
-      Helvetica,
-      Arial,
-      sans-serif;
+    @apply bg-surface text-surface-foreground font-sans antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    @apply bg-brand/20 text-brand;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full hover:bg-muted-foreground/30;
   }
 }
 
-/* Elements */
+/* ============================================ */
+/* MOTOTRUST CUSTOM COMPONENT CLASSES           */
+/* ============================================ */
+
+/* Elements - keeping your existing ones + adding MotoTrust specific */
 ._label {
   @apply text-sm font-medium;
 }
@@ -214,7 +307,7 @@ body {
   @apply mx-auto max-w-2xl lg:max-w-7xl px-[4vw] py-4;
 }
 ._gradient {
-  @apply bg-linear-to-br from-primary/30 via-secondary to-Red;
+  @apply bg-linear-to-br from-brand/30 via-secondary to-Gold;
 }
 ._shadow {
   @apply shadow-xl shadow-border/40;
@@ -228,29 +321,30 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-._primaryBtn {
-  @apply flex items-center flex-nowrap gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors cursor-pointer disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-70 active:opacity-80 hover:opacity-95 select-none;
-  background-color: var(--blue);
+/* Brand-specific button variant */
+._brandBtn {
+  @apply flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer select-none;
+  background-color: var(--brand);
+  color: var(--brand-foreground);
 }
 
-._secondaryBtn {
-  @apply flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg select-none cursor-pointer transition-all duration-150  
-         /* Light mode */
-         bg-secondary text-secondary-foreground hover:bg-accent/90
-         /* Focus */
-         focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background
-         /* Active */
-         active:opacity-80
-         /* Disabled */
-         disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none
-         /* Dark mode */
-         dark:bg-secondary dark:text-secondary-foreground dark:hover:bg-muted/60 dark:focus:ring-ring;
+._brandBtn:hover {
+  filter: brightness(0.9);
 }
 
-._deleteBtn {
-  @apply flex items-center flex-nowrap gap-2 px-4 py-2 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-lg transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 disabled:pointer-events-none select-none active:opacity-80;
+/* Brand outline button */
+._brandOutlineBtn {
+  @apply flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border transition-colors cursor-pointer select-none;
+  border-color: var(--brand);
+  color: var(--brand);
+  background: transparent;
 }
 
+._brandOutlineBtn:hover {
+  background-color: var(--brand-muted);
+}
+
+/* Backgrounds */
 ._primaryBg {
   @apply bg-white text-primary dark:bg-primary dark:text-white;
 }
@@ -261,6 +355,7 @@ body {
   @apply border-border/30 dark:border-border;
 }
 
+/* Interactions */
 ._hover {
   @apply hover:bg-secondary-foreground/10 transition-colors cursor-pointer;
 }
@@ -294,10 +389,65 @@ body {
 }
 ._listItem {
   @apply px-4 py-3 rounded-xl text-lg font-medium border cursor-pointer select-none transition-all duration-200  
-        /* light mode */
          bg-popover text-foreground border-border/45 hover:bg-accent/60
-         /* focus */
          focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background
-         /* dark mode */
          dark:bg-popover dark:text-foreground dark:border-border/60 dark:hover:bg-secondary/40 dark:focus:ring-ring;
+}
+
+/* ============================================ */
+/* MOTOTRUST SPECIFIC UTILITIES                 */
+/* ============================================ */
+
+/* Glass morphism card */
+._glass {
+  @apply bg-white/80 backdrop-blur-lg border border-white/20 dark:bg-surface-elevated/80 dark:border-white/5;
+}
+
+/* Card with hover lift effect */
+._cardLift {
+  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Shimmer loading animation */
+._shimmer {
+  background: linear-gradient(90deg, var(--muted) 25%, var(--secondary) 50%, var(--muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Badge - verified / featured */
+._badge {
+  @apply inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full;
+}
+
+._badgeVerified {
+  background-color: var(--success);
+  color: var(--success-foreground);
+}
+
+._badgeFeatured {
+  background-color: var(--brand);
+  color: var(--brand-foreground);
+}
+
+._badgePending {
+  background-color: var(--warning);
+  color: var(--warning-foreground);
+}
+
+/* Price tag */
+._price {
+  @apply font-bold tracking-tight;
+  color: var(--brand);
+}
+
+/* Section divider */
+._divider {
+  @apply border-t my-6;
+  border-color: var(--border);
 }

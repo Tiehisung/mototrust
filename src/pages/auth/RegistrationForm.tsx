@@ -6,7 +6,7 @@ import { PrimarySelect } from "@/components/select/Select";
 import { enumToOptions } from "@/lib/select";
 import { Button } from "@/components/buttons/Button";
 import { smartToast } from "@/utils/toast";
-import { useRegisterMutation } from "@/services/auth.endpoints";
+import { useRegisterMutation } from "@/services/authApi";
 import { IRegisterCredentials } from "@/types/auth";
 import { EUserRole } from "@/types/user";
 import { Link } from "react-router-dom";
@@ -41,7 +41,6 @@ export default function RegistrationForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-md space-y-8 py-5 mx-auto"
     >
-      
       <h2 className="text-2xl font-semibold mb-6 text-center">Registration</h2>
       <Controller
         control={control}
@@ -89,7 +88,7 @@ export default function RegistrationForm() {
             className="border p-2 w-full"
             triggerStyles="grow w-full min-h-11"
             label={<p className="text-muted-foreground -mt-5">Role</p>}
-            error={fieldState.error?.message} 
+            error={fieldState.error?.message}
           />
         )}
       />

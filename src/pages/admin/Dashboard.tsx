@@ -1,4 +1,3 @@
-import AdminDashboardChartsSection from "./(components)/ChartsSection";
 import HEADER from "@/components/Element";
 import { PrimaryCollapsible } from "@/components/Collapsible";
 import { CgPerformance } from "react-icons/cg";
@@ -34,8 +33,6 @@ export default function AdminDashboardPage() {
           {/* Top Players */}
           <TopPerformingPlayers />
 
-          {/* Charts Section */}
-          <AdminDashboardChartsSection />
         </div>
       </main>
     </div>

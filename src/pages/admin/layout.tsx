@@ -5,6 +5,7 @@ import BackBtn from "@/components/buttons/BackBtn";
 import Loader from "@/components/loaders/Loader";
 import { Outlet } from "react-router-dom";
 import { useAppSelector } from "@/store/hooks/store";
+import { AVATAR } from "@/components/ui/avatar";
 
 export default function AdminLayout() {
   return (
@@ -22,11 +23,11 @@ export default function AdminLayout() {
 }
 
 const Header = () => {
-  const { user, isLoading } = useAppSelector((s) => s.auth);
+  const { user } = useAppSelector((s) => s.auth);
 
-  const alias = user?.name?.split(" ")?.[0] ?? user?.email?.split("@")?.[0];
+  const alias = user?.fullName?.split(" ")?.[0];
 
-  if (isLoading) {
+  if (!user) {
     return (
       <header className="flex justify-between px-6 p-1 sticky top-0.5 bg-accent z-20 items-center border-b border-border backdrop-blur-sm">
         <LeftPaneMobileHeadless />
@@ -57,9 +58,9 @@ const Header = () => {
           <p className="text-xs italic font-light">Admin</p>
           <p>{alias}</p>
         </div>
-        <img
-          src={user?.avatar}
-          alt="avatar"
+        <AVATAR
+          src={""}
+          alt={user?.fullName || "Admin"}
           className="h-10 w-10 min-h-10 rounded-full object-cover"
         />
       </div>

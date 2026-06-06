@@ -7,7 +7,7 @@ import ScrollToTop from "@/utils/ScrollToTop";
 import Footer from "./Footer";
 import MainNavbar from "../components/MainNavbar";
 
-export default function HomeLayout() {
+export default function MainLayout() {
   return (
     <main className="relative">
       <ScrollToTop />

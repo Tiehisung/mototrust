@@ -29,7 +29,7 @@ export const uploadApi = api.injectEndpoints({
                 method: 'POST',
                 body: formData,
             }),
-            invalidatesTags: ['Uploads', 'Documents', 'Folders'],
+            invalidatesTags: ['Uploads',],
         }),
 
         /**
@@ -42,7 +42,7 @@ export const uploadApi = api.injectEndpoints({
                 method: 'POST',
                 body: formData,
             }),
-            invalidatesTags: ['Uploads', 'Documents', 'Folders'],
+            invalidatesTags: ['Uploads',],
         }),
 
         /**
@@ -55,7 +55,7 @@ export const uploadApi = api.injectEndpoints({
                 method: 'POST',
                 body: formData,
             }),
-            invalidatesTags: ['Uploads', 'Documents', 'Folders'],
+            invalidatesTags: ['Uploads',],
         }),
 
         // MULTIPLE UPLOADS
@@ -91,7 +91,7 @@ export const uploadApi = api.injectEndpoints({
                 method: 'POST',
                 body: formData,
             }),
-            invalidatesTags: ['Uploads','Documents','Folders'],
+            invalidatesTags: ['Uploads',],
         }),
 
         // DELETE

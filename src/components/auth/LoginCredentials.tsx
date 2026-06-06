@@ -1,6 +1,5 @@
-// frontend/src/components/auth/Login.tsx
 import { useState } from "react";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -10,7 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from "@/store/hooks/useAuth";
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  phoneNumber: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -35,14 +34,10 @@ export function CredentialsLoginForm({
     const result = await login(data);
 
     const dashboardPath =
-      result?.user?.role == "player"
-        ? "/players/dashboard"
-        : result?.user?.role?.includes("admin")
-          ? "/admin"
-          : "";
+      result?.user?.role !== "admin" ? "/dashboard" : "/admin";
 
     if (result.success) {
-      navigate(redirectTo  || dashboardPath, {
+      navigate(redirectTo || dashboardPath, {
         replace: true,
       });
     } else {
@@ -63,11 +58,11 @@ export function CredentialsLoginForm({
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         <Controller
           control={control}
-          name="email"
+          name="phoneNumber"
           render={({ field, fieldState }) => (
             <IconInputWithLabel
-              label="Email"
-              type="email"
+              label="Phone Number"
+              type="tel"
               error={fieldState.error?.message}
               {...field}
             />
