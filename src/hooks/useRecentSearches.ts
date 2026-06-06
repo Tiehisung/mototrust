@@ -9,7 +9,7 @@ import {
 } from "@/store/slices/recentSearch.slice";
 import { useAuth } from "@/store/hooks/useAuth";
 import { useAppSelector } from "@/store/hooks/store";
-import { useSyncRecentSearchesMutation } from "@/services/recent-search.endpoints";
+import { useSyncRecentSearchesMutation } from "@/services/recent-search";
  
 
 export interface RecentSearchInput {
