@@ -11,7 +11,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed top-0 w-full z-50 glass">
+    <nav className="fixed top-0 w-full z-50 _glass">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <span className="text-2xl">🏍️</span>
@@ -48,14 +48,14 @@ const Navbar = () => {
           ) : (
             <>
               <Link
-                to="/login"
+                to="/auth/signin"
                 className="px-4 py-2 text-sm font-medium text-surface-600 hover:text-surface-900 transition-colors"
               >
                 Sign in
               </Link>
               <Link
-                to="/register"
-                className="px-4 py-2 bg-brand-500 text-white rounded-2xl text-sm font-medium hover:bg-brand-600 transition-colors"
+                to="/auth/register"
+                className="px-4 py-2 bg-brand-500 text-brand rounded-2xl text-sm font-medium hover:bg-brand-600 transition-colors"
               >
                 Register
               </Link>

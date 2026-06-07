@@ -7,7 +7,6 @@ import applicationRouter from "@/router";
 const App = () => (
   <Provider store={store}>
     <RouterProvider router={applicationRouter} />
-  
 
     <SonnerToaster
       position="bottom-center"

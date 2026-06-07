@@ -4,7 +4,7 @@
 @import "shadcn/tailwind.css";
 
 @import "./styles.extended.css";
- 
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -56,19 +56,19 @@
   --color-Orange: var(--orange);
   --color-Gold: var(--gold);
   --color-modalOverlay: var(--modal-overlay);
-  
+
   /* Brand Accents */
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-muted: var(--brand-muted);
   --color-brand-light: var(--brand-light);
-  
+
   /* Surface tones */
   --color-surface: var(--surface);
   --color-surface-foreground: var(--surface-foreground);
   --color-surface-muted: var(--surface-muted);
   --color-surface-elevated: var(--surface-elevated);
-  
+
   /* Status */
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
@@ -83,91 +83,91 @@
   /* MOTOTRUST BRAND PALETTE                      */
   /* Warm Orange - Ghana-inspired, trustworthy     */
   /* ============================================ */
-  
+
   /* Primary Brand - Warm Orange */
-  --brand: #F97316;
-  --brand-foreground: #FFFFFF;
-  --brand-muted: #FFF7ED;
-  --brand-light: #FED7AA;
-  
+  --brand: #f97316;
+  --brand-foreground: #ffffff;
+  --brand-muted: #fff7ed;
+  --brand-light: #fed7aa;
+
   /* Legacy color mappings (keep existing) */
-  --red: #EF4444;
+  --red: #ef4444;
   --green: #059669;
-  --blue: #2563EB;
-  --arsh: #DDD9D9;
-  --orange: #F97316;
-  --gold: #C6A763;
+  --blue: #2563eb;
+  --arsh: #ddd9d9;
+  --orange: #f97316;
+  --gold: #c6a763;
   --modal-overlay: rgba(0, 0, 0, 0.5);
 
   /* ============================================ */
   /* BASE SURFACES                                */
   /* ============================================ */
-  --background: #FAFAF9;
-  --foreground: #1C1917;
-  
+  --background: #fafaf9;
+  --foreground: #1c1917;
+
   /* Surface hierarchy */
-  --surface: #FAFAF9;
-  --surface-foreground: #1C1917;
-  --surface-muted: #F5F5F4;
-  --surface-elevated: #FFFFFF;
+  --surface: #fafaf9;
+  --surface-foreground: #1c1917;
+  --surface-muted: #f5f5f4;
+  --surface-elevated: #ffffff;
 
   /* Roundedness */
   --radius: 0.75rem;
 
   /* Cards & Popovers */
-  --card: #FFFFFF;
-  --card-foreground: #1C1917;
-  --popover: #FFFFFF;
-  --popover-foreground: #1C1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
 
   /* ============================================ */
   /* PRIMARY - Warm Orange Brand                  */
   /* ============================================ */
-  --primary: #F97316;
-  --primary-foreground: #FFFFFF;
+  --primary: #f97316;
+  --primary-foreground: #ffffff;
 
   /* Secondary - Warm Gray */
-  --secondary: #F5F5F4;
-  --secondary-foreground: #44403C;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #44403c;
 
   /* Muted Backgrounds */
-  --muted: #F5F5F4;
-  --muted-foreground: #78716C;
+  --muted: #f5f5f4;
+  --muted-foreground: #78716c;
 
   /* Hover/Accent */
-  --accent: #FFF7ED;
-  --accent-foreground: #C2410C;
+  --accent: #fff7ed;
+  --accent-foreground: #c2410c;
 
   /* Destructive */
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
 
   /* Borders & Inputs */
-  --border: #E7E5E4;
-  --input: #F5F5F4;
-  --ring: #F97316;
+  --border: #e7e5e4;
+  --input: #f5f5f4;
+  --ring: #f97316;
 
   /* ============================================ */
   /* STATUS COLORS                               */
   /* ============================================ */
   --success: #059669;
-  --success-foreground: #FFFFFF;
-  --warning: #D97706;
-  --warning-foreground: #FFFFFF;
-  --info: #2563EB;
-  --info-foreground: #FFFFFF;
+  --success-foreground: #ffffff;
+  --warning: #d97706;
+  --warning-foreground: #ffffff;
+  --info: #2563eb;
+  --info-foreground: #ffffff;
 
   /* ============================================ */
   /* SIDEBAR                                     */
   /* ============================================ */
-  --sidebar: #FAFAF9;
-  --sidebar-foreground: #1C1917;
-  --sidebar-primary: #F97316;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #FFF7ED;
-  --sidebar-accent-foreground: #C2410C;
-  --sidebar-border: #E7E5E4;
-  --sidebar-ring: #F97316;
+  --sidebar: #fafaf9;
+  --sidebar-foreground: #1c1917;
+  --sidebar-primary: #f97316;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fff7ed;
+  --sidebar-accent-foreground: #c2410c;
+  --sidebar-border: #e7e5e4;
+  --sidebar-ring: #f97316;
 }
 
 /* ============================================ */
@@ -175,77 +175,77 @@
 /* ============================================ */
 .dark {
   /* Base */
-  --background: #1C1917;
-  --foreground: #FAFAF9;
-  
+  --background: #1c1917;
+  --foreground: #fafaf9;
+
   /* Surface hierarchy */
-  --surface: #1C1917;
-  --surface-foreground: #FAFAF9;
+  --surface: #1c1917;
+  --surface-foreground: #fafaf9;
   --surface-muted: #292524;
   --surface-elevated: #292524;
 
   /* Cards */
   --card: #292524;
-  --card-foreground: #FAFAF9;
+  --card-foreground: #fafaf9;
   --popover: #292524;
-  --popover-foreground: #FAFAF9;
+  --popover-foreground: #fafaf9;
 
   /* Primary - Softer orange in dark mode */
-  --primary: #FB923C;
-  --primary-foreground: #1C1917;
-  
+  --primary: #fb923c;
+  --primary-foreground: #1c1917;
+
   /* Brand in dark */
-  --brand: #FB923C;
-  --brand-foreground: #1C1917;
+  --brand: #fb923c;
+  --brand-foreground: #1c1917;
   --brand-muted: #431407;
-  --brand-light: #7C2D12;
+  --brand-light: #7c2d12;
 
   /* Secondary */
-  --secondary: #44403C;
-  --secondary-foreground: #E7E5E4;
+  --secondary: #44403c;
+  --secondary-foreground: #e7e5e4;
 
   /* Muted */
   --muted: #292524;
-  --muted-foreground: #A8A29E;
+  --muted-foreground: #a8a29e;
 
   /* Accent */
   --accent: #431407;
-  --accent-foreground: #FDBA74;
+  --accent-foreground: #fdba74;
 
   /* Destructive */
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
 
   /* Borders */
   --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.10);
-  --ring: #FB923C;
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #fb923c;
 
   /* Status */
-  --success: #10B981;
-  --success-foreground: #FFFFFF;
-  --warning: #F59E0B;
-  --warning-foreground: #1C1917;
-  --info: #3B82F6;
-  --info-foreground: #FFFFFF;
+  --success: #10b981;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #1c1917;
+  --info: #3b82f6;
+  --info-foreground: #ffffff;
 
   /* Sidebar */
-  --sidebar: #1C1917;
-  --sidebar-foreground: #FAFAF9;
-  --sidebar-primary: #FB923C;
-  --sidebar-primary-foreground: #1C1917;
+  --sidebar: #1c1917;
+  --sidebar-foreground: #fafaf9;
+  --sidebar-primary: #fb923c;
+  --sidebar-primary-foreground: #1c1917;
   --sidebar-accent: #431407;
-  --sidebar-accent-foreground: #FDBA74;
+  --sidebar-accent-foreground: #fdba74;
   --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #FB923C;
-  
+  --sidebar-ring: #fb923c;
+
   /* Legacy dark overrides */
-  --red: #F87171;
-  --green: #34D399;
-  --blue: #60A5FA;
-  --arsh: #44403C;
-  --orange: #FB923C;
-  --gold: #D4B87A;
+  --red: #f87171;
+  --green: #34d399;
+  --blue: #60a5fa;
+  --arsh: #44403c;
+  --orange: #fb923c;
+  --gold: #d4b87a;
   --modal-overlay: rgba(0, 0, 0, 0.7);
 }
 
@@ -315,6 +315,7 @@
 ._link {
   @apply hover:underline underline-offset-2 visited:text-purple-500 dark:visited:text-purple-300 hover:text-black dark:hover:text-white;
 }
+ 
 
 /* Buttons */
 ._transition ease-linear duration-100 {
@@ -410,14 +411,23 @@
 
 /* Shimmer loading animation */
 ._shimmer {
-  background: linear-gradient(90deg, var(--muted) 25%, var(--secondary) 50%, var(--muted) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--muted) 25%,
+    var(--secondary) 50%,
+    var(--muted) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Badge - verified / featured */

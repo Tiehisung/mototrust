@@ -5,14 +5,15 @@ import { Swinger } from "@/components/Animate/Swing";
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "@/utils/ScrollToTop";
 import Footer from "./Footer";
-import MainNavbar from "../components/MainNavbar";
+import Navbar from "@/components/Navbar";
+ 
 
 export default function MainLayout() {
   return (
     <main className="relative">
       <ScrollToTop />
 
-      <MainNavbar />
+      <Navbar />
       <div className={`min-h-screen overflow-x-hidden pb-6 `}>
         <div className="_page">
           <Outlet />

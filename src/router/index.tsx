@@ -15,7 +15,6 @@ import AdminLayout from "@/pages/admin/layout";
 // import NotFound from "@/pages/public/NotFound";
 
 // Auth Pages
-import LoginPage from "@/pages/auth/LoginPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 // import NotAuthorizedPage from "@/pages/auth/NotAuthorizedPage";
 
@@ -44,6 +43,25 @@ import MainLayout from "@/pages/Layout";
 import NotFound from "@/pages/NotFound";
 import NotAuthorizedPage from "@/pages/auth/NotAuthorized";
 import AuthLayout from "@/pages/auth/AuthLayout";
+import SignInPage from "@/pages/auth/SigninPage";
+import DashboardPage from "@/pages/dashboard/DashboardPage";
+import ListingDetailPage from "@/pages/Listing/ListingDetailPage";
+import CreateListingPage from "@/pages/dashboard/Listings/CreateListingPage";
+import MyListingsPage from "@/pages/dashboard/MyListingsPage";
+import ProfilePage from "@/pages/dashboard/ProfilePage";
+import VerifyIdentityPage from "@/pages/dashboard/VerifyIdentityPage";
+import EditListingPage from "@/pages/dashboard/Listings/EditListingPage";
+import MyInspectionsPage from "@/pages/dashboard/MyInspectionsPage";
+import PaymentHistoryPage from "@/pages/dashboard/PaymentHistoryPage";
+import BrowseListingsPage from "@/pages/Listing/BrowseListingsPage";
+import AdminInspectionsPage from "@/pages/admin/inspection/AdminInspectionsPage";
+import AdminListingsPage from "@/pages/admin/listing/AdminListingsPage";
+import AdminOverviewPage from "@/pages/admin/AdminOverviewPage";
+import AdminPaymentsPage from "@/pages/admin/AdminPaymentsPage";
+import AdminUsersPage from "@/pages/admin/AdminUsersPage";
+import AdminListingDetailPage from "@/pages/admin/listing/AdminListingDetailPage";
+import AdminUserDetailPage from "@/pages/admin/AdminUserDetailPage";
+import AdminInspectionDetailPage from "@/pages/admin/inspection/AdminInspectionDetailPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -69,14 +87,14 @@ const applicationRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      // {
-      //   path: "browse",
-      //   element: <BrowseListingsPage />,
-      // },
-      // {
-      //   path: "listing/:listingId",
-      //   element: <ListingDetailPage />,
-      // },
+      {
+        path: "browse",
+        element: <BrowseListingsPage />,
+      },
+      {
+        path: "listing/:listingId",
+        element: <ListingDetailPage />,
+      },
       {
         path: "unauthorized",
         element: <NotAuthorizedPage />,
@@ -97,7 +115,7 @@ const applicationRouter = createBrowserRouter([
     children: [
       {
         path: "signin",
-        element: <LoginPage />,
+        element: <SignInPage />,
       },
       {
         path: "register",
@@ -117,47 +135,47 @@ const applicationRouter = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      // { index: true, element: <DashboardPage /> },
-      // {
-      //   path: "profile",
-      //   element: <ProfilePage />,
-      // },
-      // {
-      //   path: "verify-identity",
-      //   element: <VerifyIdentityPage />,
-      // },
-      // {
-      //   path: "listings",
-      //   element: <MyListingsPage />,
-      // },
-      // {
-      //   path: "listings/create",
-      //   element: (
-      //     <ProtectedRoute allowedRoles={[EUserRole.SELLER]}>
-      //       <CreateListingPage />
-      //     </ProtectedRoute>
-      //   ),
-      // },
-      // {
-      //   path: "listings/:listingId/edit",
-      //   element: (
-      //     <ProtectedRoute allowedRoles={[EUserRole.SELLER]}>
-      //       <EditListingPage />
-      //     </ProtectedRoute>
-      //   ),
-      // },
-      // {
-      //   path: "payments",
-      //   element: <PaymentHistoryPage />,
-      // },
-      // {
-      //   path: "inspections",
-      //   element: (
-      //     <ProtectedRoute allowedRoles={[EUserRole.SELLER]}>
-      //       <MyInspectionsPage />
-      //     </ProtectedRoute>
-      //   ),
-      // },
+      { index: true, element: <DashboardPage /> },
+      {
+        path: "profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "verify-identity",
+        element: <VerifyIdentityPage />,
+      },
+      {
+        path: "listings",
+        element: <MyListingsPage />,
+      },
+      {
+        path: "listings/create",
+        element: (
+          <ProtectedRoute allowedRoles={[EUserRole.SELLER]}>
+            <CreateListingPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "listings/:listingId/edit",
+        element: (
+          <ProtectedRoute allowedRoles={[EUserRole.SELLER]}>
+            <EditListingPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "payments",
+        element: <PaymentHistoryPage />,
+      },
+      {
+        path: "inspections",
+        element: (
+          <ProtectedRoute allowedRoles={[EUserRole.SELLER]}>
+            <MyInspectionsPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 
@@ -172,35 +190,29 @@ const applicationRouter = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      // { index: true, element: <AdminOverviewPage /> },
-      // {
-      //   path: "listings",
-      //   element: <AdminListingsPage />,
-      // },
-      // {
-      //   path: "listings/:listingId",
-      //   element: <AdminListingsPage />,
-      // },
-      // {
-      //   path: "users",
-      //   element: <AdminUsersPage />,
-      // },
-      // {
-      //   path: "users/:userId",
-      //   element: <AdminUsersPage />,
-      // },
-      // {
-      //   path: "inspections",
-      //   element: <AdminInspectionsPage />,
-      // },
-      // {
-      //   path: "inspections/:inspectionId",
-      //   element: <AdminInspectionsPage />,
-      // },
-      // {
-      //   path: "payments",
-      //   element: <AdminPaymentsPage />,
-      // },
+      { index: true, element: <AdminOverviewPage /> },
+      {
+        path: "listings",
+        children: [
+          { index: true, element: <AdminListingsPage /> },
+          { path: ":listingId", element: <AdminListingDetailPage /> },
+        ],
+      },
+      {
+        path: "users",
+        children: [
+          { index: true, element: <AdminUsersPage /> },
+          { path: ":userId", element: <AdminUserDetailPage /> },
+        ],
+      },
+      {
+        path: "inspections",
+        children: [
+          { index: true, element: <AdminInspectionsPage /> },
+          { path: ":inspectionId", element: <AdminInspectionDetailPage /> },
+        ],
+      },
+      { path: "payments", element: <AdminPaymentsPage /> },
     ],
   },
 ]);
