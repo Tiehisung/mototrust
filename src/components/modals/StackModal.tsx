@@ -65,8 +65,8 @@ export const StackModal = ({
               setLoading(false);
             }, 2000);
           }}
-          waiting={!modalId && loading}
-          waitingText="Please wait..."
+          loading={!modalId && loading}
+          loadingText="Please wait..."
           id={id}
         >
           {trigger}

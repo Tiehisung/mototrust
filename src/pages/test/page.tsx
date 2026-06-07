@@ -7,8 +7,11 @@ import GlassmorphicTest from "./Glassmorphic";
 
 export default function TestPage() {
   return (
-    <div className="grid md:flex items-center ">
+    <div className="   ">
       <main className="block p-5">
+       
+
+        <br />
         <GlassmorphicTest />
         <GroupedAdminSidebar />
         <ImageUploader onUpload={(url) => console.log(url)} />
@@ -25,3 +28,5 @@ export default function TestPage() {
     </div>
   );
 }
+
+ 

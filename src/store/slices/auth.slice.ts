@@ -1,61 +1,50 @@
-// store/slices/auth.slice.ts
-import { IAuthResponse } from '@/types/auth';
 import { IUser } from '@/types/user';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
     user: IUser | null;
-    accessToken: string | null;
-    refreshToken?: string | null;
+    token: string | null;
     isAuthenticated: boolean;
-    lastLogin: string | null;
-    isLoading: boolean;
-    error: string | null;
 }
 
 const initialState: AuthState = {
     user: null,
-    accessToken: null,
-    isAuthenticated: false,
-    lastLogin: null,
-    refreshToken: null,
-    isLoading: false,
-    error: null
+    token: localStorage.getItem('mototrust_token'),
+    isAuthenticated: !!localStorage.getItem('mototrust_token'),
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setCredentials: (state, action: PayloadAction<IAuthResponse['data']>) => {
+        setCredentials: (state, action: PayloadAction<{ user: IUser; token: string }>) => {
             state.user = action.payload.user;
-            state.accessToken = action.payload.accessToken;
-            state.refreshToken = action.payload.refreshToken;
+            state.token = action.payload.token;
             state.isAuthenticated = true;
-            state.lastLogin = new Date().toISOString();
-        },
-        logout: (state) => {
-            Object.assign(state, initialState);
-        },
-        updateUser: (state, action: PayloadAction<Partial<AuthState['user']>>) => {
-            if (state.user) {
-                state.user = { ...state.user, ...action.payload };
-            }
-        },
-         setAccessToken: (state, action: PayloadAction<string>) => {
-            state.accessToken = action.payload;
-        },
-        
-        setLoading: (state, action: PayloadAction<boolean>) => {
-            state.isLoading = action.payload;
+            localStorage.setItem('mototrust_token', action.payload.token);
         },
 
-        setError: (state, action: PayloadAction<string>) => {
-            state.error = action.payload;
-            state.isLoading = false;
+        setUser: (state, action: PayloadAction<IUser>) => {
+            state.user = action.payload;
+        },
+
+        // Update verification status
+        updateVerificationStatus: (state, action: PayloadAction<{ isVerified: boolean; ghanaCardImage?: string; ghanaCardNumber?: string }>) => {
+            if (state.user) {
+                state.user.isVerified = action.payload.isVerified;
+                if (action.payload.ghanaCardImage) state.user.ghanaCardImage = action.payload.ghanaCardImage;
+                if (action.payload.ghanaCardNumber) state.user.ghanaCardNumber = action.payload.ghanaCardNumber;
+            }
+        },
+
+        logout: (state) => {
+            state.user = null;
+            state.token = null;
+            state.isAuthenticated = false;
+            localStorage.removeItem('mototrust_token');
         },
     },
 });
 
-export const { setCredentials, logout, updateUser,setAccessToken } = authSlice.actions;
+export const { setCredentials, setUser, updateVerificationStatus, logout } = authSlice.actions;
 export default authSlice.reducer;

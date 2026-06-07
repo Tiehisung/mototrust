@@ -1,7 +1,7 @@
 import { ReactNode, useRef } from "react";
-import { useUploadVideoMutation } from "@/services/upload.endpoints";
+import { useUploadVideoMutation } from "@/services/uploadApi";
 import { Button } from "@/components/buttons/Button";
-import { Loader2,   } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { ICloudinaryFile } from "@/types/file.interface";
 import { TButtonVariant } from "@/components/ui/button";
 
@@ -19,7 +19,7 @@ interface SimpleVideoUploaderProps {
   /** Button text */
   trigger?: ReactNode;
   /** Button variant */
-  buttonVariant?: TButtonVariant
+  buttonVariant?: TButtonVariant;
   /** Custom class name */
   className?: string;
   /** Disable upload */
@@ -126,10 +126,7 @@ export function SimpleVideoUploader({
             Uploading...
           </>
         ) : (
-          <>
-           
-            {trigger}
-          </>
+          <>{trigger}</>
         )}
       </Button>
     </>

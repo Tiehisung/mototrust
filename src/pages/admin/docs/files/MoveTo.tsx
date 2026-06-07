@@ -68,7 +68,7 @@ export function DocMoveTo({ document, trigger }: IProps) {
             onClick={() => handleMove(fold?._id as string)}
             className=" text-sm font-normal justify-start text-left w-full "
             variant="secondary"
-            waiting={moving && loadingFolderId == fold?._id}
+           loading={moving && loadingFolderId == fold?._id}
             disabled={moving}
           >
             <Folder /> <span className="line-clamp-1 ">{fold?.name}</span>

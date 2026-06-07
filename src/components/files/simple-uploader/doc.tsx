@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useUploadDocumentMutation } from "@/services/upload.endpoints";
+import { useUploadDocumentMutation } from "@/services/uploadApi";
 import { Button } from "@/components/buttons/Button";
 import { Loader2, FileText } from "lucide-react";
 import { ICloudinaryFile } from "@/types/file.interface";

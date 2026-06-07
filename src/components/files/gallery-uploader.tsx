@@ -1,12 +1,10 @@
 // frontend/src/components/GalleryUploader.tsx
-import { useUploadGalleryMutation } from "@/services/upload.endpoints";
+import { useUploadGalleryMutation } from "@/services/uploadApi";
 import { toast } from "sonner";
 import { X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../buttons/Button";
 import { smartToast } from "@/utils/toast";
-
- 
 
 interface GalleryUploaderProps {
   onUploadSuccess?: (urls: string[]) => void;
@@ -55,9 +53,7 @@ export function GalleryUploader({
 
     try {
       const response = await uploadGallery(formData).unwrap();
-      smartToast(response)
-
-   
+      smartToast(response);
 
       if (onUploadSuccess) {
         onUploadSuccess(response?.data?.map((f) => f.url) as string[]);
@@ -105,7 +101,7 @@ export function GalleryUploader({
           <Button
             onClick={handleUpload}
             disabled={isLoading}
-            primaryText={isLoading ? "Uploading..." : "Upload Gallery"}
+            text={isLoading ? "Uploading..." : "Upload Gallery"}
             className="w-full"
           />
         </>

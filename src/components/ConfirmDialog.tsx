@@ -82,7 +82,7 @@ export function ConfirmDialog({
 
       <AlertDialogContent className={cn("sm:max-w-md", className)}>
         <AlertDialogHeader>
-          <AlertDialogTitle >{title}</AlertDialogTitle>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>
             {typeof description === "string" ? (
               <div dangerouslySetInnerHTML={{ __html: description }} />
@@ -103,8 +103,8 @@ export function ConfirmDialog({
               variant={variant}
               onClick={handleConfirm}
               disabled={isLoading}
-              waiting={isLoading}
-              primaryText={confirmText}
+              loading={isLoading}
+              text={confirmText}
             />
           </AlertDialogAction>
 

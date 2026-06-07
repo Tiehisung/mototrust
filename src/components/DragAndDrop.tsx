@@ -8,7 +8,7 @@ import {
   useUploadDocumentMutation,
   useUploadImageMutation,
   useUploadVideoMutation,
-} from "@/services/upload.endpoints";
+} from "@/services/uploadApi";
 import { smartToast } from "@/utils/toast";
 
 export const DragAndDropUpload = ({
@@ -66,7 +66,7 @@ export const DragAndDropUpload = ({
         formData.append("video", file);
         result = await uploadVideo(formData);
       }
-      
+
       if (file?.type.includes("pdf")) {
         formData.append("document", file);
         result = await uploadPDF(formData);

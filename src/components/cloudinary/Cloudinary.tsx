@@ -5,7 +5,7 @@ import { Upload, X } from "lucide-react";
 import { TButtonVariant } from "../ui/button";
 import { ICloudinaryFile } from "@/types/file.interface";
 import { smartToast } from "@/utils/toast";
-import { useDeleteFileMutation } from "@/services/upload.endpoints";
+import { useDeleteFileMutation } from "@/services/uploadApi";
 
 declare global {
   interface Window {

@@ -5,12 +5,12 @@ import "./index.css";
 //Redux imports
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "./store/store.ts";
+import { persistor, store } from "./store/index.ts";
 
 import { ThemeProvider } from "./contexts/ThemContext.tsx";
 import AppLoader from "./components/loaders/AppLoader.tsx";
 
-const App = React.lazy(() => import('./App'));
+const App = React.lazy(() => import("./App"));
 createRoot(document.getElementById("root")!).render(
   <React.Suspense fallback={<AppLoader />}>
     <StrictMode>

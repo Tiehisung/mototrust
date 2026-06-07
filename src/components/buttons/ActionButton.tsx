@@ -77,10 +77,10 @@ export function ActionButton({
   };
   return (
     <Button
-      waiting={waiting}
+      loading={waiting}
       disabled={disabled || waiting}
-      primaryText={primaryText}
-      waitingText={loadingText}
+      text={primaryText}
+      loadingText={loadingText}
       onClick={handleAction}
       className={`${className} `}
       styles={styles}

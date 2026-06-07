@@ -105,9 +105,9 @@ export default function UserForm({ user }: { user?: IUser }) {
       />
 
       <Button
-        primaryText={user ? "Update User" : "Create User"}
-        waiting={isSubmitting}
-        waitingText={user ? "Updating..." : "Creating..."}
+       text={user ? "Update User" : "Create User"}
+        loading={isSubmitting}
+        loadingText={user ? "Updating..." : "Creating..."}
         type="submit"
         className="p-2 grow w-full justify-center"
       />

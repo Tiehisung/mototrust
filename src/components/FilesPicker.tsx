@@ -111,7 +111,7 @@ export default function FilesPicker({
         </label>
 
         <Button
-          primaryText={"Clear files"}
+          text={"Clear files"}
           className=" text-sm _deleteBtn"
           onClick={() => setConvertedFiles([])}
         />

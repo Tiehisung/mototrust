@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useUploadVideoMutation } from "@/services/upload.endpoints";
+import { useUploadVideoMutation } from "@/services/uploadApi";
 import { Button } from "@/components/buttons/Button";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";

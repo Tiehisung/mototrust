@@ -19,5 +19,6 @@ export const symbols = {
     cedi: '₵',
     dot: '●',
     'dot-sm': '•',
-    longDash: '–'
+    longDash: '–',
+    motor:'🏍️'
 }

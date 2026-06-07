@@ -1,24 +1,24 @@
-import HEADER from "@/components/Element";
-import { AVATAR } from "@/components/ui/avatar";
-import { ENV } from "@/lib/env";
-import { Link, Outlet } from "react-router-dom";
+import { symbols } from "@/data";
+import { Outlet, Link } from "react-router-dom";
 
-export default function AuthLayout() {
+const AuthLayout = () => {
   return (
-    <div>
-      <HEADER
-        title={
-          <Link to="/" className="text-primary hover:underline flex items-center gap-2 mx-auto w-fit">
-            <AVATAR
-              src={ENV.LOGO_NO_BG_URL}
-              size={"md"}
-              className="scale-110 bg-accent/90 backdrop-blur-3xl drop-shadow-accent drop-shadow-md"
-              />
-              <span>{ENV.APP_NAME}</span>
+    <div className="min-h-screen bg-surface flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <Link to="/" className="inline-flex items-center gap-2">
+            <span className="text-3xl pb-2.5">{symbols.motor}</span>
+            <span className="font-display font-bold text-2xl text-surface-900">
+              Moto<span className="text-brand-500">Trust</span>
+            </span>
           </Link>
-        }
-      />
-      <Outlet />
+        </div>
+        <div className="bg-white rounded-3xl shadow-soft p-8">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default AuthLayout;

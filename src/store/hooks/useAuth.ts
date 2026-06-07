@@ -1,47 +1,29 @@
 // frontend/src/hooks/useAuth.ts
-import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks/store';
-import { useLoginMutation, useLogoutMutation, useRefreshTokenMutation } from '@/services/auth.endpoints';
+import { useLoginMutation, } from '@/services/authApi';
 import { ILoginCredentials } from '@/types/auth';
-import { logout, setAccessToken, setCredentials, } from '../slices/auth.slice';
-import {   getErrorMessage } from '@/lib/error';
+import { logout, setCredentials, } from '../slices/auth.slice';
+import { getErrorMessage } from '@/lib/error';
 
 export const useAuth = () => {
     const dispatch = useAppDispatch();
-    const { user, accessToken, isAuthenticated, } = useAppSelector((state) => state.auth);
+    const { user, token, isAuthenticated, } = useAppSelector((state) => state.auth);
 
     const [loginMutation, { isLoading: isLoggingIn }] = useLoginMutation();
-    const [logoutMutation, { isLoading: isLoggingOut }] = useLogoutMutation();
-    const [refreshTokenMutation] = useRefreshTokenMutation();
+    // const [logoutMutation, { isLoading: isLoggingOut }] = useLogoutMutation();
 
-    // Auto refresh token
-    useEffect(() => {
-        const refreshAuthToken = async () => {
-            try {
-                const response = await refreshTokenMutation().unwrap();
-                dispatch(setAccessToken(response.data.accessToken));
-            } catch (error) {
-                dispatch(logout());
-            }
-        };
-
-        // Refresh token every 14 minutes (slightly before 15m expiry)
-        const interval = setInterval(refreshAuthToken, 14 * 60 * 1000);
-
-        return () => clearInterval(interval);
-    }, [dispatch, refreshTokenMutation]);
+ 
 
     const login = async (credentials: ILoginCredentials) => {
         try {
             const response = await loginMutation(credentials).unwrap();
 
             dispatch(setCredentials({
-                user: response.data.user,
-                accessToken: response.data.accessToken,
-                refreshToken: response.data.refreshToken,
+                user: response.user,
+                token: response.token,
             }));
 
-            return { success: true, user: response.data.user };
+            return { success: true, user: response.user };
         } catch (error: any) {
             return {
                 success: false,
@@ -52,7 +34,7 @@ export const useAuth = () => {
 
     const logoutUser = async () => {
         try {
-            await logoutMutation().unwrap();
+            // await logoutMutation().unwrap();
         } finally {
             dispatch(logout());
         }
@@ -60,9 +42,9 @@ export const useAuth = () => {
 
     return {
         user,
-        accessToken,
+        token,
         isAuthenticated,
-        isLoading: isLoggingIn || isLoggingOut,
+        isLoading: isLoggingIn ,
         login,
         logout: logoutUser,
     };

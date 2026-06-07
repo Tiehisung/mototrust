@@ -1,4 +1,4 @@
-import { LogoutBtn } from "@/components/auth/LogoutButton";
+import { LogoutBtn } from "@/pages/auth/LogoutButton";
 import { ThemeModeToggle } from "@/components/ThemeToggle";
 import { Link } from "react-router-dom";
 import {
@@ -35,7 +35,6 @@ export function LeftPaneDesktop() {
   );
 }
 
- 
 export function LeftPaneMobileHeadless() {
   return (
     <POPOVER

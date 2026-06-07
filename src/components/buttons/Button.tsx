@@ -3,9 +3,10 @@ import { VscLoading } from "react-icons/vsc";
 import { TButtonSize, TButtonVariant, Button as Btn } from "../ui/button";
 
 interface ButtonProps {
-  primaryText?: string;
-  waiting?: boolean;
-  waitingText?: string;
+  text?: string;
+  loading?: boolean;
+  loadingText?: string;
+
   className?: string;
   disabled?: boolean;
   children?: React.ReactNode;
@@ -22,8 +23,6 @@ interface ClickButtonProps extends ButtonProps {
 }
 
 export function Button({
-  primaryText,
-  waiting = false,
   className = "",
   disabled = false,
   type = "button",
@@ -34,12 +33,15 @@ export function Button({
   variant,
   size,
   id,
+  loading = false,
+  loadingText,
+  text,
 }: ClickButtonProps) {
   return (
     <Btn
-      disabled={waiting || disabled}
+      disabled={loading || disabled}
       className={`flex items-center gap-2 font-semibold disabled:pointer-events-none disabled:hover:bg-transparent disabled:opacity-60 active:scale-[99%] overflow-hidden ${className} ${
-        waiting ? "cursor-wait" : "cursor-pointer"
+        loading ? "cursor-wait" : "cursor-pointer"
       }  `}
       variant={variant}
       size={size}
@@ -49,9 +51,8 @@ export function Button({
       style={styles}
       id={id}
     >
-       
-      <span hidden={!primaryText}>{primaryText}</span>
-      {waiting ? <VscLoading className={` animate-spin `} />:children}
+      <span hidden={!text}>{loading && loadingText ? loadingText : text}</span>
+      {loading ? <VscLoading className={` animate-spin `} /> : children}
     </Btn>
   );
 }

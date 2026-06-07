@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 import { ReactNode, useState, useCallback, useRef } from "react";
-import { useUploadImageMutation } from "@/services/upload.endpoints";
+import { useUploadImageMutation } from "@/services/uploadApi";
 import { Button } from "../buttons/Button";
 import { smartToast } from "@/utils/toast";
 import { Label } from "../ui/label";
-import { X, Upload, Image as ImageIcon,   } from "lucide-react";
+import { X, Upload, Image as ImageIcon } from "lucide-react";
 import { OverlayLoader } from "../loaders/OverlayLoader";
 
 interface IProps {

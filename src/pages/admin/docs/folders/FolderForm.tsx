@@ -79,9 +79,9 @@ export function FolderForm({ folder }: { folder?: IFolder }) {
 
       <Button
         onClick={handleCreate}
-        primaryText={folder ? "Update Folder" : "Create Folder"}
-        waiting={creatingFolder || updatingFolder}
-        waitingText={folder ? "Updating..." : "Creating..."}
+        text={folder ? "Update Folder" : "Create Folder"}
+        loading={creatingFolder || updatingFolder}
+        loadingText={folder ? "Updating..." : "Creating..."}
         className="w-full"
       />
 

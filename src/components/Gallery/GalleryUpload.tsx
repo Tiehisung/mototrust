@@ -3,22 +3,18 @@ import { toast } from "sonner";
 import { Button } from "@/components/buttons/Button";
 import { Input } from "@/components/input/Inputs";
 import { IGallery } from "@/types/file.interface";
-import { IPlayer } from "@/types/player.interface";
-import MultiSelectionInput from "../select/MultiSelect";
 import { ICloudinaryFile } from "@/types/file.interface";
 import { smartToast } from "@/utils/toast";
-import { useCreateGalleryMutation } from "@/services/gallery.endpoints";
+import { useCreateGalleryMutation } from "@/services/galleryApi";
 import { CloudinaryWidget } from "../cloudinary/Cloudinary";
 
 interface GalleryUploadProps {
   tags?: string[];
-  players?: IPlayer[];
   trigger?: ReactNode;
 }
 
 export function GalleryUpload({
   tags = [],
-  players = [],
   trigger = "Create Gallery",
 }: GalleryUploadProps) {
   const [createGallery, { isLoading }] = useCreateGalleryMutation();
@@ -106,28 +102,14 @@ export function GalleryUpload({
               />
             </div>
 
-            {players?.length > 0 && (
-              <div className="w-full">
-                <p className="_label mb-2">Tag Players</p>
-                <MultiSelectionInput
-                  onChange={(ts) => setTaggedPlayers(ts.map((t) => t.value))}
-                  options={players?.map((p) => ({
-                    label: `${p.lastName} ${p.firstName}`,
-                    value: `${p._id},${p.lastName} ${p.firstName}`,
-                  }))}
-                  className="text-sm"
-                  label=""
-                  name={"tags"}
-                />
-              </div>
-            )}
+           
 
             <div className="flex justify-center">
               <Button
                 type="submit"
-                waiting={isLoading}
-                waitingText="Saving..."
-                primaryText="Save Gallery"
+                loading={isLoading}
+                loadingText="Saving..."
+              text="Save Gallery"
                 className="_primaryBtn w-48 h-10 justify-center"
               />
             </div>

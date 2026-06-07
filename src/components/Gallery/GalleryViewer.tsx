@@ -3,8 +3,7 @@
 import { ThumbsGallery } from "@/components/carousel/ThumbsGallery";
 import { SideDrawer } from "@/components/ShadSideDrawer";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-import { usePlayerGalleryUtils } from "@/hooks/usePlayerGallery";
+ 
 import { IGallery } from "@/types/file.interface";
 
 interface IProps {
@@ -12,7 +11,7 @@ interface IProps {
   title?: string;
 }
 export function GalleryViewer({ gallery, title }: IProps) {
-  const { images } = usePlayerGalleryUtils([gallery] as IGallery[]);
+  
   const isMobile = useIsMobile("md");
   return (
     <SideDrawer
@@ -24,7 +23,7 @@ export function GalleryViewer({ gallery, title }: IProps) {
     >
       <ThumbsGallery
         title={title}
-        images={images}
+        images={gallery?.files || []}
         thumbnailSwiperStyles={{
           borderRadius: "0%",
           height: "70px",

@@ -246,9 +246,9 @@ export default function StaffForm({
           {/* Submit Button */}
           <Button
             type="submit"
-            waiting={isLoading}
-            waitingText={existingStaff ? "Saving Changes" : "Submitting"}
-            primaryText={existingStaff ? "Save Changes" : "Submit"}
+            loading={isLoading}
+            loadingText={existingStaff ? "Saving Changes" : "Submitting"}
+            text={existingStaff ? "Save Changes" : "Submit"}
             className="px-12 h-10 py-1 w-full justify-center my-6"
             disabled={isLoading || (existingStaff ? !isDirty : false)}
           />

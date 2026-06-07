@@ -260,8 +260,8 @@ export function DocumentFileCard({
             />
             <Button
               onClick={handleRename}
-              waiting={updatingDoc}
-              primaryText="Save"
+              loading={updatingDoc}
+              text="Save"
               type="submit"
               disabled={newName == file.original_filename}
               className="grow w-full"
@@ -312,8 +312,8 @@ export function DocumentFileCard({
           />
           <Button
             onClick={handleRename}
-            waiting={updatingDoc}
-            primaryText="Save"
+            loading={updatingDoc}
+            text="Save"
             type="submit"
             disabled={newName == file.original_filename}
             className="grow w-full"

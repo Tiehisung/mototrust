@@ -9,7 +9,7 @@ import { scrollToSection } from "@/lib/dom";
 import { Button } from "@/components/buttons/Button";
 import { fireEscape } from "@/hooks/Esc";
 import UserLogButtons from "./UserLogger";
-import { LogoutBtn } from "./auth/LogoutButton";
+import { LogoutBtn } from "../pages/auth/LogoutButton";
 import { ThemeModeToggle } from "./ThemeToggle";
 import { GlobalSearch } from "./searcher/Global";
 
@@ -44,7 +44,7 @@ export default function MainNavbar() {
     <>
       <nav className="bg-accent backdrop-blur-xs sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div  className="flex justify-start items-center h-16 text-">
+          <div className="flex justify-start items-center h-16 text-">
             {/* Left Section - Menu Button (Mobile) */}
             <div className="flex items-center lg:hidden">
               <button
@@ -175,23 +175,6 @@ export default function MainNavbar() {
         title="Search"
       >
         <div className="p-4">
-          {/* <PrimarySearch placeholder="Search players, articles, and more..." />
-
-          <div className="mt-6">
-            <h3 className="text-sm font-medium text-gray-500">
-              Recent Searches
-            </h3>
-            <div className="mt-2 space-y-2">
-              {["player", "match", "article"].map((search) => (
-                <Button
-                  key={search}
-                  className="block w-full text-left px-2 py-1 text-sm rounded"
-                >
-                  {search}
-                </Button>
-              ))}
-            </div>
-          </div> */}
           <GlobalSearch />
         </div>
       </Drawer>

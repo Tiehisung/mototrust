@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Camera, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ICloudinaryFile } from "@/types/file.interface";
-import { useUploadImageMutation } from "@/services/upload.endpoints";
+import { useUploadImageMutation } from "@/services/uploadApi";
 import { smartToast } from "@/utils/toast";
 import { bytesToMB } from "@/lib";
 
