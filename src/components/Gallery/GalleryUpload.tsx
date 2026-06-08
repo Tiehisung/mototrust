@@ -1,12 +1,13 @@
 import { useState, useCallback, ReactNode } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/buttons/Button";
-import { Input } from "@/components/input/Inputs";
+ 
 import { IGallery } from "@/types/file.interface";
 import { ICloudinaryFile } from "@/types/file.interface";
 import { smartToast } from "@/utils/toast";
 import { useCreateGalleryMutation } from "@/services/gallery";
 import { CloudinaryWidget } from "../cloudinary/Cloudinary";
+import { Input } from "../form";
 
 interface GalleryUploadProps {
   tags?: string[];

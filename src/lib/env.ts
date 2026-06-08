@@ -7,13 +7,7 @@ export const ENV = {
     APP_URL: e.VITE_APP_URL,
     API_URL: e.VITE_API_URL,
 
-    // TEAM Info
-    TEAM_ID: e.VITE_TEAM_ID,
-
-    TEAM_NAME: e.VITE_TEAM_NAME,
-    TEAM_ALIAS: e.VITE_TEAM_ALIAS,
-    SHORT_NAME: e.VITE_APP_SHORT_NAME,
-    TAGLINE: e.VITE_APP_TAGLINE,
+    
 
     // Assets
     LOGO_URL: e.VITE_LOGO_URL,

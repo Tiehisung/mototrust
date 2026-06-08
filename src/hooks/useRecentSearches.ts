@@ -1,16 +1,15 @@
 // hooks/useRecentSearches.ts
-import { useDispatch,   } from "react-redux";
- 
+import { useDispatch, } from "react-redux";
+
 import {
     addRecentSearch,
     removeRecentSearch,
     clearAllRecentSearches,
     updateMaxItems,
 } from "@/store/slices/recentSearch.slice";
-import { useAuth } from "@/store/hooks/useAuth";
 import { useAppSelector } from "@/store/hooks/store";
 import { useSyncRecentSearchesMutation } from "@/services/recent-searchApi";
- 
+
 export interface RecentSearchInput {
     query: string;
     type?: string;
@@ -19,7 +18,7 @@ export interface RecentSearchInput {
 
 export function useRecentSearches() {
     const dispatch = useDispatch();
-    const { user } = useAuth();
+    const { user } = useAppSelector(s => s.auth);
     const [syncSearches] = useSyncRecentSearchesMutation();
 
     const recentSearches = useAppSelector((state) => state.recentSearches.searches);

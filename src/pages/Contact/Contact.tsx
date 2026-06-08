@@ -1,8 +1,8 @@
 // components/Contact.tsx
 import { MotionWrapper } from "@/components/Animate/MotionWrapper";
 import { Button } from "@/components/buttons/Button";
+import { Input, Textarea } from "@/components/form";
 import { GlassmorphicGradient } from "@/components/Glasmorphic/Gradient";
-import { Input, TextArea } from "@/components/input/Inputs";
 import { SocialMediaHandles } from "@/components/SocialShare";
 import React, { useState } from "react";
 
@@ -89,7 +89,7 @@ const Contact: React.FC = () => {
               required
               name={"email"}
             />
-            <TextArea
+            <Textarea
               placeholder="Your Message"
               value={formData.message}
               onChange={(e) =>
