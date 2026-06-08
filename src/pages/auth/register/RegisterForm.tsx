@@ -42,12 +42,7 @@ const RegisterForm = () => {
     setServerError("");
 
     try {
-      const result = await registerUser({
-        fullName: data.fullName,
-        phoneNumber: data.phoneNumber,
-        password: data.password,
-        role: data.role,
-      }).unwrap();
+      const result = await registerUser(data).unwrap();
 
       dispatch(setCredentials({ user: result.user, token: result.token }));
       toast.success("Account created! 🎉", {

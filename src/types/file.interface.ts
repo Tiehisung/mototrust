@@ -1,4 +1,6 @@
-import { IMiniUser } from "./user";
+import { IUser } from "./user";
+
+ 
 
 export interface ICloudinaryFile {
     public_id: string;
@@ -13,12 +15,16 @@ export interface ICloudinaryFile {
     width?: number;
     height?: number;
     duration?: number;
+
+    
+    _id?: string; //Trace any saved file data on db
+    description?: string; //Optional field to save with file on db
 }
 
 export interface IFileProps extends ICloudinaryFile {
     _id?: string; //Trace any saved file data on db
     description?: string; //Optional field to save with file on db
-    createdBy?: IMiniUser
+    createdBy?: IUser
     createdAt?: string;
     updatedAt?: string;
 }
@@ -31,7 +37,7 @@ export interface IGallery {
     timestamp?: number;
     type?: 'player' | 'donation' | 'general',
     tags?: string[];
-    createdBy?: IMiniUser
+    createdBy?: IUser
     createdAt?: string;
     updatedAt?: string;
 }
