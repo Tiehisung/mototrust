@@ -161,7 +161,7 @@ export function SimpleImageUploader({
         disabled={disabled || isLoading || showCropper}
         className={className}
         title={`Accepted files: ${acceptedFileText} (Max: ${(maxSize / 1024 / 1024).toFixed(0)}MB)`}
-        waiting={isLoading}
+        loading={isLoading}
       >
         {trigger}
       </Button>

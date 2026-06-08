@@ -1,5 +1,3 @@
- 
-
 import { useEffect } from "react";
 
 export const useActionOnEsc = ({ onEscape }: { onEscape: () => void }) => {
@@ -23,7 +21,7 @@ export function fireEscape(target: HTMLElement | Document = document) {
       key: "Escape",
       code: "Escape",
       bubbles: true,
-    })
+    }),
   );
 }
 

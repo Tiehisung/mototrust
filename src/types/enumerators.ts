@@ -54,3 +54,12 @@ export const mimes = {
   audio: Object.values(AudioMimeTypes).join(","),
   document: Object.values(DocMimeTypes).join(","),
 };
+
+export enum EGhanaRegion {
+  UPPER_WEST = 'Upper West',
+  UPPER_EAST = 'Upper East',
+  NORTHERN = 'Northern',
+  SAVANNAH = 'Savannah',
+  NORTH_EAST = 'North East',
+  OTHER = 'Other',
+}

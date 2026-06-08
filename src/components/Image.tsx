@@ -42,7 +42,7 @@ export function SlideImage({ file, className = "", caption = "" }: IProps) {
       className={`w-full h-full overflow-hidden bg-card hover:shadow-lg transition-shadow relative ${className}`}
     >
       <img
-        src={(file?.secure_url as string) ?? staticImages.ball}
+        src={(file?.secure_url as string) ||staticImages.yamaha}
         alt={
           file?.original_filename ||
           `slide image - ${file?.width}"X"${file?.height}`

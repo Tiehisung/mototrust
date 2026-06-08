@@ -80,7 +80,7 @@ const MultiSelectionInput = ({
             <Button
               key={index}
               onClick={() => handleChangeOption(option)}
-              primaryText={option.label}
+             text={option.label}
               className={`${className} rounded-full capitalize font-light text-sm w-fit px-2 py-1 text-center justify-center border _transition cursor-pointer select-none`}
               variant={isSelected ? "default" : "ghost"}
             >

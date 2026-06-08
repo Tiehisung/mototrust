@@ -30,7 +30,7 @@ const NotAuthorizedPage = () => {
         {/* Logo */}
         <div className="mb-8">
           <img
-            src={staticImages.baloons}
+            src={staticImages.yamaha}
             alt="logo"
             width={300}
             height={150}
@@ -51,7 +51,7 @@ const NotAuthorizedPage = () => {
           </Link>
           <BackBtn
             label="Return"
-            className="_primaryBtn px-6 py-2 transition duration-200"
+            className=" px-6 py-2 transition duration-200"
           />
         </div>
 

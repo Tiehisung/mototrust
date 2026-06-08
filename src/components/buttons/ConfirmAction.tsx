@@ -76,10 +76,10 @@ export const ConfirmActionButton = ({
         )}
 
         <Button
-          waiting={isLoading}
+          loading={isLoading}
           disabled={isLoading}
-          primaryText={`Confirm ${primaryText ?? ""}`}
-          waitingText={loadingText}
+          text={`Confirm ${primaryText ?? ""}`}
+          loadingText={loadingText}
           onClick={handleConfirm}
           className={className}
           variant={confirmVariant ?? variant}

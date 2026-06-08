@@ -1,4 +1,4 @@
-import { LogoutBtn } from "@/components/auth/LogoutButton";
+import { LogoutBtn } from "@/pages/auth/LogoutButton";
 import { ThemeModeToggle } from "@/components/ThemeToggle";
 import { Link } from "react-router-dom";
 import {
@@ -21,7 +21,7 @@ export function LeftPaneDesktop() {
           className="text-2xl font-semibold grow flex gap-2 items-center"
           title="Home"
         >
-          <AVATAR src={ENV.LOGO_NO_BG_URL} /> {ENV.TEAM_ALIAS}
+          <AVATAR src={ENV.LOGO_NO_BG_URL} /> {ENV.APP_NAME}
         </Link>
         <ThemeModeToggle />
       </div>
@@ -35,7 +35,6 @@ export function LeftPaneDesktop() {
   );
 }
 
- 
 export function LeftPaneMobileHeadless() {
   return (
     <POPOVER

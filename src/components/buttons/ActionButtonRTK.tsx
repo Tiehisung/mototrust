@@ -67,10 +67,10 @@ export function RtkActionButton<T = any>({
 
   return (
     <Button
-      waiting={isLoading}
+      loading={isLoading}
       disabled={disabled || isLoading}
-      primaryText={primaryText}
-      waitingText={loadingText}
+      text={primaryText}
+      loadingText={loadingText}
       onClick={handleAction}
       className={className}
       styles={styles}
@@ -83,65 +83,3 @@ export function RtkActionButton<T = any>({
   );
 }
 
-
-// usage
-
-// Example 1: Delete a player
-// import { useDeletePlayerMutation } from "@/services/players.endpoints";
-
-// function PlayerActions({ playerId }: { playerId: string }) {
-//   return (
-//     <RtkActionButton
-//       mutation={useDeletePlayerMutation}
-//       data={playerId}
-//       primaryText="Delete Player"
-//       loadingText="Deleting..."
-//       variant="destructive"
-//       successMessage="Player deleted successfully!"
-//       onSuccess={() => {
-//         // Additional logic after successful delete
-//         console.log("Player deleted");
-//       }}
-//     >
-//       <TrashIcon />
-//     </RtkActionButton>
-//   );
-// }
-
-// Example 2: Update a manager
-// import { useUpdateManagerMutation } from "@/services/managers.endpoints";
-
-// function DisengageManager({ manager }: { manager: IManager }) {
-//   return (
-//     <RtkActionButton
-//       mutation={useUpdateManagerMutation}
-//       data={{ id: manager._id, isActive: false }}
-//       primaryText="Disengage Manager"
-//       loadingText="Disengaging..."
-//       variant="secondary"
-//       escapeOnEnd
-//     >
-//       <HiOutlineUserRemove size={20} />
-//     </RtkActionButton>
-//   );
-// }
-
-// // Example 3: Create a match
-// import { useCreateMatchMutation } from "@/services/matches.endpoints";
-
-// function CreateMatchButton({ matchData }: { matchData: Partial<IMatch> }) {
-//   return (
-//     <RtkActionButton
-//       mutation={useCreateMatchMutation}
-//       data={matchData}
-//       primaryText="Create Match"
-//       loadingText="Creating..."
-//       className="_primaryBtn"
-//       onSuccess={() => {
-//         // Refresh or navigate
-//       }}
-//     >
-//       <PlusIcon />
-//     </RtkActionButton>
-//   );
-// }

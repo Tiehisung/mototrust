@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 import {
   useLazyGlobalSearchQuery,
   useLazyQuickSearchQuery,
-} from "@/services/search.endpoints";
+} from "@/services/searchApi";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
 import { Card } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";

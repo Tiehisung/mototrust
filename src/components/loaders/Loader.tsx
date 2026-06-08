@@ -1,6 +1,5 @@
- 
 
-import { icons } from "@/assets/icons/icons";
+import { Loader2, Loader as LucideLoader } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { ImSpinner2 } from "react-icons/im";
 
@@ -46,11 +45,11 @@ const Loader: React.FC<{
 
   const Icon =
     icon == "ring" ? (
-      <icons.loader className={`animate-spin ${_size}`} />
+      <Loader2 className={`animate-spin ${_size}`} />
     ) : icon == "cone-ring" ? (
       <ImSpinner2 className={`animate-spin ${_size} `} />
     ) : (
-      <icons.loaderSpiral className={`animate-spin ${_size} `} />
+      <LucideLoader className={`animate-spin ${_size} `} />
     );
 
   return (

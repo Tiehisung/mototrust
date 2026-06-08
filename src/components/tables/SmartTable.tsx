@@ -140,7 +140,7 @@ export default function SmartTable({
           </Button>
 
           <Button
-            primaryText="Delete table"
+            text="Delete table"
             onClick={handleDeleteTable}
             className={` h-fit flex items-center gap-2  ${
               isTable() ? " " : "hidden"

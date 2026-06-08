@@ -1,10 +1,18 @@
 import { IFileProps } from "@/types/file.interface";
- 
-export function MediaPreview({ file,className }: { file: IFileProps,className?:string }) {
+
+export function MediaPreview({
+  file,
+  className,
+}: {
+  file: IFileProps;
+  className?: string;
+}) {
   const isVideo = file?.resource_type === "video";
 
   return (
-    <div className={`relative aspect-square overflow-hidden rounded-lg ${className}`}>
+    <div
+      className={`relative aspect-square overflow-hidden rounded-lg ${className}`}
+    >
       {isVideo ? (
         <video
           src={file?.secure_url}

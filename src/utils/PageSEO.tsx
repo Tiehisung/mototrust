@@ -1,5 +1,6 @@
 // components/SEO/PageSEO.tsx
-import { TEAM } from "@/data/team";
+ 
+import { ENV } from "@/lib/env";
 import { Helmet } from "react-helmet";
 
 interface IPageSEOProps {
@@ -13,12 +14,12 @@ interface IPageSEOProps {
 const pageConfig = {
   home: {
     title: "Official Website",
-    description: `Official website of ${TEAM.name}. Get the latest news, match updates, player profiles, and everything about your favorite team.`,
-    keywords: ["football", "soccer", TEAM.name, "Ghana football"],
+    description: `Official website of ${ENV.APP_NAME}. Get the latest news, match updates, player profiles, and everything about your favorite ENV.`,
+    keywords: ["football", "soccer", ENV.APP_NAME, "Ghana football"],
   },
   players: {
     title: "Players",
-    description: `Meet the ${TEAM.name} squad. View player profiles, stats, and career highlights.`,
+    description: `Meet the ${ENV.APP_NAME} squad. View player profiles, stats, and career highlights.`,
     keywords: ["players", "squad", "football team", "player stats"],
     images: [
       "https://res.cloudinary.com/djzfztrig/image/upload/v1775161029/assets-storage/pbbsnmw7uvsnmghwbyxc.jpg",
@@ -33,38 +34,38 @@ const pageConfig = {
   },
   matches: {
     title: "Matches & Fixtures",
-    description: `Check ${TEAM.name} upcoming fixtures, live scores, and match results.`,
+    description: `Check ${ENV.APP_NAME} upcoming fixtures, live scores, and match results.`,
     keywords: ["fixtures", "results", "live scores", "match schedule"],
   },
   news: {
     title: "News",
-    description: `Latest news, updates, and announcements from ${TEAM.name}.`,
+    description: `Latest news, updates, and announcements from ${ENV.APP_NAME}.`,
     keywords: ["football news", "club updates", "transfer news"],
   },
   squad: {
     title: "Squad",
-    description: `Meet the players and coaching staff of ${TEAM.name}. Explore profiles, stats, and roles of every member of the squad.`,
+    description: `Meet the players and coaching staff of ${ENV.APP_NAME}. Explore profiles, stats, and roles of every member of the squad.`,
     keywords: [
       "squad",
       "players",
       "coaching staff",
       "team roster",
-      `${TEAM.name} players`,
+      `${ENV.APP_NAME} players`,
     ],
   },
   gallery: {
     title: "Gallery",
-    description: `Browse photos and videos from ${TEAM.name} matches, training, and events.`,
+    description: `Browse photos and videos from ${ENV.APP_NAME} matches, training, and events.`,
     keywords: ["photos", "videos", "match highlights", "gallery"],
   },
   sponsors: {
     title: "Sponsors & Partners",
-    description: `Meet the official sponsors and partners supporting ${TEAM.name}.`,
+    description: `Meet the official sponsors and partners supporting ${ENV.APP_NAME}.`,
     keywords: ["sponsors", "partners", "supporters", "donations"],
   },
   contact: {
     title: "Contact Us",
-    description: `Get in touch with ${TEAM.name}. Contact information for inquiries, sponsorship, and support.`,
+    description: `Get in touch with ${ENV.APP_NAME}. Contact information for inquiries, sponsorship, and support.`,
     keywords: ["contact", "email", "phone", "location"],
   },
 };
@@ -74,13 +75,13 @@ export const PageSEO = ({
   title: customTitle,
   description: customDescription,
   image,
-  url = TEAM.url,
+  url = ENV.APP_URL,
 }: IPageSEOProps) => {
   const config = pageConfig[page as keyof typeof pageConfig];
   const title = customTitle || config.title;
   const description = customDescription || config.description;
-  const fullTitle = `${title} | ${TEAM.name}`;
-  const ogImage = image || TEAM.logo;
+  const fullTitle = `${title} | ${ENV.APP_NAME}`;
+  const ogImage = image || ENV.LOGO_URL;
 
   return (
     <Helmet>
@@ -91,7 +92,7 @@ export const PageSEO = ({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:site_name" content={TEAM.name} />
+      <meta property="og:site_name" content={ENV.APP_NAME} />
       <meta property="og:url" content={url} />
 
       <meta name="twitter:card" content="summary_large_image" />
@@ -101,7 +102,7 @@ export const PageSEO = ({
 
       <link
         rel="canonical"
-        href={`${TEAM.url}/${page === "home" ? "" : page}`}
+        href={`${ENV.APP_URL}/${page === "home" ? "" : page}`}
       />
     </Helmet>
   );

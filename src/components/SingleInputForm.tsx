@@ -1,27 +1,34 @@
 import { CSSProperties, useEffect, useState } from "react";
 import { Button } from "./buttons/Button";
-import { Input } from "./input/Inputs";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { apiConfig } from "@/lib/configs";
 import { fireEscape } from "@/hooks/Esc";
 import { useUpdateSearchParams } from "@/hooks/params";
 import { TButtonVariant } from "./ui/button";
 import { getErrorMessage } from "@/lib/error";
+import { Input } from "./form";
 
 interface IProps {
+  placeholder: string;
   className?: string;
-  variant?: TButtonVariant
-  primaryText?: string;
+  variant?: TButtonVariant;
+  buttonText?: string;
   loadingText?: string;
-  uri: string;
-  method: "PUT" | "POST" | "DELETE" | "GET";
-  body?: unknown;
+  // RTK Query mutation hook (required)
+  mutationHook: () => any; // RTK Query mutation hook
   escapeOnEnd?: boolean;
   styles?: CSSProperties;
   title: string;
   fieldName: string;
   useParam?: boolean;
+  // Additional options
+  onSuccess?: (data: any) => void;
+  onError?: (error: any) => void;
+  transformData?: (input: string, existingBody?: any) => any;
+  successMessage?: string;
+  errorMessage?: string;
+  // Optional body data to merge with input
+  body?: unknown;
 }
 
 export function SingleInputForm(props: IProps) {
@@ -30,43 +37,51 @@ export function SingleInputForm(props: IProps) {
   const { setParam } = useUpdateSearchParams();
   const [waiting, setWaiting] = useState(false);
 
+  // Initialize mutation
+  const [executeMutation, mutationState] = props.mutationHook();
+
   useEffect(() => {
     if (props.useParam && input) setParam(props?.fieldName ?? "input", input);
   }, [input, props.useParam, props.fieldName, setParam]);
 
   const handleAction = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     try {
       setWaiting(true);
-      const response = await fetch(
-        props.uri?.startsWith(apiConfig.base)
-          ? props.uri
-          : props.uri?.startsWith("/")
-            ? `${apiConfig.base}${props.uri}`
-            : `${apiConfig.base}/${props.uri}`,
-        {
-          method: props.method ?? "PUT",
-          headers: { "Content-Type": "application/json" },
-          cache: "no-cache",
-          body: JSON.stringify({
+
+      // Prepare data for mutation
+      const mutationData = props.transformData
+        ? props.transformData(input, props.body)
+        : {
             ...(props.body ?? {}),
-            
             [props.fieldName ?? "input"]: input,
-          }),
-        },
-      );
-      const results = await response.json();
-      toast.info(results.message);
-      setWaiting(false);
-    } catch (error) {
-      toast.error(getErrorMessage(error));
-    } finally {
-      setWaiting(false);
-      // Use navigate(0) as a soft refresh instead of router.refresh()
+          };
+
+      const result = await executeMutation(mutationData).unwrap();
+
+      toast.success(props.successMessage || result?.message || "Success!");
+
+      if (props.onSuccess) {
+        props.onSuccess(result);
+      }
+
+      // Refresh and cleanup
       navigate(0);
       if (props.escapeOnEnd) fireEscape();
+    } catch (error) {
+      const errorMsg = props.errorMessage || getErrorMessage(error);
+      toast.error(errorMsg);
+
+      if (props.onError) {
+        props.onError(error);
+      }
+    } finally {
+      setWaiting(false);
     }
   };
+
+  const isLoading = waiting || mutationState?.isLoading;
 
   return (
     <form
@@ -79,13 +94,13 @@ export function SingleInputForm(props: IProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         className="grow"
-        placeholder="New Role"
+        placeholder={props.placeholder}
       />
 
       <Button
-        primaryText={props.primaryText}
-        waiting={waiting}
-        waitingText={props?.loadingText ?? "Saving..."}
+       text={props.buttonText}
+        loading={isLoading}
+        loadingText={props?.loadingText ?? "Saving..."}
         className="w-full justify-center"
         variant={props?.variant}
       />

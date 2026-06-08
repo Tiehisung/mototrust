@@ -5,19 +5,18 @@ export interface IAuthResponse {
     message: string;
     data: {
         user: IUser;
-        accessToken: string;
-        refreshToken: string;
+        token: string;
     };
 }
 
 export interface ILoginCredentials {
-    email: string;
+    phoneNumber: string;
     password: string;
 }
 
 export interface IRegisterCredentials {
     name: string;
-    email: string;
+    phoneNumber: string;
     password: string;
 }
 
@@ -25,7 +24,6 @@ export interface ITokenRefreshResponse {
     success: boolean;
     message: string;
     data: {
-        accessToken: string;
-        refreshToken: string;
+        token: string;
     };
 }
