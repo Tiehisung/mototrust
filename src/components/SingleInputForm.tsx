@@ -98,9 +98,9 @@ export function SingleInputForm(props: IProps) {
       />
 
       <Button
-        primaryText={props.buttonText}
-        waiting={isLoading}
-        waitingText={props?.loadingText ?? "Saving..."}
+       text={props.buttonText}
+        loading={isLoading}
+        loadingText={props?.loadingText ?? "Saving..."}
         className="w-full justify-center"
         variant={props?.variant}
       />

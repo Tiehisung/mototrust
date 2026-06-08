@@ -103,8 +103,8 @@ export function ConfirmDialog({
               variant={variant}
               onClick={handleConfirm}
               disabled={isLoading}
-              waiting={isLoading}
-              primaryText={confirmText}
+              loading={isLoading}
+              text={confirmText}
             />
           </AlertDialogAction>
 

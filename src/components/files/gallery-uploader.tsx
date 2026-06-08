@@ -105,7 +105,7 @@ export function GalleryUploader({
           <Button
             onClick={handleUpload}
             disabled={isLoading}
-            primaryText={isLoading ? "Uploading..." : "Upload Gallery"}
+            text={isLoading ? "Uploading..." : "Upload Gallery"}
             className="w-full"
           />
         </>

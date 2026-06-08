@@ -108,9 +108,9 @@ export function GalleryUpload({
             <div className="flex justify-center">
               <Button
                 type="submit"
-                waiting={isLoading}
-                waitingText="Saving..."
-                primaryText="Save Gallery"
+                loading={isLoading}
+                loadingText="Saving..."
+                text="Save Gallery"
                 className="_primaryBtn w-48 h-10 justify-center"
               />
             </div>

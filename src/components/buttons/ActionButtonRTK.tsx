@@ -67,10 +67,10 @@ export function RtkActionButton<T = any>({
 
   return (
     <Button
-      waiting={isLoading}
+      loading={isLoading}
       disabled={disabled || isLoading}
-      primaryText={primaryText}
-      waitingText={loadingText}
+      text={primaryText}
+      loadingText={loadingText}
       onClick={handleAction}
       className={className}
       styles={styles}
