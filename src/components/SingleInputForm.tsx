@@ -107,3 +107,4 @@ export function SingleInputForm(props: IProps) {
     </form>
   );
 }
+`https://vercel.com/new/import?framework=vite&hasTrialAvailable=1&id=1162279039&name=MotoMart-GH&owner=Tiehisung&project-name=moto-mart-gh&provider=github&remainingProjects=1&s=https%3A%2F%2Fgithub.com%2FTiehisung%2FMotoMart-GH&teamSlug=soskodes-projects&totalProjects=1`;
