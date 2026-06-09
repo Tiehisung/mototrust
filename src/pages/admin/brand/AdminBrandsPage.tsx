@@ -191,7 +191,7 @@ const AdminBrandsPage = () => {
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-end gap-1">
                         <MODAL
-                          title={"Add Brand"}
+                          title={"Edit Brand"}
                           modalSize="md"
                           showCloseButton
                           closeOnOutsideClick={!isLoading}
