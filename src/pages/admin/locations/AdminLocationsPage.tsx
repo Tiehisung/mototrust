@@ -18,6 +18,7 @@ import { LocationForm } from "./LocationForm";
 import { fireEscape } from "@/hooks/Esc";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Plus } from "lucide-react";
+import { Button } from "@/components/buttons/Button";
 
 // ============================================
 // MAIN PAGE
@@ -25,7 +26,8 @@ import { Plus } from "lucide-react";
 const AdminLocationsPage = () => {
   const { data, isLoading } = useGetAdminLocationsQuery();
 
-  const [toggleActive] = useToggleLocationActiveMutation();
+  const [toggleActive, { isLoading: isToggling }] =
+    useToggleLocationActiveMutation();
   const [deleteLocation] = useDeleteLocationMutation();
 
   const [filterRegion, setFilterRegion] = useState("All");
@@ -142,7 +144,7 @@ const AdminLocationsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((loc) => (
+              {filtered.map((loc, ) => (
                 <tr
                   key={loc._id}
                   className={`border-b border-border last:border-0 ${!loc.isActive ? "opacity-50" : ""}`}
@@ -166,9 +168,11 @@ const AdminLocationsPage = () => {
                     {loc.displayOrder}
                   </td>
                   <td className="px-4 py-3">
-                    <button
+                    <Button
+                      size="xs"
                       onClick={() => handleToggle(loc._id)}
-                      className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${loc.isActive ? "bg-success/10 text-success" : "bg-red-50 text-red-500"}`}
+                      loading={isToggling}
+                      className={`inline-flex items-center gap-1 cursor-pointer text-xs font-medium px-2 py-0.5 rounded-full ${loc.isActive ? "bg-success/10 text-success" : "bg-red-50 text-red-500"}`}
                     >
                       {loc.isActive ? (
                         <>
@@ -181,7 +185,7 @@ const AdminLocationsPage = () => {
                           Inactive
                         </>
                       )}
-                    </button>
+                    </Button>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-1">
