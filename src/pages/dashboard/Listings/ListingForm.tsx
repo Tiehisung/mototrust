@@ -14,6 +14,7 @@ import {
 } from "./validations";
 import { Button } from "@/components/buttons/Button";
 import { useListingForm } from "@/hooks/useListingForm";
+import { useGetBrandsQuery } from "@/services/brandApi";
 
 // ============================================
 // CONSTANTS
@@ -74,6 +75,17 @@ const STEP_FIELDS: Record<number, (keyof ICreateListingFormData)[]> = {
 // ============================================
 const ListingForm = () => {
   const navigate = useNavigate();
+  const { data: brandsData } = useGetBrandsQuery();
+
+  // Build brand options from API
+  const brandOptions = [
+    { value: "", label: "Select brand" },
+    ...(brandsData?.data || []).map((brand) => ({
+      value: brand.name,
+      label: `${brand.name}${brand.isPopular ? " ⭐" : ""}`,
+    })),
+  ];
+
   const [createListing, { isLoading }] = useCreateListingMutation();
   const {
     formData,
@@ -231,7 +243,7 @@ const ListingForm = () => {
                 <Select
                   label="Brand"
                   required
-                  options={BRANDS}
+                  options={brandOptions}
                   error={errors.brand?.message}
                   {...field}
                 />

@@ -8,11 +8,16 @@ import {
   HiOutlineArrowRight,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa";
+import { useAppSelector } from "@/store/hooks/store";
+import { useGetPopularBrandsQuery } from "@/services/brandApi";
 
-const BRANDS = ["All", "Haojue", "Bajaj", "Royal", "Honda", "Yamaha", "TVS"];
 const LOCATIONS = ["All", "Wa", "Lawra", "Tumu", "Jirapa", "Nadowli", "Bamahu"];
 
 const HomePage = () => {
+  const { user } = useAppSelector((s) => s.auth);
+  const { data: popularBrandsData } = useGetPopularBrandsQuery();
+  const popularBrands = [{ name: "All" }, popularBrandsData?.data].flat();
+ 
   const [selectedBrand, setSelectedBrand] = useState("All");
   const [selectedLocation, setSelectedLocation] = useState("All");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
@@ -28,7 +33,7 @@ const HomePage = () => {
   return (
     <div className="space-y-10 pb-12">
       {/* ============ HERO ============ */}
-      <section className="text-center pt-16 pb-4">
+      <section className="text-center pb-4">
         <div className="inline-flex items-center gap-2 bg-brand-muted text-brand text-xs font-medium px-3 py-1 rounded-full mb-4">
           <HiOutlineShieldCheck className="w-3.5 h-3.5" />
           Trusted marketplace in Upper West
@@ -54,7 +59,11 @@ const HomePage = () => {
             Browse bikes
           </Link>
           <Link
-            to="/auth/register"
+            to={
+              user?.role == "seller"
+                ? "/dashboard/listings/create"
+                : "/auth/register"
+            }
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-surface-elevated border border-border rounded-xl text-sm font-medium
               text-surface-foreground hover:bg-surface-muted transition-colors"
           >
@@ -96,18 +105,18 @@ const HomePage = () => {
 
         {/* Brands */}
         <div className="flex flex-wrap gap-1.5">
-          {BRANDS.map((brand) => (
+          {popularBrands?.map((brand) => (
             <button
-              key={brand}
-              onClick={() => setSelectedBrand(brand)}
+              key={brand?.name}
+              onClick={() => setSelectedBrand(brand?.name as string)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all
                 ${
-                  selectedBrand === brand
+                  selectedBrand === brand?.name
                     ? "bg-brand text-brand-foreground"
                     : "bg-surface-elevated text-muted-foreground border border-border hover:bg-surface-muted"
                 }`}
             >
-              {brand}
+              {brand?.name}
             </button>
           ))}
         </div>

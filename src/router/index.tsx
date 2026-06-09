@@ -63,6 +63,7 @@ import AdminUserDetailPage from "@/pages/admin/AdminUserDetailPage";
 import AdminInspectionDetailPage from "@/pages/admin/inspection/AdminInspectionDetailPage";
 import DashboardLayout from "@/pages/dashboard/Layout";
 import AdminLayout from "@/pages/admin/AdminLayout";
+import AdminBrandsPage from "@/pages/admin/brand/AdminBrandsPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -214,6 +215,10 @@ const applicationRouter = createBrowserRouter([
         ],
       },
       { path: "payments", element: <AdminPaymentsPage /> },
+      {
+        path: "brands",
+        element: <AdminBrandsPage />,
+      },
       { path: "profile", element: <ProfilePage /> },
     ],
   },

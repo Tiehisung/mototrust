@@ -14,8 +14,8 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <span className="text-2xl pb-3">{symbols.motor}</span>
-          <span className="font-display font-bold text-xl text-brand">
-            Moto<span className="text-brand-500">Trust</span>
+          <span className="font-display font-bold text-xl ">
+            Moto<span className="text-brand">Trust</span>
           </span>
         </Link>
 
@@ -24,7 +24,7 @@ const Navbar = () => {
             <>
               {user?.role === "seller" && (
                 <button
-                  onClick={() => navigate("/create-listing")}
+                  onClick={() => navigate("/dashboard/listings/create")}
                   className="flex items-center gap-1.5 px-4 py-2 bg-brand-500 text-primary rounded-2xl text-sm font-medium hover:bg-brand-600 transition-colors"
                 >
                   <HiOutlinePlusCircle className="w-4 h-4" />

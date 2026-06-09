@@ -25,7 +25,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="space-y-1.5">
         {label && (
-          <label className="block text-sm font-medium text-surface-foreground">
+          <label
+            htmlFor={label?.toString()}
+            className="block text-sm font-medium text-surface-foreground"
+          >
             {label}
             {props.required && <span className="text-red-500 ml-1">*</span>}
           </label>
@@ -37,6 +40,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
           <input
+            id={label?.toString()}
             ref={ref}
             className={`
               w-full py-2.5 bg-surface-muted border rounded-xl text-sm

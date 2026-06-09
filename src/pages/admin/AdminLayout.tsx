@@ -8,11 +8,11 @@ import {
   HiOutlineBars3,
   HiOutlineXMark,
   HiOutlineArrowRight,
+  HiOutlineTag,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
 import { LogoutBtn } from "../auth/LogoutButton";
 import { Settings, Users } from "lucide-react";
-
 
 type AdminLink = {
   href: string;
@@ -49,6 +49,11 @@ const adminLinks: AdminLink[] = [
 
   ...adminQuickLinks,
   { href: `/admin/users`, icon: <Users className="w-5 h-5" />, label: "Users" },
+  {
+    href: "/admin/brands",
+    icon: <HiOutlineTag/>,
+    label: "Brands",
+  },
   {
     label: "Settings",
     href: `/admin/profile`,

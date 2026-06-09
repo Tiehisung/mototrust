@@ -35,7 +35,7 @@ export function ConfirmDialog({
   description = "This action cannot be undone.",
   confirmText = "Confirm",
   cancelText = "Cancel",
-  variant = "default",
+  variant = "ghost",
   trigger,
   className,
   size,
@@ -72,7 +72,7 @@ export function ConfirmDialog({
           variant={variant}
           size={size}
           title={typeof title === "string" ? title : ""}
-          className={cn("h-fit", triggerStyles)}
+          className={cn(" ", triggerStyles)}
           disabled={disabled}
           onClick={() => setOpen(true)}
         >

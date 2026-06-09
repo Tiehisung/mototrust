@@ -14,7 +14,7 @@ export default function MainLayout() {
       <ScrollToTop />
 
       <Navbar />
-      <div className={`min-h-screen overflow-x-hidden pb-6 `}>
+      <div className={`min-h-screen overflow-x-hidden pb-6 pt-16 lg:pt-20`}>
         <div className="_page">
           <Outlet />
         </div>

@@ -12,6 +12,7 @@ import {
 } from "react-icons/hi2";
 import { useAppSelector } from "@/store/hooks/store";
 import { LogoutBtn } from "@/pages/auth/LogoutButton";
+import { symbols } from "@/data";
 type DashboardLink = {
   href: string;
   icon: ReactNode;
@@ -120,7 +121,11 @@ const DashboardLayout = () => {
             to="/"
             className="font-display font-bold text-xl text-surface-foreground"
           >
-            Moto<span className="text-brand">Trust</span>
+            <div className='flex items-center '>
+
+            <span className="pb-2.5"> {symbols.motor}</span> Moto
+            <span className="text-brand">Trust</span>
+            </div>
           </Link>
         </div>
         <div className="flex-1 overflow-y-auto px-4 pb-6">
