@@ -30,7 +30,7 @@ const NotAuthorizedPage = () => {
         {/* Logo */}
         <div className="mb-8">
           <img
-            src={staticImages.yamaha}
+            src={staticImages.yamahaLogo}
             alt="logo"
             width={300}
             height={150}

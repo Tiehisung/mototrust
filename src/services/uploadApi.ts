@@ -32,6 +32,15 @@ export const uploadApi = api.injectEndpoints({
             invalidatesTags: ['Uploads',],
         }),
 
+        // MULTIPLE IMAGE UPLOADS
+        uploadImages: builder.mutation<IQueryResponse<ICloudinaryFile[]>, FormData>({
+            query: (formData) => ({
+                url: '/upload/images',
+                method: 'POST',
+                body: formData,
+            }),
+        }),
+
         /**
          * Upload a single video (match highlights, etc)
          * @param formData - FormData with field name 'video'
@@ -56,24 +65,6 @@ export const uploadApi = api.injectEndpoints({
                 body: formData,
             }),
             invalidatesTags: ['Uploads',],
-        }),
-
-        // MULTIPLE UPLOADS
-
-        /**
-         * Upload multiple images (gallery)
-         * @param formData - FormData with field name 'images' (multiple files)
-         * @example
-         * const formData = new FormData();
-         * files.forEach(file => formData.append('images', file));
-         */
-        uploadGallery: builder.mutation<IQueryResponse<ICloudinaryFile[]>, FormData>({
-            query: (formData) => ({
-                url: '/upload/gallery',
-                method: 'POST',
-                body: formData,
-            }),
-            invalidatesTags: ['Uploads'],
         }),
 
         // MIXED UPLOADS
@@ -118,11 +109,12 @@ export const uploadApi = api.injectEndpoints({
 export const {
     // Single upload hooks
     useUploadImageMutation,
+    useUploadImagesMutation,
+
     useUploadVideoMutation,
     useUploadDocumentMutation,
 
-    // Multiple upload hooks
-    useUploadGalleryMutation,
+ 
 
     // Mixed upload hooks
     useUploadMixedMutation,
