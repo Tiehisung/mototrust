@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { useCreateListingMutation } from "@/services/listingsApi";
-
-import { Input, Select, Textarea } from "@/components/form";
 import { HiOutlineArrowLeft } from "react-icons/hi2";
-import { createListingSchema, ICreateListingFormData } from "./validations";
-import { EListingType } from "@/types/listing";
+
+import { useCreateListingMutation } from "@/services/listingsApi";
+import { Input, Select, Textarea } from "@/components/form";
+import { ImageUpload, validateImages } from "@/components/form/ImageUpload";
+import {
+  createListingSchema,
+  type ICreateListingFormData,
+} from "./validations";
+import { Button } from "@/components/buttons/Button";
+import { useListingForm } from "@/hooks/useListingForm";
+
+// ============================================
+// CONSTANTS
+// ============================================
+const TOTAL_STEPS = 5;
 
 const BRANDS = [
   { value: "", label: "Select brand" },
@@ -19,6 +29,7 @@ const BRANDS = [
   { value: "Yamaha", label: "Yamaha" },
   { value: "TVS", label: "TVS" },
   { value: "KTM", label: "KTM" },
+  { value: "Kawasaki", label: "Kawasaki" },
   { value: "Suzuki", label: "Suzuki" },
   { value: "Other", label: "Other" },
 ];
@@ -42,37 +53,111 @@ const LOCATIONS = [
   { value: "Other", label: "Other" },
 ];
 
+const DOCUMENT_TYPES = [
+  { value: "", label: "Select document type" },
+  { value: "Original Registration", label: "Original Registration" },
+  { value: "Duplicate Registration", label: "Duplicate Registration" },
+  { value: "Receipt Only", label: "Receipt Only" },
+];
+
+// Fields to validate per step
+const STEP_FIELDS: Record<number, (keyof ICreateListingFormData)[]> = {
+  1: ["brand"],
+  2: ["condition", "price", "location"],
+  3: ["description"],
+  4: [], // Images validated separately
+  5: ["listingType"],
+};
+
+// ============================================
+// COMPONENT
+// ============================================
 const ListingForm = () => {
   const navigate = useNavigate();
   const [createListing, { isLoading }] = useCreateListingMutation();
-  const [step, setStep] = useState(1);
-  const totalSteps = 4;
+  const {
+    formData,
+    currentStep,
+    lastSaved,
+    updateMultipleFields,
+    setCurrentStep,
+    submitSuccess,
+    clearForm,
+  } = useListingForm();
 
   const {
     register,
     handleSubmit,
     control,
     watch,
+    setValue,
+    trigger,
     formState: { errors },
   } = useForm<ICreateListingFormData>({
     resolver: zodResolver(createListingSchema as any),
-    mode: "onBlur",
-    defaultValues: {
-      priceNegotiable: true,
-      hasDocuments: false,
-      listingType: EListingType.Standard,
-      condition: undefined,
-      brand: "",
-      location: "",
-    },
+    mode: "onChange",
+    defaultValues: formData,
   });
 
+  // Sync Redux → Form on mount (one time)
+  useEffect(() => {
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        setValue(key as keyof ICreateListingFormData, value);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Watch values
   const hasDocuments = watch("hasDocuments");
- 
+  const watchedImages = watch("images") || [];
+
+  // ============================================
+  // HANDLERS
+  // ============================================
+  const handleImagesChange = useCallback(
+    (urls: string[]) => {
+      setValue("images", urls, { shouldValidate: true, shouldDirty: true });
+      updateMultipleFields({ images: urls } as any);
+    },
+    [setValue, updateMultipleFields],
+  );
+
+  const handleNextStep = async () => {
+    const fieldsToValidate = STEP_FIELDS[currentStep] || [];
+
+    // Validate images on step 4
+    if (currentStep === 4) {
+      const imageError = validateImages(watchedImages);
+      if (imageError) {
+        toast.error(imageError);
+        return;
+      }
+    }
+
+    if (fieldsToValidate.length > 0) {
+      const isValid = await trigger(fieldsToValidate);
+      if (!isValid) return;
+    }
+
+    // Save current values to Redux
+    const currentValues = watch();
+    updateMultipleFields(currentValues);
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handlePrevStep = () => {
+    const currentValues = watch();
+    updateMultipleFields(currentValues);
+    setCurrentStep(currentStep - 1);
+  };
 
   const onSubmit = async (data: ICreateListingFormData) => {
     try {
       const result = await createListing(data).unwrap();
+      submitSuccess();
+      clearForm();
       toast.success("Listing created!", {
         description: "Pay the listing fee to publish it.",
       });
@@ -84,44 +169,57 @@ const ListingForm = () => {
     }
   };
 
-  const nextStep = () => setStep((s) => Math.min(s + 1, totalSteps));
-  const prevStep = () => setStep((s) => Math.max(s - 1, 1));
+  const formatLastSaved = () => {
+    if (!lastSaved) return null;
+    return new Date(lastSaved).toLocaleTimeString();
+  };
 
+  // ============================================
+  // RENDER
+  // ============================================
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6 pb-20">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <button
-          onClick={() => navigate(-1)}
-          className="p-2 hover:bg-surface-muted rounded-xl transition-colors"
-        >
-          <HiOutlineArrowLeft className="w-5 h-5 text-muted-foreground" />
-        </button>
-        <div>
-          <h1 className="text-xl font-bold text-surface-foreground">
-            Create Listing
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Step {step} of {totalSteps}
-          </p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 hover:bg-surface-muted rounded-xl transition-colors"
+          >
+            <HiOutlineArrowLeft className="w-5 h-5 text-muted-foreground" />
+          </button>
+          <div>
+            <h1 className="text-xl font-bold text-surface-foreground">
+              Create Listing
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Step {currentStep} of {TOTAL_STEPS}
+            </p>
+          </div>
         </div>
+        {lastSaved && (
+          <span className="text-xs text-muted-foreground bg-surface-muted px-2 py-1 rounded-lg">
+            💾 {formatLastSaved()}
+          </span>
+        )}
       </div>
 
-      {/* Progress bar */}
+      {/* Progress */}
       <div className="flex gap-1">
-        {Array.from({ length: totalSteps }).map((_, i) => (
+        {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
           <div
             key={i}
             className={`h-1 flex-1 rounded-full transition-colors ${
-              i + 1 <= step ? "bg-brand" : "bg-surface-muted"
+              i + 1 <= currentStep ? "bg-brand" : "bg-surface-muted"
             }`}
           />
         ))}
       </div>
 
+      {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* Step 1: Basic Info */}
-        {step === 1 && (
+        {/* ============ STEP 1: BIKE DETAILS ============ */}
+        {currentStep === 1 && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Bike Details
@@ -142,6 +240,7 @@ const ListingForm = () => {
             <Input
               label="Model"
               placeholder="e.g., Super 125"
+              error={errors.model?.message}
               {...register("model")}
             />
             <div className="grid grid-cols-2 gap-3">
@@ -170,8 +269,8 @@ const ListingForm = () => {
           </div>
         )}
 
-        {/* Step 2: Condition & Price */}
-        {step === 2 && (
+        {/* ============ STEP 2: CONDITION & PRICE ============ */}
+        {currentStep === 2 && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Condition & Price
@@ -223,15 +322,15 @@ const ListingForm = () => {
           </div>
         )}
 
-        {/* Step 3: Description & Documents */}
-        {step === 3 && (
+        {/* ============ STEP 3: DETAILS & DOCUMENTS ============ */}
+        {currentStep === 3 && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Details & Documents
             </h2>
             <Textarea
               label="Description"
-              placeholder="Describe your bike - condition, history, any issues..."
+              placeholder="Describe your bike..."
               error={errors.description?.message}
               {...register("description")}
             />
@@ -260,18 +359,8 @@ const ListingForm = () => {
                     render={({ field }) => (
                       <Select
                         label="Document type"
-                        options={[
-                          { value: "", label: "Select type" },
-                          {
-                            value: "Original Registration",
-                            label: "Original Registration",
-                          },
-                          {
-                            value: "Duplicate Registration",
-                            label: "Duplicate Registration",
-                          },
-                          { value: "Receipt Only", label: "Receipt Only" },
-                        ]}
+                        options={DOCUMENT_TYPES}
+                        error={errors.documentType?.message}
                         {...field}
                       />
                     )}
@@ -279,11 +368,13 @@ const ListingForm = () => {
                   <Input
                     label="Chassis Number"
                     placeholder="Enter chassis number"
+                    error={errors.chassisNumber?.message}
                     {...register("chassisNumber")}
                   />
                   <Input
                     label="Engine Number"
                     placeholder="Enter engine number"
+                    error={errors.engineNumber?.message}
                     {...register("engineNumber")}
                   />
                 </div>
@@ -292,8 +383,24 @@ const ListingForm = () => {
           </div>
         )}
 
-        {/* Step 4: Listing Type */}
-        {step === 4 && (
+        {/* ============ STEP 4: PHOTOS ============ */}
+        {currentStep === 4 && (
+          <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+              Photos
+            </h2>
+            <ImageUpload
+              label="Bike Photos"
+              value={watchedImages}
+              onChange={handleImagesChange}
+              error={errors.images?.message}
+              maxFiles={10}
+            />
+          </div>
+        )}
+
+        {/* ============ STEP 5: LISTING TYPE ============ */}
+        {currentStep === 5 && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Listing Type
@@ -303,44 +410,45 @@ const ListingForm = () => {
               name="listingType"
               render={({ field }) => (
                 <div className="space-y-3">
-                  <button
-                    type="button"
-                    onClick={() => field.onChange("standard")}
-                    className={`w-full text-left p-4 rounded-2xl border transition-all ${
-                      field.value === "standard"
-                        ? "border-brand bg-brand-muted"
-                        : "border-border hover:bg-surface-muted"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-surface-foreground">
-                        Standard
-                      </span>
-                      <span className="text-brand font-bold">GHS 25</span>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      30-day listing. Appears in search results.
-                    </p>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => field.onChange("premium")}
-                    className={`w-full text-left p-4 rounded-2xl border transition-all ${
-                      field.value === "premium"
-                        ? "border-brand bg-brand-muted"
-                        : "border-border hover:bg-surface-muted"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-surface-foreground">
-                        Premium
-                      </span>
-                      <span className="text-brand font-bold">GHS 40</span>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Top of search results. Featured badge. 30-day listing.
-                    </p>
-                  </button>
+                  {[
+                    {
+                      value: "standard",
+                      label: "Standard",
+                      price: 25,
+                      desc: "30-day listing • Appears in search results",
+                    },
+                    {
+                      value: "premium",
+                      label: "Premium",
+                      price: 40,
+                      desc: "Featured badge • Top of search • 30-day listing",
+                    },
+                  ].map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => field.onChange(option.value)}
+                      className={`w-full text-left p-4 rounded-2xl border transition-all ${
+                        field.value === option.value
+                          ? "border-brand bg-brand-muted"
+                          : "border-border hover:bg-surface-muted"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="font-semibold text-surface-foreground">
+                            {option.label}
+                          </span>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {option.desc}
+                          </p>
+                        </div>
+                        <span className="text-brand font-bold">
+                          GHS {option.price}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
                 </div>
               )}
             />
@@ -352,44 +460,36 @@ const ListingForm = () => {
           </div>
         )}
 
-        {/* Navigation buttons */}
+        {/* ============ NAVIGATION ============ */}
         <div className="flex gap-3">
-          {step > 1 && (
+          {currentStep > 1 && (
             <button
               type="button"
-              onClick={prevStep}
+              onClick={handlePrevStep}
               className="px-4 py-2.5 bg-surface-elevated border border-border rounded-xl text-sm font-medium
                 text-surface-foreground hover:bg-surface-muted transition-colors"
             >
               Back
             </button>
           )}
-          {step < totalSteps ? (
-            <button
+          {currentStep < TOTAL_STEPS && (
+            <Button
               type="button"
-              onClick={nextStep}
-              className="flex-1 py-2.5 bg-brand text-brand-foreground rounded-xl text-sm font-medium
-                hover:opacity-90 transition-opacity"
-            >
-              Continue
-            </button>
-          ) : (
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="flex-1 py-2.5 bg-brand text-brand-foreground rounded-xl text-sm font-medium
-                hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed
-                flex items-center justify-center gap-2"
-            >
-              {isLoading ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Creating...
-                </>
-              ) : (
-                "Create Listing"
-              )}
-            </button>
+              onClick={handleNextStep}
+              text="Continue"
+              size="lg"
+              className="rounded-xl grow"
+            />
+          )}
+          {currentStep == TOTAL_STEPS && (
+            <Button
+              type={"submit"}
+              loading={isLoading}
+              text="Create Listing"
+              loadingText="Creating..."
+              size="lg"
+              className="rounded-xl grow"
+            />
           )}
         </div>
       </form>
