@@ -1,6 +1,6 @@
 import { IListing } from '@/types/listing';
 import { api } from './api';
-import { IPagination } from '@/types';
+import { IPagination, IQueryResponse } from '@/types';
 
 interface IListingsResponse {
     success: boolean;
@@ -52,7 +52,11 @@ export const listingsApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Listings'],
         }),
-        contactSeller: builder.mutation<any, string>({
+        contactSeller: builder.mutation<IQueryResponse<{
+            sellerName: string,
+            sellerPhone: string,
+            listingTitle: string,
+        }>, string>({
             query: (id) => ({ url: `/listings/${id}/contact`, method: 'POST' }),
         }),
     }),

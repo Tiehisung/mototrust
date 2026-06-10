@@ -11,9 +11,9 @@ import {
   HiOutlineExclamationTriangle,
   HiOutlineCheck,
   HiOutlineIdentification,
- 
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
+import { useGetAdminUserQuery } from "@/services/userApi";
 
 // We'll fetch user data directly since we don't have a single-user admin endpoint
 // For now, we use the getMe pattern or you can add a getUser endpoint
@@ -22,24 +22,9 @@ const AdminUserDetailPage = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // Mock data - In production, fetch from API
-  // const { data, isLoading } = useGetUserByIdQuery(userId!);
-  const isLoading = false;
-  const user = {
-    _id: userId,
-    fullName: "Loading...",
-    phoneNumber: "",
-    role: "seller",
-    isVerified: false,
-    momoVerified: false,
-    ghanaCardImage: "",
-    ghanaCardSelfie: "",
-    ghanaCardNumber: "",
-    region: "",
-    town: "",
-    createdAt: new Date().toISOString(),
-    isActive: true,
-  };
+  const { data, isLoading } = useGetAdminUserQuery(userId as string);
+  const user = data?.data?.user;
+  console.log(data, userId);
 
   const handleVerify = async () => {
     toast.success("User verified successfully");
@@ -73,14 +58,14 @@ const AdminUserDetailPage = () => {
           <div className="bg-surface-elevated border border-border rounded-3xl p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="w-20 h-20 bg-brand-muted rounded-full flex items-center justify-center text-brand font-bold text-3xl shrink-0">
-                {user.fullName?.charAt(0)?.toUpperCase() || "?"}
+                {user?.fullName?.charAt(0)?.toUpperCase() || "?"}
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-3">
                   <h1 className="text-2xl font-bold text-surface-foreground">
-                    {user.fullName}
+                    {user?.fullName}
                   </h1>
-                  {user.isVerified ? (
+                  {user?.isVerified ? (
                     <span className="_badge _badgeVerified text-xs">
                       <HiOutlineShieldCheck className="w-3.5 h-3.5" /> Verified
                     </span>
@@ -94,26 +79,29 @@ const AdminUserDetailPage = () => {
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-sm text-muted-foreground">
                   <span className="flex items-center gap-1.5">
                     <HiOutlinePhone className="w-4 h-4" />
-                    {user.phoneNumber || "N/A"}
+                    {user?.phoneNumber || "N/A"}
                   </span>
-                  {user.town && (
+                  {user?.town && (
                     <span className="flex items-center gap-1.5">
                       <HiOutlineMapPin className="w-4 h-4" />
-                      {user.town}
-                      {user.region ? `, ${user.region}` : ""}
+                      {user?.town}
+                      {user?.region ? `, ${user?.region}` : ""}
                     </span>
                   )}
                   <span className="flex items-center gap-1.5">
                     <HiOutlineCalendarDays className="w-4 h-4" />
                     Joined{" "}
-                    {new Date(user.createdAt).toLocaleDateString("en-GH", {
-                      dateStyle: "medium",
-                    })}
+                    {new Date(user?.createdAt as string).toLocaleDateString(
+                      "en-GH",
+                      {
+                        dateStyle: "medium",
+                      },
+                    )}
                   </span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                {!user.isVerified && (
+                {!user?.isVerified && (
                   <button
                     onClick={handleVerify}
                     className="px-4 py-2 bg-success text-success-foreground rounded-xl text-sm font-medium
@@ -123,7 +111,7 @@ const AdminUserDetailPage = () => {
                     Verify User
                   </button>
                 )}
-                {user.isActive && (
+                {user?.isActive && (
                   <button
                     onClick={handleDeactivate}
                     className="px-4 py-2 bg-red-50 text-red-600 rounded-xl text-sm font-medium
@@ -146,21 +134,21 @@ const AdminUserDetailPage = () => {
                 </h2>
                 <div className="grid grid-cols-2 gap-4">
                   {[
-                    { label: "Role", value: user.role, capitalize: true },
+                    { label: "Role", value: user?.role, capitalize: true },
                     {
                       label: "Status",
-                      value: user.isActive ? "Active" : "Deactivated",
+                      value: user?.isActive ? "Active" : "Deactivated",
                     },
                     {
                       label: "Momo Verified",
-                      value: user.momoVerified ? "Yes" : "No",
+                      value: user?.momoVerified ? "Yes" : "No",
                     },
                     {
                       label: "Identity Verified",
-                      value: user.isVerified ? "Yes" : "No",
+                      value: user?.isVerified ? "Yes" : "No",
                     },
-                    { label: "Region", value: user.region || "N/A" },
-                    { label: "Town", value: user.town || "N/A" },
+                    { label: "Region", value: user?.region || "N/A" },
+                    { label: "Town", value: user?.town || "N/A" },
                   ].map((item) => (
                     <div key={item.label}>
                       <p className="text-xs text-muted-foreground">
@@ -177,45 +165,49 @@ const AdminUserDetailPage = () => {
               </div>
 
               {/* Verification Documents */}
-              {(user.ghanaCardImage || user.ghanaCardSelfie) && (
+              {(user?.ghanaCardImage || user?.ghanaCardSelfie) && (
                 <div className="bg-surface-elevated border border-border rounded-2xl p-5">
                   <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
                     Verification Documents
                   </h2>
-                  {user.ghanaCardNumber && (
+                  {user?.ghanaCardNumber && (
                     <p className="text-sm text-muted-foreground mb-4">
                       Card Number:{" "}
                       <span className="font-medium text-surface-foreground">
-                        {user.ghanaCardNumber}
+                        {user?.ghanaCardNumber}
                       </span>
                     </p>
                   )}
                   <div className="grid grid-cols-2 gap-4">
-                    {user.ghanaCardImage && (
+                    {user?.ghanaCardImage && (
                       <div>
                         <p className="text-xs text-muted-foreground mb-1.5 flex items-center gap-1">
                           <HiOutlineIdentification className="w-3.5 h-3.5" />
                           Ghana Card
                         </p>
                         <img
-                          src={user.ghanaCardImage}
+                          src={user?.ghanaCardImage}
                           alt="Ghana Card"
                           className="w-full h-48 object-cover rounded-xl cursor-pointer hover:opacity-90 border border-border"
-                          onClick={() => setSelectedImage(user.ghanaCardImage)}
+                          onClick={() =>
+                            setSelectedImage(user?.ghanaCardImage as string)
+                          }
                         />
                       </div>
                     )}
-                    {user.ghanaCardSelfie && (
+                    {user?.ghanaCardSelfie && (
                       <div>
                         <p className="text-xs text-muted-foreground mb-1.5 flex items-center gap-1">
                           <HiOutlineUser className="w-3.5 h-3.5" />
                           Selfie with Card
                         </p>
                         <img
-                          src={user.ghanaCardSelfie}
+                          src={user?.ghanaCardSelfie}
                           alt="Selfie"
                           className="w-full h-48 object-cover rounded-xl cursor-pointer hover:opacity-90 border border-border"
-                          onClick={() => setSelectedImage(user.ghanaCardSelfie)}
+                          onClick={() =>
+                            setSelectedImage(user?.ghanaCardSelfie as string)
+                          }
                         />
                       </div>
                     )}
@@ -233,7 +225,7 @@ const AdminUserDetailPage = () => {
                 <div className="space-y-2">
                   <button
                     onClick={handleVerify}
-                    disabled={user.isVerified}
+                    disabled={user?.isVerified}
                     className="w-full py-2.5 bg-success text-success-foreground rounded-xl text-sm font-medium
                       hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed
                       flex items-center justify-center gap-2"
@@ -242,7 +234,7 @@ const AdminUserDetailPage = () => {
                     Verify Identity
                   </button>
                   <Link
-                    to={`/admin/listings?seller=${user._id}`}
+                    to={`/admin/listings?seller=${user?._id}`}
                     className="w-full py-2.5 bg-surface-muted text-surface-foreground rounded-xl text-sm font-medium
                       hover:bg-surface-elevated border border-border transition-colors
                       flex items-center justify-center gap-2"
@@ -255,12 +247,15 @@ const AdminUserDetailPage = () => {
 
               {/* Metadata */}
               <div className="text-xs text-muted-foreground space-y-1 p-2">
-                <p>User ID: {user._id}</p>
+                <p>User ID: {user?._id}</p>
                 <p>
                   Created:{" "}
-                  {new Date(user.createdAt).toLocaleDateString("en-GH", {
-                    dateStyle: "medium",
-                  })}
+                  {new Date(user?.createdAt as string).toLocaleDateString(
+                    "en-GH",
+                    {
+                      dateStyle: "medium",
+                    },
+                  )}
                 </p>
               </div>
             </div>

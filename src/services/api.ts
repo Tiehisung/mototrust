@@ -16,7 +16,10 @@ export const api = createApi({
             return headers;
         },
     }),
-    tagTypes: ['User','Users', 'Listings', 'MyListings', 'Payments', 'Inspections','Uploads','Me'],
+    tagTypes: [
+        'User', 'Users', 'Listings', 'MyListings', 'Payments',
+        'Inspections', 'Uploads', 'Me', 'Brands', 'Locations'
+    ],
     // keepUnusedDataFor: 300, // Keep data for 5 minutes (in seconds)
     // refetchOnMountOrArgChange: 30, // Refetch if data is older than 30 seconds
     endpoints: () => ({}),

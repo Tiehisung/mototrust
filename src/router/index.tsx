@@ -57,12 +57,14 @@ import AdminInspectionsPage from "@/pages/admin/inspection/AdminInspectionsPage"
 import AdminListingsPage from "@/pages/admin/listing/AdminListingsPage";
 import AdminOverviewPage from "@/pages/admin/AdminOverviewPage";
 import AdminPaymentsPage from "@/pages/admin/AdminPaymentsPage";
-import AdminUsersPage from "@/pages/admin/AdminUsersPage";
 import AdminListingDetailPage from "@/pages/admin/listing/AdminListingDetailPage";
-import AdminUserDetailPage from "@/pages/admin/AdminUserDetailPage";
+import AdminUserDetailPage from "@/pages/admin/users/AdminUserDetailPage";
 import AdminInspectionDetailPage from "@/pages/admin/inspection/AdminInspectionDetailPage";
 import DashboardLayout from "@/pages/dashboard/Layout";
 import AdminLayout from "@/pages/admin/AdminLayout";
+import AdminBrandsPage from "@/pages/admin/brand/AdminBrandsPage";
+import AdminLocationsPage from "@/pages/admin/locations/AdminLocationsPage";
+import AdminUsersPage from "@/pages/admin/users/AdminUsersPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -214,6 +216,14 @@ const applicationRouter = createBrowserRouter([
         ],
       },
       { path: "payments", element: <AdminPaymentsPage /> },
+      {
+        path: "brands",
+        element: <AdminBrandsPage />,
+      },
+      {
+        path: "locations",
+        element: <AdminLocationsPage />,
+      },
       { path: "profile", element: <ProfilePage /> },
     ],
   },
