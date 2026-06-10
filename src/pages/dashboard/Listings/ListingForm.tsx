@@ -15,25 +15,12 @@ import {
 import { Button } from "@/components/buttons/Button";
 import { useListingForm } from "@/hooks/useListingForm";
 import { useGetBrandsQuery } from "@/services/brandApi";
+import { useGetLocationsQuery } from "@/services/locationApi";
 
 // ============================================
 // CONSTANTS
 // ============================================
 const TOTAL_STEPS = 5;
-
-const BRANDS = [
-  { value: "", label: "Select brand" },
-  { value: "Haojue", label: "Haojue" },
-  { value: "Bajaj", label: "Bajaj" },
-  { value: "Royal", label: "Royal" },
-  { value: "Honda", label: "Honda" },
-  { value: "Yamaha", label: "Yamaha" },
-  { value: "TVS", label: "TVS" },
-  { value: "KTM", label: "KTM" },
-  { value: "Kawasaki", label: "Kawasaki" },
-  { value: "Suzuki", label: "Suzuki" },
-  { value: "Other", label: "Other" },
-];
 
 const CONDITIONS = [
   { value: "", label: "Select condition" },
@@ -41,17 +28,6 @@ const CONDITIONS = [
   { value: "Good", label: "Good - Minor signs of use" },
   { value: "Fair", label: "Fair - Visible wear, runs well" },
   { value: "Needs Repair", label: "Needs Repair - Requires work" },
-];
-
-const LOCATIONS = [
-  { value: "", label: "Select location" },
-  { value: "Wa", label: "Wa" },
-  { value: "Lawra", label: "Lawra" },
-  { value: "Tumu", label: "Tumu" },
-  { value: "Jirapa", label: "Jirapa" },
-  { value: "Nadowli", label: "Nadowli" },
-  { value: "Bamahu", label: "Bamahu" },
-  { value: "Other", label: "Other" },
 ];
 
 const DOCUMENT_TYPES = [
@@ -76,6 +52,7 @@ const STEP_FIELDS: Record<number, (keyof ICreateListingFormData)[]> = {
 const ListingForm = () => {
   const navigate = useNavigate();
   const { data: brandsData } = useGetBrandsQuery();
+  const { data: locationsData } = useGetLocationsQuery();
 
   // Build brand options from API
   const brandOptions = [
@@ -325,7 +302,13 @@ const ListingForm = () => {
                 <Select
                   label="Location"
                   required
-                  options={LOCATIONS}
+                  options={[
+                    { value: "", label: "Select location" },
+                    ...(locationsData?.data?.map((d) => ({
+                      label: d.name,
+                      value: d.name,
+                    })) || []),
+                  ]}
                   error={errors.location?.message}
                   {...field}
                 />
