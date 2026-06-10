@@ -5,9 +5,14 @@ export interface IUser {
   role: EUserRole
   isVerified: boolean;
   momoVerified: boolean;
+  isActive: boolean;
+  ghanaCardImage?: string;
+  ghanaCardNumber?: string;
+  ghanaCardSelfie?: string;
   region?: string;
   town?: string;
   createdAt: string;
+  __v: number;
 }
 
 export enum EUserRole {

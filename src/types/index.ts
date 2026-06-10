@@ -1,36 +1,9 @@
-
-
 export interface ISelectOptionLV {
   value: string;
   label: string;
 }
 
-export type TConvertedFile = {
-  name: string;
-  type: string;
-  path: string;
-  bytes?: number;
-};
-
-
-export interface IDeleteFile {
-  _id?: string; //Trace any saved file data on db
-  public_id: string;
-  resource_type?: string;
-}
-
-//Cloudinary
-export enum EPresetType {
-  AUTHENTICATED = "authenticated",
-  UNAUTHENTICATED = "unauthenticated"
-}
-
-export enum EPreset {
-  KFC_SIGNED = "kfc-signed",
-  KFC_UNSIGNED = 'kfc-unsigned'
-};
 export type TResourceType = "image" | "video" | "audio" | "auto";
-// export type TFolders = "images/logos" | "images" | "videos" | "audios";
 
 export type IRecord<T = string | string[] | undefined> = Record<string, T>
 export interface IQueryResponse<T = unknown> {
@@ -39,21 +12,9 @@ export interface IQueryResponse<T = unknown> {
   error?: string;
   data?: T;
   pagination?: IPagination
-}
-export interface IPageProps {
-  searchParams: Promise<Record<string, string | undefined>>;
-  params: Promise<Record<string, string | undefined>>;
+  [x: string]: any
 }
 
-export interface IFormEvents<
-  TSuccess = any,
-  TError = any,
-  TClose = any
-> {
-  onError?: (error?: TError) => void;
-  onSuccess?: (data?: TSuccess) => void;
-  onClose?: (data?: TClose) => void;
-}
 export interface IPagination {
   page: number;
   limit: number;
