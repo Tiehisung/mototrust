@@ -16,20 +16,13 @@ import { Button } from "@/components/buttons/Button";
 import { useListingForm } from "@/hooks/useListingForm";
 import { useGetBrandsQuery } from "@/services/brandApi";
 import { useGetLocationsQuery } from "@/services/locationApi";
+import { CONDITIONS } from "@/data/motor";
 
 // ============================================
 // CONSTANTS
 // ============================================
 const TOTAL_STEPS = 5;
-
-const CONDITIONS = [
-  { value: "", label: "Select condition" },
-  { value: "Excellent", label: "Excellent - Like new" },
-  { value: "Good", label: "Good - Minor signs of use" },
-  { value: "Fair", label: "Fair - Visible wear, runs well" },
-  { value: "Needs Repair", label: "Needs Repair - Requires work" },
-];
-
+ 
 const DOCUMENT_TYPES = [
   { value: "", label: "Select document type" },
   { value: "Original Registration", label: "Original Registration" },

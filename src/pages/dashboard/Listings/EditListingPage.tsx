@@ -11,6 +11,7 @@ import {
 import { Input, Select, Textarea } from "@/components/form";
 import { HiOutlineArrowLeft } from "react-icons/hi2";
 import { createListingSchema, ICreateListingFormData } from "./validations";
+import { CONDITIONS } from "@/data/motor";
 
 const BRANDS = [
   { value: "", label: "Select brand" },
@@ -21,14 +22,6 @@ const BRANDS = [
   { value: "Yamaha", label: "Yamaha" },
   { value: "TVS", label: "TVS" },
   { value: "Other", label: "Other" },
-];
-
-const CONDITIONS = [
-  { value: "", label: "Select condition" },
-  { value: "Excellent", label: "Excellent" },
-  { value: "Good", label: "Good" },
-  { value: "Fair", label: "Fair" },
-  { value: "Needs Repair", label: "Needs Repair" },
 ];
 
 const EditListingPage = () => {
