@@ -9,7 +9,7 @@ import {
 import { FaMotorcycle } from "react-icons/fa6";
 import { ContactSection } from "../Contact/ContactForm";
 import Footer from "../Footer";
-import LandingBikeCard, { BikeCard } from "./BikeCard";
+import { BikeCard } from "./BikeCard";
 import Hero from "./Hero";
 import { useScrollProgressBar } from "@/hooks/useScroll";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -210,7 +210,7 @@ const LandingPage = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {listingsData?.data?.slice(0, 6)?.map((listing, i) => (
+                {listingsData?.data?.slice(0, 6)?.map((listing) => (
                   <BikeCard listing={listing} />
                 ))}
               </div>
