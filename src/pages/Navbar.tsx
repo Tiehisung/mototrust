@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
 import { useAppSelector } from "@/store/hooks/store";
-import { UserMenu } from "./auth/UserMenu";
+import { UserMenu } from "../components/auth/UserMenu";
 import { symbols } from "@/data";
 
 const Navbar = () => {
@@ -12,7 +12,10 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-50 _glass">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
+        <Link
+          to={window.location.pathname == "/" ? "/welcome" : "/"}
+          className="flex items-center gap-2 group"
+        >
           <span className="text-2xl pb-3">{symbols.motor}</span>
           <span className="font-display font-bold text-xl ">
             Moto<span className="text-brand">Trust</span>

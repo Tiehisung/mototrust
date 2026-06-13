@@ -10,7 +10,10 @@ export const createListingSchema = z.object({
         .max(new Date().getFullYear() + 1, 'Year cannot be in the future')
         .optional()
         .or(z.literal('')),
-    mileage: z.number().min(0, 'Mileage cannot be negative').optional().or(z.literal('')),
+    mileage: z.preprocess(
+        (val) => (val === '' || val === undefined ? undefined : Number(val)),
+        z.number().min(0, 'Mileage cannot be negative').optional()
+    ),
     engineCapacity: z.number().min(50, 'Must be at least 50cc').optional().or(z.literal('')),
     condition: z.nativeEnum(EBikeCondition, {
         error: 'Condition is required',

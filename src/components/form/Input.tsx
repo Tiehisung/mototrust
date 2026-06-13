@@ -1,8 +1,11 @@
+import { cn } from "@/lib/utils";
 import { forwardRef, InputHTMLAttributes } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
+import { Label } from "./Label";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  faintLabel?: boolean;
   error?: string;
   icon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -25,13 +28,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="space-y-1.5">
         {label && (
-          <label
+          <Label
             htmlFor={label?.toString()}
-            className="block text-sm font-medium text-surface-foreground"
+            required={props.required}
+            faint={props.faintLabel}
           >
             {label}
-            {props.required && <span className="text-red-500 ml-1">*</span>}
-          </label>
+          </Label>
         )}
         <div className="relative">
           {icon && (
@@ -42,7 +45,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             id={label?.toString()}
             ref={ref}
-            className={`
+            className={cn(
+              `
               w-full py-2.5 bg-surface-muted border rounded-xl text-sm
               placeholder:text-muted-foreground/50
               focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand
@@ -55,8 +59,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                   ? "border-red-300 dark:border-red-700 focus:ring-red-200"
                   : "border-border"
               }
-              ${className}
-            `}
+             `,
+              className,
+            )}
             {...props}
           />
           {rightIcon && (

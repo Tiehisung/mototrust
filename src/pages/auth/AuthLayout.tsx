@@ -13,7 +13,7 @@ const AuthLayout = () => {
             </span>
           </Link>
         </div>
-        <div className="bg-white rounded-3xl shadow-soft p-8">
+        <div className="bg-card rounded-3xl shadow-soft p-8">
           <Outlet />
         </div>
       </div>

@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 import { UserCircle } from "lucide-react";
 import { getInitials } from "@/lib";
-import { SignInController } from "@/pages/auth/signin/Page";
+ 
 import { useAppSelector } from "@/store/hooks/store";
+import { SignInModal } from "@/pages/auth/signin/SignModal";
 
 export default function UserLogButtons() {
   const { user,   } = useAppSelector((s) => s.auth);
@@ -27,6 +28,6 @@ export default function UserLogButtons() {
     );
   }
   return (
-    <SignInController trigger={<UserCircle className="min-h-5 min-w-5 " />} />
+    <SignInModal trigger={<UserCircle className="min-h-5 min-w-5 " />} />
   );
 }

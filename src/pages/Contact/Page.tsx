@@ -1,9 +1,10 @@
-import Contact from "./Contact";
+ 
+import { ContactSection } from "./ContactForm";
 
 const ContactPage = () => {
   return (
     <div className="py-20 ">
-      <Contact />
+      <ContactSection />
     </div>
   );
 };

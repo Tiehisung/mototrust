@@ -120,6 +120,7 @@ const AdminLocationsPage = () => {
         </div>
       ) : (
         <div className="bg-surface-elevated border border-border rounded-2xl overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-border">
@@ -224,6 +225,7 @@ const AdminLocationsPage = () => {
               ))}
             </tbody>
           </table>
+        </div>
         </div>
       )}
     </div>

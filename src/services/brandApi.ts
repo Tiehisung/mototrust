@@ -16,19 +16,22 @@ export enum EBrandTier {
     mid = 'mid',
     economy = 'economy'
 }
+
+interface IBrandResponse { success: boolean; count: number; data: IBrandData[] }
+
 export const brandApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getBrands: builder.query<{ success: boolean; data: IBrandData[] }, void>({
+        getBrands: builder.query<IBrandResponse, void>({
             query: () => '/brands',
             providesTags: ['Brands'],
         }),
-        getPopularBrands: builder.query<{ success: boolean; data: IBrandData[] }, void>({
+        getPopularBrands: builder.query<IBrandResponse, void>({
             query: () => '/brands/popular',
         }),
 
         // Admin
         // Get all brands (including inactive)
-        getAdminBrands: builder.query<{ success: boolean; data: IBrandData[] }, void>({
+        getAdminBrands: builder.query<IBrandResponse, void>({
             query: () => '/brands/all',
             providesTags: ['Brands'],
         }),
@@ -76,8 +79,8 @@ export const brandApi = api.injectEndpoints({
 
 export const {
     useGetBrandsQuery,
-    useGetPopularBrandsQuery, 
-    
+    useGetPopularBrandsQuery,
+
     // Adming
     useGetAdminBrandsQuery,
     useCreateBrandMutation,

@@ -11,6 +11,7 @@ import {
   HiOutlineFire,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
+import { Select } from "@/components/form";
 
 // ============================================
 // STATIC FILTER OPTIONS
@@ -366,46 +367,27 @@ const BrowseListingsPage = () => {
 
           {/* Location + Condition */}
           <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-xs font-medium text-muted-foreground mb-2 block">
-                Location
-              </label>
-              <select
-                value={filters.location}
-                onChange={(e) => {
-                  setFilters({ ...filters, location: e.target.value });
-                  setPage(1);
-                }}
-                className="w-full px-3 py-2 bg-surface-muted border border-border rounded-xl text-sm
-                  focus:outline-none focus:ring-2 focus:ring-brand/20 cursor-pointer"
-              >
-                {LOCATIONS.map((loc) => (
-                  <option key={loc.value} value={loc.value}>
-                    {loc.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="text-xs font-medium text-muted-foreground mb-2 block">
-                Condition
-              </label>
-              <select
-                value={filters.condition}
-                onChange={(e) => {
-                  setFilters({ ...filters, condition: e.target.value });
-                  setPage(1);
-                }}
-                className="w-full px-3 py-2 bg-surface-muted border border-border rounded-xl text-sm
-                  focus:outline-none focus:ring-2 focus:ring-brand/20 cursor-pointer"
-              >
-                {CONDITIONS.map((cond) => (
-                  <option key={cond.value} value={cond.value}>
-                    {cond.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <Select
+              label="Location"
+              faintLabel
+              value={filters.location}
+              options={LOCATIONS}
+              onChange={(e) => {
+                setFilters({ ...filters, location: e.target.value });
+                setPage(1);
+              }}
+            />
+
+            <Select
+              label="Condition"
+              faintLabel
+              value={filters.condition}
+              onChange={(e) => {
+                setFilters({ ...filters, condition: e.target.value });
+                setPage(1);
+              }}
+              options={CONDITIONS}
+            />
           </div>
 
           {/* Price Range */}

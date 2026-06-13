@@ -1,38 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import ScrollToTop from "@/utils/ScrollToTop";
-
-// Layouts
-// import MainLayout from "@/layouts/MainLayout";
-// import AuthLayout from "@/layouts/AuthLayout";
-
-// import DashboardLayout from "@/layouts/DashboardLayout";
-
-// Public Pages
-// import HomePage from "@/pages/public/HomePage";
-// import BrowseListingsPage from "@/pages/public/BrowseListingsPage";
-// import ListingDetailPage from "@/pages/public/ListingDetailPage";
-// import NotFound from "@/pages/public/NotFound";
+ 
 
 // Auth Pages
 import RegisterPage from "@/pages/auth/register/Page";
-// import NotAuthorizedPage from "@/pages/auth/NotAuthorizedPage";
-
-// Dashboard Pages (Seller/Buyer)
-// import DashboardPage from "@/pages/dashboard/DashboardPage";
-// import MyListingsPage from "@/pages/dashboard/MyListingsPage";
-// import CreateListingPage from "@/pages/dashboard/CreateListingPage";
-// import EditListingPage from "@/pages/dashboard/EditListingPage";
-// import PaymentHistoryPage from "@/pages/dashboard/PaymentHistoryPage";
-// import MyInspectionsPage from "@/pages/dashboard/MyInspectionsPage";
-// import ProfilePage from "@/pages/dashboard/ProfilePage";
-// import VerifyIdentityPage from "@/pages/dashboard/VerifyIdentityPage";
-
-// Admin Pages
-// import AdminOverviewPage from "@/pages/admin/AdminOverviewPage";
-// import AdminListingsPage from "@/pages/admin/AdminListingsPage";
-// import AdminUsersPage from "@/pages/admin/AdminUsersPage";
-// import AdminInspectionsPage from "@/pages/admin/AdminInspectionsPage";
-// import AdminPaymentsPage from "@/pages/admin/AdminPaymentsPage";
+ 
 
 // Components
 import ProtectedRoute from "@/pages/auth/ProtectedRoute";
@@ -44,15 +16,14 @@ import NotAuthorizedPage from "@/pages/auth/NotAuthorized";
 import AuthLayout from "@/pages/auth/AuthLayout";
 import SignInPage from "@/pages/auth/signin/Page";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
-import ListingDetailPage from "@/pages/Listing/ListingDetailPage";
+import ListingDetailPage from "@/pages/browse-listing/ListingDetailPage";
 import CreateListingPage from "@/pages/dashboard/Listings/CreateListingPage";
-import MyListingsPage from "@/pages/dashboard/MyListingsPage";
+import MyListingsPage from "@/pages/dashboard/Listings/MyListingsPage";
 import ProfilePage from "@/pages/dashboard/ProfilePage";
 import VerifyIdentityPage from "@/pages/dashboard/VerifyIdentityPage";
-import EditListingPage from "@/pages/dashboard/Listings/EditListingPage";
 import MyInspectionsPage from "@/pages/dashboard/MyInspectionsPage";
-import PaymentHistoryPage from "@/pages/dashboard/PaymentHistoryPage";
-import BrowseListingsPage from "@/pages/Listing/BrowseListingsPage";
+import PaymentHistoryPage from "@/pages/dashboard/payments/PaymentHistoryPage";
+import BrowseListingsPage from "@/pages/browse-listing/BrowseListingsPage";
 import AdminInspectionsPage from "@/pages/admin/inspection/AdminInspectionsPage";
 import AdminListingsPage from "@/pages/admin/listing/AdminListingsPage";
 import AdminOverviewPage from "@/pages/admin/AdminOverviewPage";
@@ -65,6 +36,8 @@ import AdminLayout from "@/pages/admin/AdminLayout";
 import AdminBrandsPage from "@/pages/admin/brand/AdminBrandsPage";
 import AdminLocationsPage from "@/pages/admin/locations/AdminLocationsPage";
 import AdminUsersPage from "@/pages/admin/users/AdminUsersPage";
+import EditListingPage from "@/pages/dashboard/Listings/EditListingPage";
+import LandingPage from "@/pages/home/WelcomePage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -90,6 +63,7 @@ const applicationRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: "welcome", element: <LandingPage /> },
       {
         path: "browse",
         element: <BrowseListingsPage />,
@@ -163,7 +137,7 @@ const applicationRouter = createBrowserRouter([
         path: "listings/:listingId/edit",
         element: (
           <ProtectedRoute allowedRoles={[EUserRole.SELLER]}>
-            <EditListingPage />
+            <EditListingPage  />
           </ProtectedRoute>
         ),
       },

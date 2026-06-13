@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,8 +17,10 @@ import { useAppDispatch } from "@/store/hooks/store";
 import { EUserRole } from "@/types/user";
 import { setCredentials } from "@/store/slices/auth.slice";
 import { cn } from "@/lib/utils";
+import useGetParam from "@/hooks/params";
 
 const RegisterForm = () => {
+  const roleFromUrl = useGetParam("role");
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
 
@@ -27,12 +29,24 @@ const RegisterForm = () => {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
+    setValue,
   } = useForm<IRegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      role: EUserRole.BUYER,
+      role: roleFromUrl as EUserRole,
     },
   });
+  
+  useEffect(() => {
+    if (
+      roleFromUrl &&
+      (roleFromUrl === EUserRole.BUYER || roleFromUrl === EUserRole.SELLER)
+    ) {
+      setValue("role", roleFromUrl as EUserRole);
+    }
+  }, [roleFromUrl, setValue]);
+
+ 
 
   const [registerUser] = useRegisterMutation();
   const dispatch = useAppDispatch();

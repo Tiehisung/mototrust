@@ -57,7 +57,7 @@ const adminLinks: AdminLink[] = [
   {
     href: "/admin/locations",
     icon: <MapPin className="w-5 h-5" />,
-    label: "Loactions",
+    label: "Locations",
   },
   {
     label: "Settings",

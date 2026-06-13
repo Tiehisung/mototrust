@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,29 +9,35 @@ import {
   useCreateListingMutation,
   useUpdateListingMutation,
 } from "@/services/listingsApi";
+import { useGetBrandsQuery } from "@/services/brandApi";
+import { useGetLocationsQuery } from "@/services/locationApi";
+import { useListingForm } from "@/hooks/useListingForm";
 import { Input, Select, Textarea } from "@/components/form";
 import { ImageUpload, validateImages } from "@/components/form/ImageUpload";
 import {
   createListingSchema,
   type ICreateListingFormData,
 } from "./validations";
-import { Button } from "@/components/buttons/Button";
-import { useListingForm } from "@/hooks/useListingForm";
-import { useGetBrandsQuery } from "@/services/brandApi";
-import { useGetLocationsQuery } from "@/services/locationApi";
-import { CONDITIONS } from "@/data/motor";
-import { EDocumentType, IListing } from "@/types/listing";
-import PaymentModal from "../payments/PaymentModal";
-import { enumToOptions } from "@/lib/select";
+import { IListing } from "@/types/listing";
 
 // ============================================
 // CONSTANTS
 // ============================================
 const TOTAL_STEPS = 5;
 
+const CONDITIONS = [
+  { value: "", label: "Select condition" },
+  { value: "Excellent", label: "Excellent - Like new" },
+  { value: "Good", label: "Good - Minor signs of use" },
+  { value: "Fair", label: "Fair - Visible wear, runs well" },
+  { value: "Needs Repair", label: "Needs Repair - Requires work" },
+];
+
 const DOCUMENT_TYPES = [
   { value: "", label: "Select document type" },
-  ...enumToOptions(EDocumentType),
+  { value: "Original Registration", label: "Original Registration" },
+  { value: "Duplicate Registration", label: "Duplicate Registration" },
+  { value: "Receipt Only", label: "Receipt Only" },
 ];
 
 const STEP_FIELDS: Record<number, (keyof ICreateListingFormData)[]> = {
@@ -49,45 +55,33 @@ interface ListingFormProps {
   existingListing?: IListing;
 }
 
-const ListingForm = ({ existingListing }: ListingFormProps) => {
+const EditableListingForm = ({ existingListing }: ListingFormProps) => {
   const navigate = useNavigate();
-  const { data: brandsData } = useGetBrandsQuery();
-  const { data: locationsData } = useGetLocationsQuery();
-
-  // ============================================
-  // PAYMENT MODAL STATE
-  // ============================================
-  const [paymentModal, setPaymentModal] = useState({
-    isOpen: false,
-    listingId: "",
-    listingTitle: "",
-    amount: 0,
-  });
-
-  // Build brand options from API
-  const brandOptions = [
-    { value: "", label: "Select brand" },
-    ...(brandsData?.data || []).map((brand) => ({
-      value: brand.name,
-      label: `${brand.name}${brand.isPopular ? " ⭐" : ""}`,
-    })),
-  ];
-
-  // Build location options from API
-  const locationOptions = [
-    { value: "", label: "Select location" },
-    ...(locationsData?.data || []).map((loc) => ({
-      value: loc.name,
-      label: loc.name,
-    })),
-  ];
-
   const [createListing, { isLoading: isCreating }] = useCreateListingMutation();
   const [updateListing, { isLoading: isUpdating }] = useUpdateListingMutation();
 
   const isLoading = isCreating || isUpdating;
 
-  // Redux form state (create mode only)
+  // Fetch brands and locations
+  const { data: brandsData } = useGetBrandsQuery();
+  const { data: locationsData } = useGetLocationsQuery();
+
+  const brandOptions = [
+    { value: "", label: "Select brand" },
+    ...(brandsData?.data.map((b) => ({
+      value: b.name,
+      label: b.isPopular ? `⭐ ${b.name}` : b.name,
+    })) || []),
+  ];
+
+  const locationOptions = [
+    { value: "", label: "Select location" },
+    ...(locationsData?.data.map((l) => ({
+      value: l.name,
+      label: l.isPopular ? `📍 ${l.name}` : l.name,
+    })) || []),
+  ];
+  // Form state (only for create mode)
   const {
     formData,
     currentStep,
@@ -98,16 +92,9 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
     clearForm,
   } = useListingForm();
 
-  // Build default values based on mode
-  const getDefaultValues = () => {
-    if (existingListing) {
-      return {
-        ...existingListing,
-        images: existingListing.images || [],
-      };
-    }
-    return formData;
-  };
+  // Build default values
+  const defaultValues =
+    existingListing && existingListing ? { ...existingListing } : formData;
 
   const {
     register,
@@ -120,10 +107,10 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
   } = useForm<ICreateListingFormData>({
     resolver: zodResolver(createListingSchema as any),
     mode: "onChange",
-    defaultValues: getDefaultValues(),
+    defaultValues,
   });
 
-  // Sync Redux → Form on mount (create mode only)
+  // Sync Redux → Form (create mode only, on mount)
   useEffect(() => {
     if (!existingListing) {
       Object.entries(formData).forEach(([key, value]) => {
@@ -186,7 +173,7 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
   const onSubmit = async (data: ICreateListingFormData) => {
     try {
       if (existingListing?._id) {
-        // ============ EDIT MODE ============
+        // Update existing
         const result = await updateListing({
           id: existingListing._id,
           data,
@@ -194,69 +181,27 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
         toast.success("Listing updated!", {
           description: "Your changes have been saved.",
         });
-        if (!result.data.listingFee) {
-          setPaymentModal({
-            isOpen: true,
-            listingId: result.data._id,
-            listingTitle:
-              `${result.data.brand} ${result.data.model || ""}`.trim(),
-            amount:
-              result.data.listingFee ||
-              (data.listingType === "premium" ? 40 : 25),
-          });
-        }
         navigate(`/listing/${result.data._id}`);
       } else {
-        // ============ CREATE MODE ============
+        // Create new
         const result = await createListing(data).unwrap();
         submitSuccess();
         clearForm();
-
-        // Open payment modal
-        setPaymentModal({
-          isOpen: true,
-          listingId: result.data._id,
-          listingTitle:
-            `${result.data.brand} ${result.data.model || ""}`.trim(),
-          amount:
-            result.data.listingFee ||
-            (data.listingType === "premium" ? 40 : 25),
+        toast.success("Listing created!", {
+          description: "Pay the listing fee to publish it.",
         });
+        navigate(`/listing/${result.data._id}`);
       }
     } catch (err: any) {
-      toast.error(
-        existingListing
-          ? "Failed to update listing"
-          : "Failed to create listing",
-        { description: err?.data?.message || "Please try again" },
-      );
+      toast.error(existingListing ? "Failed to update" : "Failed to create", {
+        description: err?.data?.message || "Please try again",
+      });
     }
-  };
-
-  const handlePaymentSuccess = () => {
-    toast.success("Payment confirmed! Your listing is now live.", {
-      description: "It will be visible after admin approval.",
-    });
-  };
-
-  const handlePaymentClose = () => {
-    setPaymentModal((prev) => ({ ...prev, isOpen: false }));
-    navigate(`/listing/${paymentModal.listingId}`);
   };
 
   const formatLastSaved = () => {
     if (!lastSaved) return null;
     return new Date(lastSaved).toLocaleTimeString();
-  };
-
-  // ============================================
-  // RENDER HELPERS
-  // ============================================
-  const renderStep = (step: number, content: React.ReactNode) => {
-    if (existingListing || currentStep === step) {
-      return content;
-    }
-    return null;
   };
 
   // ============================================
@@ -279,23 +224,21 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
             </h1>
             <p className="text-sm text-muted-foreground">
               {existingListing
-                ? `${existingListing?.brand || "Bike"} ${existingListing?.model || ""}`.trim()
+                ? `${existingListing?.brand || ""} ${existingListing?.model || ""}`
                 : `Step ${currentStep} of ${TOTAL_STEPS}`}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          {existingListing && (
-            <span className="text-xs text-warning bg-warning/10 px-2 py-1 rounded-lg font-medium">
-              Editing
-            </span>
-          )}
-          {!existingListing && lastSaved && (
-            <span className="text-xs text-muted-foreground bg-surface-muted px-2 py-1 rounded-lg">
-              💾 {formatLastSaved()}
-            </span>
-          )}
-        </div>
+        {!existingListing && lastSaved && (
+          <span className="text-xs text-muted-foreground bg-surface-muted px-2 py-1 rounded-lg">
+            💾 {formatLastSaved()}
+          </span>
+        )}
+        {existingListing && (
+          <span className="text-xs text-warning bg-warning/10 px-2 py-1 rounded-lg">
+            Editing
+          </span>
+        )}
       </div>
 
       {/* Progress (create mode only) */}
@@ -315,8 +258,7 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* ============ STEP 1: BIKE DETAILS ============ */}
-        {renderStep(
-          1,
+        {(currentStep === 1 || existingListing) && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Bike Details
@@ -363,12 +305,11 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
               error={errors.mileage?.message}
               {...register("mileage", { valueAsNumber: true })}
             />
-          </div>,
+          </div>
         )}
 
         {/* ============ STEP 2: CONDITION & PRICE ============ */}
-        {renderStep(
-          2,
+        {(currentStep === 2 || existingListing) && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Condition & Price
@@ -417,12 +358,11 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
                 />
               )}
             />
-          </div>,
+          </div>
         )}
 
         {/* ============ STEP 3: DETAILS & DOCUMENTS ============ */}
-        {renderStep(
-          3,
+        {(currentStep === 3 || existingListing) && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Details & Documents
@@ -479,12 +419,11 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
                 </div>
               )}
             </div>
-          </div>,
+          </div>
         )}
 
         {/* ============ STEP 4: PHOTOS ============ */}
-        {renderStep(
-          4,
+        {(currentStep === 4 || existingListing) && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Photos
@@ -496,12 +435,11 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
               error={errors.images?.message}
               maxFiles={10}
             />
-          </div>,
+          </div>
         )}
 
         {/* ============ STEP 5: LISTING TYPE ============ */}
-        {renderStep(
-          5,
+        {(currentStep === 5 || existingListing) && (
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Listing Type
@@ -558,12 +496,12 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
                 {errors.listingType.message}
               </p>
             )}
-          </div>,
+          </div>
         )}
 
         {/* ============ NAVIGATION ============ */}
         <div className="flex gap-3">
-          {!existingListing && currentStep > 1 && (
+          {currentStep > 1 && !existingListing && (
             <button
               type="button"
               onClick={handlePrevStep}
@@ -574,41 +512,57 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
             </button>
           )}
 
-          {/* Do not combine these two logic */}
-          {currentStep < TOTAL_STEPS && (
-            <Button
+          {existingListing ? (
+            // Edit mode: just show update button
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="flex-1 py-2.5 bg-brand text-brand-foreground rounded-xl text-sm font-medium
+                hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed
+                flex items-center justify-center gap-2"
+            >
+              {isLoading ? (
+                <>
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                "Save Changes"
+              )}
+            </button>
+          ) : currentStep < TOTAL_STEPS ? (
+            // Create mode: Continue button
+            <button
               type="button"
               onClick={handleNextStep}
-              text="Continue"
-              size="lg"
-              className="rounded-xl grow"
-            />
-          )}
-
-          {currentStep >= TOTAL_STEPS && (
-            <Button
+              className="flex-1 py-2.5 bg-brand text-brand-foreground rounded-xl text-sm font-medium
+                hover:opacity-90 transition-opacity"
+            >
+              Continue
+            </button>
+          ) : (
+            // Create mode: Submit button
+            <button
               type="submit"
-              loading={isLoading}
-              text={existingListing ? "Save Changes" : "Create Listing"}
-              loadingText={existingListing ? "Saving..." : "Creating..."}
-              size="lg"
-              className="rounded-xl grow"
-            />
+              disabled={isLoading}
+              className="flex-1 py-2.5 bg-brand text-brand-foreground rounded-xl text-sm font-medium
+                hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed
+                flex items-center justify-center gap-2"
+            >
+              {isLoading ? (
+                <>
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                "Create Listing"
+              )}
+            </button>
           )}
         </div>
       </form>
-
-      {/* ============ PAYMENT MODAL ============ */}
-      <PaymentModal
-        isOpen={paymentModal.isOpen}
-        onClose={handlePaymentClose}
-        listingId={paymentModal.listingId}
-        listingTitle={paymentModal.listingTitle}
-        amount={paymentModal.amount}
-        onSuccess={handlePaymentSuccess}
-      />
     </div>
   );
 };
 
-export default ListingForm;
+export default EditableListingForm;

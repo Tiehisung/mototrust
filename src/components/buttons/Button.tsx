@@ -1,6 +1,7 @@
 import { CSSProperties, MouseEventHandler } from "react";
 import { VscLoading } from "react-icons/vsc";
 import { TButtonSize, TButtonVariant, Button as Btn } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 interface ButtonProps {
   text?: string;
@@ -39,9 +40,12 @@ export function Button({
   return (
     <Btn
       disabled={loading || disabled}
-      className={`flex items-center gap-2 font-semibold disabled:pointer-events-none disabled:hover:bg-transparent disabled:opacity-60 active:scale-[99%] overflow-hidden ${className} ${
-        loading ? "cursor-wait" : "cursor-pointer"
-      }  `}
+      className={cn(
+        `flex items-center gap-2 font-semibold disabled:pointer-events-none disabled:hover:bg-transparent disabled:opacity-60 active:scale-[99%] overflow-hidden ${
+          loading ? "cursor-wait" : "cursor-pointer"
+        }  `,
+        className,
+      )}
       variant={variant}
       size={size}
       type={type}
@@ -50,8 +54,8 @@ export function Button({
       style={styles}
       id={id}
     >
-      <span hidden={!text}>{loading && loadingText ? loadingText : text}</span>
       {loading ? <VscLoading className={` animate-spin `} /> : children}
+      <span hidden={!text}>{loading && loadingText ? loadingText : text}</span>
     </Btn>
   );
 }

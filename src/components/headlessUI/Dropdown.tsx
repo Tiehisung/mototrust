@@ -4,7 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 
 export interface DropdownItem {
-  label: string;
+  label: ReactNode;
   href?: string;
   onClick?: () => void;
   icon?: ReactNode;
@@ -52,7 +52,7 @@ export function Dropdown({
         >
           <div className="px-1 py-1">
             {items.map((item, index) => (
-              <Menu.Item key={index} disabled={item.disabled} >
+              <Menu.Item key={index} disabled={item.disabled}>
                 {({ active, disabled }) => {
                   const classes = `group flex w-full items-center rounded-md px-3 py-2 text-sm ${
                     active
@@ -87,6 +87,8 @@ export function Dropdown({
                       {item.label}
                     </button>
                   );
+
+                  
                 }}
               </Menu.Item>
             ))}

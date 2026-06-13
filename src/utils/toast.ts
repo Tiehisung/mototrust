@@ -75,16 +75,16 @@ export const showToast = ({
     }
 };
 
-export const smartToast = ({ success, message, error, }: Partial<Omit<IQueryResponse, 'error'> & { error: unknown }>) => {
+export const smartToast = ({ success, message, error, title }: Partial<Omit<IQueryResponse, 'error'> & { error: unknown, title?: string }>) => {
     const msg = error ? getErrorMessage(error) : message
     const type = error ? false : success
 
     switch (type) {
         case true:
-            return toast.success(msg, { position: 'bottom-center' });
+            return toast.success(title || '', { description: msg, position: 'bottom-center' });
         case false:
-            return toast.error(msg, { position: 'bottom-center' });
+            return toast.error(title || '', { description: msg, position: 'bottom-center' });
         default:
-            return toast(msg, { position: 'bottom-center' });
+            return toast(title || '', { description: msg, position: 'bottom-center' });
     }
 };

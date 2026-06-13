@@ -2,13 +2,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
- 
+
 import { useUpdateProfileMutation } from "@/services/authApi";
- 
+
 import { Input, Select } from "@/components/form";
 import { HiOutlineUser, HiOutlineMapPin } from "react-icons/hi2";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/store";
 import { setUser } from "@/store/slices/auth.slice";
+import { GHANA_REGIONS } from "@/data/location";
 
 const profileSchema = z.object({
   fullName: z.string().min(2, "Name too short").max(50, "Name too long"),
@@ -20,12 +21,7 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 
 const REGIONS = [
   { value: "", label: "Select region" },
-  { value: "Upper West", label: "Upper West" },
-  { value: "Upper East", label: "Upper East" },
-  { value: "Northern", label: "Northern" },
-  { value: "Savannah", label: "Savannah" },
-  { value: "North East", label: "North East" },
-  { value: "Other", label: "Other" },
+  ...GHANA_REGIONS.map((r) => ({ value: r, label: r })),
 ];
 
 const ProfilePage = () => {

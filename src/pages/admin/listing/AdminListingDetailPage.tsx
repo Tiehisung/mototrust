@@ -107,7 +107,7 @@ const AdminListingDetailPage = () => {
           <div className="flex-1">
             <p className="text-sm font-medium text-warning">Pending Review</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {listing.paymentStatus === "unpaid"
+              {listing.paymentStatus === "pending"
                 ? "Seller has not paid the listing fee yet."
                 : "This listing needs your approval to go live."}
             </p>

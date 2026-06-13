@@ -36,19 +36,7 @@ export interface IListing {
     updatedAt: string;
     expiresAt: string;
 }
-
-export enum EBikeBrand {
-    Haojue = 'Haojue',
-    Bajaj = 'Bajaj',
-    Royal = 'Royal',
-    Honda = 'Honda',
-    Yamaha = 'Yamaha',
-    TVS = 'TVS',
-    KTM = 'KTM',
-    Kawasaki = 'Kawasaki',
-    Suzuki = 'Suzuki',
-    Other = 'Other'
-}
+ 
 
 export enum EBikeCondition {
     Excellent = 'Excellent',
@@ -71,9 +59,11 @@ export enum EListingType {
 }
 
 export enum EPaymentStatus {
-    Unpaid = 'unpaid',
-    Paid = 'paid',
-    Refunded = 'refunded'
+    PENDING = 'pending',
+    PROCESSING = 'processing',
+    PAID = 'paid',
+    FAILED = 'failed',
+    REFUNDED = 'refunded',
 }
 
 export enum EListingStatus {
