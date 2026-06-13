@@ -5,7 +5,7 @@ import { Swinger } from "@/components/Animate/Swing";
 import { Outlet, useLocation } from "react-router-dom";
 import ScrollToTop from "@/utils/ScrollToTop";
 import Footer from "./Footer";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/pages/Navbar";
 
 export default function MainLayout() {
   const { pathname } = useLocation();

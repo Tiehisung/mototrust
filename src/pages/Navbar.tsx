@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
 import { useAppSelector } from "@/store/hooks/store";
-import { UserMenu } from "./auth/UserMenu";
+import { UserMenu } from "../components/auth/UserMenu";
 import { symbols } from "@/data";
 
 const Navbar = () => {

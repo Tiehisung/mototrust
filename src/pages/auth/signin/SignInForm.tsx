@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate,   } from "react-router-dom";
+import { Link, useLocation, useNavigate,   } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import { useLoginMutation } from "@/services/authApi";
-
 import { Input } from "@/components/form";
 import {
   HiOutlineEye,
@@ -31,8 +29,8 @@ const SignInForm = () => {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const from = (location.state as any)?.from?.pathname;
+  const location = useLocation();
+  const from = (location.state as any)?.from?.pathname;
 
   const onSubmit = async (data: ISigninFormData) => {
     setServerError("");
@@ -49,7 +47,7 @@ const SignInForm = () => {
       toast.success("Welcome back! 👋", {
         description: `Signed in as ${result.user.fullName}`,
       });
-      const path =  (user.role === "admin" ? "/admin" : "/dashboard");
+      const path =from||  (user.role === "admin" ? "/admin" : "/dashboard");
       navigate(path, { replace: true });
     } catch (err: any) {
       const message = err?.data?.message || "Invalid credentials";
