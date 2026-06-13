@@ -83,9 +83,12 @@ export function UserMenu() {
             {user?.fullName?.[0] || "U"}
           </div>
           <span className=" md:block text-sm text-muted-foreground">
-            {user?.fullName?.split(" ")?.[0] ||
-              user?.phoneNumber?.substring(7) ||
-              "User"}
+            {
+              "Menu"
+              // || user?.fullName?.split(" ")?.[0] ||
+              //   user?.phoneNumber?.substring(7) ||
+              //   "User"
+            }
           </span>
         </button>
       }

@@ -5,7 +5,7 @@ import { UserCircle } from "lucide-react";
 import { getInitials } from "@/lib";
  
 import { useAppSelector } from "@/store/hooks/store";
-import { SignInModal } from "@/pages/auth/signin/Page";
+import { SignInModal } from "@/pages/auth/signin/SignModal";
 
 export default function UserLogButtons() {
   const { user,   } = useAppSelector((s) => s.auth);
